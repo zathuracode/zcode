@@ -1,0 +1,19 @@
+package  ${virginPackage}.entity.service;
+
+
+import java.math.*;
+import java.util.*;
+
+import $package.${metaData.getRealClassName()};
+#if($composedKey)
+    import $package.${metaData.primaryKey.getRealClassName()};
+#end
+/**
+* @author Zathura Code Generator Version 9.0 http://zathuracode.org/
+* www.zathuracode.org
+* 
+*/
+public interface ${metaData.getRealClassName()}Service extends GenericService<${metaData.getRealClassName()},${metaData.primaryKey.getRealClassName()}>{
+
+    
+}

@@ -1,0 +1,105 @@
+package  ${virginPackage}.service;
+
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+
+import ${virginPackage}.entity.service.${metaData.getRealClassName()}Service;
+
+/**
+* @author Zathura Code Generator Version 9.0 http://zathuracode.org/
+* www.zathuracode.org
+* 
+*/
+
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+class ${metaData.getRealClassName()}ServiceTest{
+
+	@Autowired
+	private ${metaData.getRealClassName()}Service ${metaData.getRealClassNameAsVariable()}Service;
+
+	@Test
+	@DisplayName("findAll")
+	void findAll(){
+		//Arrange
+		
+		//Act
+		
+		//Assert
+		assertNotNull(${metaData.getRealClassNameAsVariable()}Service);
+    }
+
+	@Test
+	@DisplayName("save")
+    void save() throws Exception {
+    	//Arrange
+		
+		//Act
+		
+		//Assert
+		assertNotNull(${metaData.getRealClassNameAsVariable()}Service);
+    }
+
+
+	@Test
+	@DisplayName("delete")
+	void delete() throws Exception {
+		//Arrange
+		
+		//Act
+		
+		//Assert
+		assertNotNull(${metaData.getRealClassNameAsVariable()}Service);
+	}
+
+    @Test
+	@DisplayName("deleteById")
+    void deleteById() throws Exception {
+    	//Arrange
+		
+		//Act
+		
+		//Assert
+    	assertNotNull(${metaData.getRealClassNameAsVariable()}Service);
+    }
+
+	@Test
+	@DisplayName("update")
+    void update() throws Exception {
+    	//Arrange
+		
+		//Act
+		
+		//Assert
+		assertNotNull(${metaData.getRealClassNameAsVariable()}Service);
+    }
+
+	@Test
+	@DisplayName("findById")
+    void findById() throws Exception {
+    	//Arrange
+		
+		//Act
+		
+		//Assert
+    	assertNotNull(${metaData.getRealClassNameAsVariable()}Service);
+    }
+
+	@Test
+	@DisplayName("count")
+    void count() throws Exception {
+    	//Arrange
+		
+		//Act
+		
+		//Assert
+    	assertNotNull(${metaData.getRealClassNameAsVariable()}Service);
+    }
+
+}

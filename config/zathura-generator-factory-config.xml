@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zathura-generator
+	xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+	xmlns='http://lidis.usbcali.edu.co/schema/zathura-generator-factory-config'
+	xsi:schemaLocation='http://lidis.usbcali.edu.co/schema/zathura-generator-factory-config zathura-generator-factory-config.xsd'>
+
+	<generator>
+		<name>SkyJet</name>
+		<gui-name>SkyJet</gui-name>
+		<class>org.zcode.generator.robot.skyjet.SkyJet</class>
+		<persistence>jpa</persistence>
+		<zathuraVersion>9.0</zathuraVersion>
+		<description>
+		<![CDATA[<!doctype html>
+<html>
+<head>
+	<style type="text/css">
+		
+		body{
+			width: 100%;
+			background-image: url(${RELATIVE_PATH}/icons/Zathuracode_galaxia.jpg);
+			background-position: center;
+			background-size: cover;
+			background-repeat: no-repeat;
+			margin-left: 0px;
+			height: auto;
+
+			
+		}
+		
+       li {
+           font-size: 16px;
+		   font-family: Open Sans, sans-serif;
+		   color: white;
+           }
+                    
+       h3 {
+           font-size: 100%;
+		   color:#013b67;
+		   text-align: center;
+		   color: white;
+           }
+                    
+       p {
+           font-size: 16px;
+		   text-align: center;
+		   font-family: Open Sans, sans-serif;
+		   color: white;
+         }			
+                    
+	</style>
+</head>
+    <body>
+      <h3><img alt="SkyJet" src="${RELATIVE_PATH}/icons/Skyjet_Zathuracode.png" style="width: 150px;"/></h3>
+      <p>Generate Spring Boot microservices App</p>
+     <p>&nbsp;</p>
+     <p>&nbsp;</p>
+	</body>
+</html>
+		]]>
+		</description>
+	</generator>
+
+</zathura-generator>

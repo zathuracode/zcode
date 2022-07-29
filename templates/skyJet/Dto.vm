@@ -1,0 +1,28 @@
+package ${virginPackage}.dto;
+import java.util.Date;
+import java.io.Serializable;
+import java.sql.*;
+
+import javax.validation.constraints.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+
+/**
+* @author Zathura Code Generator Version 9.0 http://zathuracode.org/
+* www.zathuracode.org
+* 
+*/
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class ${metaData.getRealClassName()}DTO implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
+	#foreach($member  in $variableDto)	
+	 $member	
+	#end
+}

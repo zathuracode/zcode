@@ -1,0 +1,18 @@
+package  ${virginPackage}.repository;
+
+import java.math.BigDecimal;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import $package.${metaData.getRealClassName()};
+#if($composedKey == true)
+    import $package.${metaData.primaryKey.getRealClassName()};
+#end
+/**
+* @author Zathura Code Generator Version 9.0 http://zathuracode.org/
+* www.zathuracode.org
+* 
+*/
+public interface  ${metaData.getRealClassName()}Repository extends JpaRepository<${metaData.getRealClassName()}, ${metaData.getPrimaryKey().getType().getSimpleName()}> {
+
+}
