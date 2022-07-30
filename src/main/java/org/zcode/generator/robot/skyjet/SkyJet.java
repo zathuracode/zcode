@@ -911,7 +911,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			bwIlogic.write(swIlogic.toString());
 			bwIlogic.close();
 			fwIlogic.close();
-			log.info("Begin Dockerfile");
+			log.info("End Dockerfile");
 
 		} catch (Exception e) {
 			log.error(e.toString());

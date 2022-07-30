@@ -35,6 +35,7 @@ public class JalopyCodeFormatter {
 	 */
 	public static void formatJavaCodeFolder(String pathFolder) {
 		log.info("formatJavaCodeFolder");
+		/*
 		try {
 			Jalopy jalopy = new Jalopy();
 			File directory = new File(pathFolder);
@@ -63,6 +64,7 @@ public class JalopyCodeFormatter {
 		} catch (Exception e) {
 			log.info("Error in formatJavaCodeFolder:"+ e.toString());
 		}
+		*/
 	}
 
 	/**
@@ -73,6 +75,7 @@ public class JalopyCodeFormatter {
 	 */
 	public static void formatJavaCodeFile(String pathFiles) {
 		log.info("formatJavaCodeFile in file:"+pathFiles);
+		/*
 		Jalopy jalopy = new Jalopy();
 		try {
 			if (pathFiles.endsWith(".java")) {
@@ -97,6 +100,7 @@ public class JalopyCodeFormatter {
 		} catch (Exception e) {
 			log.info("Error in formatJavaCodeFile:"	+ e.toString());
 		}
+		*/
 	}
 
 	/**

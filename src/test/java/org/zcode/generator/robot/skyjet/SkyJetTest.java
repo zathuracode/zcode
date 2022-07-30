@@ -17,15 +17,18 @@ import org.zcode.generator.utilities.GeneratorUtil;
 import org.zcode.metadata.model.MetaDataModel;
 import org.zcode.metadata.reader.IMetaDataReader;
 import org.zcode.metadata.reader.MetaDataReaderFactory;
+import org.zcode.reverse.utilities.ZathuraReverseEngineeringUtil;
 
 
 public class SkyJetTest {
+	
+	public static final String ZCODE_FULL_PATH="/Users/dgomez/Workspaces/workspace-2022-zcode/zcode/";
 	
 	private final static Logger log=LoggerFactory.getLogger(SkyJetTest.class);
 	
 	private static MetaDataModel metaDataModel = null;
 	
-	static String fullPathProject="/Users/dgomez/Workspaces/workspace-2022-zcode/demo-zcode-2022";
+	private static String fullPathProject="/Users/dgomez/Workspaces/workspace-2022-zcode/demo-zcode-2022";
 	
 	//La ruta donde estan los .class de las clases con anotaciones JPA
 	static String jpaPath = fullPathProject+"/src/main/java/";
@@ -43,7 +46,8 @@ public class SkyJetTest {
 			
 			
 			
-			GeneratorUtil.setFullPath("/Users/dgomez/Workspaces/workspace-2022-zcode/zcode/");
+			ZathuraReverseEngineeringUtil.setFullPath(ZCODE_FULL_PATH);
+			GeneratorUtil.setFullPath(ZCODE_FULL_PATH);
 			
 			
 			//Cargo los generadores
@@ -123,6 +127,7 @@ public class SkyJetTest {
 			properties.put("mainResoruces", fullPathProject+MAIN_RESOURCES);
 			properties.put("testJava", 		fullPathProject+TEST_JAVA);
 			properties.put("testResoruces", fullPathProject+TEST_RESOURCES);
+			properties.put("fullPathProject",fullPathProject);
 
 			
 			//EclipseGeneratorUtil.generate();

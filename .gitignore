@@ -43,3 +43,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Velocity
+velocity.*
+velocity.log*
