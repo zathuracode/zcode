@@ -22,24 +22,23 @@ import org.zcode.reverse.utilities.ZathuraReverseEngineeringUtil;
 
 public class SkyJetTest {
 	
+	
 	public static final String ZCODE_FULL_PATH="/Users/dgomez/Workspaces/workspace-2022-zcode/zcode/";
+	public static final String PROJECT_FULL_PATH="/Users/dgomez/Workspaces/workspace-2022-zcode/demo-zcode-2022";
+	
+	//La ruta donde estan los .class de las clases con anotaciones JPA
+	public static String jpaPath = PROJECT_FULL_PATH+"/src/main/java/";
+	public static String folderProjectPath = PROJECT_FULL_PATH+"/src/main/java/";
+	public static File pomFile =new File(PROJECT_FULL_PATH+"/pom.xml");
+	
 	
 	private final static Logger log=LoggerFactory.getLogger(SkyJetTest.class);
 	
 	private static MetaDataModel metaDataModel = null;
 	
-	private static String fullPathProject="/Users/dgomez/Workspaces/workspace-2022-zcode/demo-zcode-2022";
-	
-	//La ruta donde estan los .class de las clases con anotaciones JPA
-	static String jpaPath = fullPathProject+"/src/main/java/";
-	
-	
 	static String jpaPckgName = "com.vobi.bank.domain";
 	static String projectName = "demo-banco-jender-web";
-	static String folderProjectPath = fullPathProject+"/src/main/java/";
-	
-	
-	static File pomFile =new File(fullPathProject+"/pom.xml");
+
 	
 	public static void main(String[] args) {
 		try {
@@ -49,13 +48,18 @@ public class SkyJetTest {
 			ZathuraReverseEngineeringUtil.setFullPath(ZCODE_FULL_PATH);
 			GeneratorUtil.setFullPath(ZCODE_FULL_PATH);
 			
+			EclipseGeneratorUtil.workspaceFolderPath="/Users/dgomez/Workspaces/workspace-2022-zcode";
+			EclipseGeneratorUtil.destinationDirectory="/demo-zcode-2022/src/main/java";
+			
+			
+			
 			
 			//Cargo los generadores
 			ZathuraGeneratorFactory.loadZathuraGenerators();			
 			IZathuraGenerator zathuraGenerator=ZathuraGeneratorFactory.createZathuraGenerator("SkyJet");
 			EclipseGeneratorUtil.javaVersion="1.8";
 			EclipseGeneratorUtil.metaDataReader = MetaDataReaderFactory.JPAEntityLoaderEngine;
-			EclipseGeneratorUtil.fullPathProject=fullPathProject;
+			EclipseGeneratorUtil.fullPathProject=PROJECT_FULL_PATH;
 			EclipseGeneratorUtil.javaClassFolderPath=jpaPath;
 			EclipseGeneratorUtil.javaEntityPackage=jpaPckgName;
 			EclipseGeneratorUtil.projectName=projectName;
@@ -71,11 +75,7 @@ public class SkyJetTest {
 			
 			//EclipseGeneratorUtil.isMavenProject=true;
 			
-			//Para generacion de los Entity
-			
-			EclipseGeneratorUtil.workspaceFolderPath="/Users/dgomez/Workspaces/workspace-2022-zcode";
-			EclipseGeneratorUtil.destinationDirectory="/demo-zcode-2022/src/main/java";
-			//EclipseGeneratorUtil.connectionDriverJarPath="/Users/dgomez/Software/java/jdbc/postgresql-9.4.1211.jre6.jar";
+			//Para generacion de los Entity	
 			EclipseGeneratorUtil.connectionDriverClass="org.postgresql.Driver";
 			EclipseGeneratorUtil.connectionUrl="jdbc:postgresql://127.0.0.1:5432/bank";
 			EclipseGeneratorUtil.connectionUsername="postgres";
@@ -100,7 +100,7 @@ public class SkyJetTest {
 			EclipseGeneratorUtil.generateJPAReverseEngineering();
 
 			// Para que no corte los nombres de los paquetes
-			int specificityLevel = 1;
+			Integer specificityLevel = 1;
 			
 			if (metaDataModel == null) {
 				IMetaDataReader entityLoader = null;
@@ -113,7 +113,7 @@ public class SkyJetTest {
 			Properties properties = new Properties();
 			properties.put("jpaPath", jpaPath);
 			properties.put("jpaPckgName", jpaPckgName);
-			properties.put("specificityLevel", new Integer(specificityLevel));
+			properties.put("specificityLevel", specificityLevel);
 			
 			properties.put("libFolderPath", "");
 			properties.put("folderProjectPath", folderProjectPath);
@@ -124,16 +124,19 @@ public class SkyJetTest {
 			String TEST_JAVA=		GeneratorUtil.slash+"src"+GeneratorUtil.slash+"test"+GeneratorUtil.slash+"java"+GeneratorUtil.slash;
 			String TEST_RESOURCES=	GeneratorUtil.slash+"src"+GeneratorUtil.slash+"test"+GeneratorUtil.slash+"resources"+GeneratorUtil.slash;
 			
-			properties.put("mainResoruces", fullPathProject+MAIN_RESOURCES);
-			properties.put("testJava", 		fullPathProject+TEST_JAVA);
-			properties.put("testResoruces", fullPathProject+TEST_RESOURCES);
-			properties.put("fullPathProject",fullPathProject);
+			properties.put("mainResoruces", PROJECT_FULL_PATH+MAIN_RESOURCES);
+			properties.put("testJava", 		PROJECT_FULL_PATH+TEST_JAVA);
+			properties.put("testResoruces", PROJECT_FULL_PATH+TEST_RESOURCES);
+			properties.put("fullPathProject",PROJECT_FULL_PATH);
+
 
 			
 			//EclipseGeneratorUtil.generate();
 			
-			GeneratorUtil.generateMavenDirectoryStructure(fullPathProject);
+			GeneratorUtil.generateMavenDirectoryStructure(PROJECT_FULL_PATH);
 			zathuraGenerator.toGenerate(metaDataModel, projectName, folderProjectPath, properties);
+			
+			System.exit(1);
 				
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
