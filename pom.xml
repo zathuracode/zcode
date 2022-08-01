@@ -40,12 +40,6 @@
 			<artifactId>saaj-impl</artifactId>
 			<version>1.5.1</version>
 		</dependency>
-
-
-
-
-
-
 		<!-- LOGS log4j2 y SLF4J -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>

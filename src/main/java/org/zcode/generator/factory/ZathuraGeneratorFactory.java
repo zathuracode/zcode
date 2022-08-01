@@ -2,6 +2,7 @@ package org.zcode.generator.factory;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -60,6 +61,14 @@ public class ZathuraGeneratorFactory {
 		} catch (ClassNotFoundException e) {
 			log.error(e.getMessage());
 			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -98,9 +107,13 @@ public class ZathuraGeneratorFactory {
 	 * @throws InstantiationException the instantiation exception
 	 * @throws IllegalAccessException the illegal access exception
 	 * @throws ClassNotFoundException the class not found exception
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
+	 * @throws InvocationTargetException 
+	 * @throws IllegalArgumentException 
 	 */
 	public static void loadZathuraGenerators() throws FileNotFoundException, XMLStreamException, InstantiationException, IllegalAccessException,
-			ClassNotFoundException {
+			ClassNotFoundException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 
 		log.info("Reading:" + GeneratorUtil.getXmlConfigFactoryPath());
 
@@ -175,7 +188,7 @@ public class ZathuraGeneratorFactory {
 					guiName = false;
 					log.debug(cadena);
 				} else if (className == true) {
-					generatorModel.setZathuraGenerator((IZathuraGenerator) Class.forName(cadena).newInstance());
+					generatorModel.setZathuraGenerator((IZathuraGenerator) Class.forName(cadena).getDeclaredConstructor().newInstance());
 					className = false;
 					log.debug(cadena);
 				} else if (persistence == true) {

@@ -25,7 +25,6 @@ import java.util.Properties;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectHelper;
-
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -34,7 +33,6 @@ import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.zcode.eclipse.plugin.generator.utilities.EclipseGeneratorUtil;
 import org.zcode.reverse.utilities.ZathuraReverseEngineeringUtil;
 
 
@@ -122,7 +120,7 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 		connectionPassword = connectionProperties.getProperty("connectionPassword");
 		companyDomainName = connectionProperties.getProperty("companyDomainName");
 		companyDomainNameForPojoLocation = ZathuraReverseEngineeringUtil.fixDomain(companyDomainName);
-		//connectionDriverJarPath = connectionProperties.getProperty("connectionDriverJarPath");
+		
 		destinationDirectory = connectionProperties.getProperty("destinationDirectory");
 		schema = connectionProperties.getProperty("schema");
 		catalog = connectionProperties.getProperty("catalog");
@@ -133,11 +131,6 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 		// Llama los templates que generan los archivos de configuracion para
 		// HibernateTools
 		doTemplate();
-
-		
-		//ZathuraReverseJarLoader.loadJarSystem(connectionDriverJarPath, connectionDriverClass);
-		//ZathuraReverseJarLoader.loadJarSystem(connectionDriverJarPath, connectionDriverClass);
-		
 
 		// LLama el proceso de ANT con los archivos generados
 		callAntProcess();
@@ -150,13 +143,16 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 	 */
 	private void doTemplate() throws Exception{
 		
-		//TODO https://github.com/whitesource/whitesource-bamboo-agent/issues/9
+		
 		log.info("Execute init doTemplate");
 		
+		/*
 		Thread thread = Thread.currentThread();
 		ClassLoader loader = thread.getContextClassLoader();
 		thread.setContextClassLoader(EclipseGeneratorUtil.bundleClassLoader);
 		log.info("Chaged ContextClassLoader:"+EclipseGeneratorUtil.bundleClassLoader);
+		*/
+		
 		try {
 	
 			ve = new VelocityEngine();
@@ -197,12 +193,7 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 			context.put("schema", schema);
 			context.put("catalog", catalog);
 			context.put("catalogAndSchema", catalogAndSchema);
-			if(EclipseGeneratorUtil.javaVersion==null || EclipseGeneratorUtil.javaVersion.equals("")==true){
-				throw new Exception("The JavaVersion not Found for this reason is not posible generate");
-			}
-			context.put("javaVersion",EclipseGeneratorUtil.javaVersion);
 			
-
 			doCfg(context);
 			doBuild(context);
 			doRevEng(context);
@@ -213,8 +204,10 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 			log.info(e.getMessage());
 			throw e;
 		}finally{
+			/*
 			log.info("Chaged ContextClassLoader:"+loader);
 			thread.setContextClassLoader(loader);
+			*/
 		}
 	}
 
@@ -413,11 +406,12 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 	public static void callAntProcess() throws Exception{
 		log.info("Begin Ant");
 		
+		/*
 		Thread thread = Thread.currentThread();
 		ClassLoader loader = thread.getContextClassLoader();
 		thread.setContextClassLoader(EclipseGeneratorUtil.bundleClassLoader);
 		log.info("Chaged ContextClassLoader:"+EclipseGeneratorUtil.bundleClassLoader);
-		
+		*/
 		try {
 			File buildFile = new File(ZathuraReverseEngineeringUtil.getTempFileBuildPath());
 			Project p = new Project();
@@ -463,8 +457,8 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 		} catch (Exception e) {
 			throw e;
 		}finally{
-			log.info("Chaged ContextClassLoader:"+loader);
-			thread.setContextClassLoader(loader);
+			//log.info("Chaged ContextClassLoader:"+loader);
+			//thread.setContextClassLoader(loader);
 		}
 		log.info("End Ant");
 	}

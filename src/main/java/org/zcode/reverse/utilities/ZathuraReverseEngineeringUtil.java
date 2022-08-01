@@ -31,7 +31,7 @@ import net.sourceforge.squirrel_sql.fw.sql.SQLDriverManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * Zathura Generator.
  * 
@@ -40,7 +40,6 @@ import org.slf4j.LoggerFactory;
  * @version 1.0
  */
 public class ZathuraReverseEngineeringUtil {
-	
 	
 
 	/** The full path. */
@@ -81,21 +80,8 @@ public class ZathuraReverseEngineeringUtil {
 	private static String tempFileBuildPath = tempFiles + buildXmlFileName;
 
 	/** The temp file build compile path. */
-	private static String tempFileBuildCompilePath = tempFiles
-			+ buildCompileXmlFileName;
+	private static String tempFileBuildCompilePath = tempFiles + buildCompileXmlFileName;
 
-//	
-//	/** The sql connection. */
-//	private static ISQLConnection sqlConnection = null;
-//
-//	/** The alias. */
-//	private static ISQLAlias alias = null;
-//
-//	/** The sql driver. */
-//	private static ISQLDriver sqlDriver = null;
-//	// private static SQLDriverPropertyCollection driverProperties =null;
-//	/** The sql driver manager. */
-//	private static SQLDriverManager sqlDriverManager = null;
 	
 	
 	private static Connection connection;

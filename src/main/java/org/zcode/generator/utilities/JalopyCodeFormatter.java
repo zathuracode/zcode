@@ -1,13 +1,9 @@
 package org.zcode.generator.utilities;
 
-import java.io.File;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.hunsicker.jalopy.Jalopy;
-
-// TODO: Auto-generated Javadoc
+//TODO Se debe buscar otro Formateador de Codigo
 /**
  * Zathura Generator.
  *
@@ -17,8 +13,7 @@ import de.hunsicker.jalopy.Jalopy;
 public class JalopyCodeFormatter {
 
 	/** The log. */
-	private static Logger log = LoggerFactory
-			.getLogger(JalopyCodeFormatter.class);
+	private static Logger log = LoggerFactory.getLogger(JalopyCodeFormatter.class);
 
 	/**
 	 * The Constructor.
@@ -35,6 +30,7 @@ public class JalopyCodeFormatter {
 	 */
 	public static void formatJavaCodeFolder(String pathFolder) {
 		log.info("formatJavaCodeFolder");
+		
 		/*
 		try {
 			Jalopy jalopy = new Jalopy();
@@ -65,6 +61,7 @@ public class JalopyCodeFormatter {
 			log.info("Error in formatJavaCodeFolder:"+ e.toString());
 		}
 		*/
+		
 	}
 
 	/**
@@ -76,6 +73,7 @@ public class JalopyCodeFormatter {
 	public static void formatJavaCodeFile(String pathFiles) {
 		log.info("formatJavaCodeFile in file:"+pathFiles);
 		/*
+		
 		Jalopy jalopy = new Jalopy();
 		try {
 			if (pathFiles.endsWith(".java")) {
@@ -97,10 +95,12 @@ public class JalopyCodeFormatter {
 				in = null;
 				System.gc();
 			}
+			
 		} catch (Exception e) {
 			log.info("Error in formatJavaCodeFile:"	+ e.toString());
 		}
 		*/
+		
 	}
 
 	/**

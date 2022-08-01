@@ -34,7 +34,7 @@ public interface IZathuraSkyJetTemplate {
 	
 	public void doSpringBootRunner( VelocityContext context, String hdLocation, MetaDataModel dataModel, String modelName)throws Exception;
 	
-	public void doSwaggerConfig( VelocityContext context, String hdLocation, MetaDataModel dataModel, String modelName)throws Exception;
+	//public void doSwaggerConfig( VelocityContext context, String hdLocation, MetaDataModel dataModel, String modelName)throws Exception;
 
 	public void doDto(MetaData metaData, VelocityContext context, String hdLocation, MetaDataModel dataModel, String modelName)throws Exception;
 
@@ -58,6 +58,9 @@ public interface IZathuraSkyJetTemplate {
 	
 	public void doJWTSecurity(VelocityContext context, String hdLocation, MetaDataModel dataModel,String modelName) throws Exception;
 
-	void doORMXML(MetaDataModel dataModel, VelocityContext context, String hdLocation) throws Exception;
+	public void doORMXML(MetaDataModel dataModel, VelocityContext context, String hdLocation) throws Exception;
+	
+	public void doPomXml(VelocityContext context, String hdLocation)throws Exception;
+	
 
 }

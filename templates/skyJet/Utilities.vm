@@ -2,7 +2,6 @@ package ${virginPackage}.utility;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -76,7 +75,7 @@ public class Utilities {
 	
 	/**
 	 * @author Camilo Puente
-	 * @author Frank Edward Daza González
+	 * @author Frank Edward Daza Gonzï¿½lez
 	 * @date Nov 1, 2017
 	 * @param lblName
 	 * @param locale
@@ -129,7 +128,7 @@ public class Utilities {
 	/**
 	 * Retorna una fecha inicial con horas, minutos y segundos: 00:00:00
 	 * 
-	 * @author Frank Edward Daza González
+	 * @author Frank Edward Daza Gonzï¿½lez
 	 * @date Nov 20, 2017
 	 * @param date
 	 * @return Date
@@ -148,7 +147,7 @@ public class Utilities {
 	/**
 	 * Retorna una fecha final con horas, minutos y segundos: 23:59:59
 	 * 
-	 * @author Frank Edward Daza González
+	 * @author Frank Edward Daza Gonzï¿½lez
 	 * @date Nov 20, 2017
 	 * @param date
 	 * @return Date
@@ -165,7 +164,7 @@ public class Utilities {
 	}
 
 	/**
-	 * Funcíón para redondear un número double a los decimales que le ingresen
+	 * Funcï¿½ï¿½n para redondear un nï¿½mero double a los decimales que le ingresen
 	 * 
 	 * @author Camilo Delgado
 	 * @version Mar 23, 2018
@@ -187,7 +186,7 @@ public class Utilities {
     }
 
 	/**
-	 * Función para obtener el número que sea múltiplo de "multiploDe"
+	 * Funciï¿½n para obtener el nï¿½mero que sea mï¿½ltiplo de "multiploDe"
 	 * y mayor que "mayorQue"
 	 *
 	 * @author Camilo Delgado

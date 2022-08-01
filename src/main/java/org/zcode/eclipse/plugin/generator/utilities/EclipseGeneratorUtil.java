@@ -17,22 +17,6 @@ package org.zcode.eclipse.plugin.generator.utilities;
 
 import java.io.File;
 import java.util.List;
-import java.util.Properties;
-
-import org.apache.commons.lang.NotImplementedException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.zcode.generator.exceptions.GeneratorNotFoundException;
-import org.zcode.generator.factory.ZathuraGeneratorFactory;
-import org.zcode.generator.model.IZathuraGenerator;
-import org.zcode.generator.utilities.GeneratorUtil;
-import org.zcode.metadata.exceptions.MetaDataReaderNotFoundException;
-import org.zcode.metadata.model.MetaDataModel;
-import org.zcode.metadata.reader.IMetaDataReader;
-import org.zcode.metadata.reader.MetaDataReaderFactory;
-import org.zcode.reverse.engine.IZathuraReverseEngineering;
-import org.zcode.reverse.engine.ZathuraReverseEngineering;
-import org.zcode.reverse.utilities.ZathuraReverseEngineeringUtil;
 
 /**
  * Zathura Generator.
@@ -42,17 +26,6 @@ import org.zcode.reverse.utilities.ZathuraReverseEngineeringUtil;
  */
 public class EclipseGeneratorUtil {
 
-	/** The log. */
-	private static final Logger log = LoggerFactory.getLogger(EclipseGeneratorUtil.class);
-
-	/** The project. */
-	//public static IProject project;
-	
-	public static ClassLoader bundleClassLoader =  null;
-
-	public static ClassLoader threadClassLoader =  Thread.currentThread().getContextClassLoader();
-	
-	public static String javaVersion;
 	
 	/** The project name. */
 	public static String projectName;
@@ -93,11 +66,9 @@ public class EclipseGeneratorUtil {
 	/** The connection password. */
 	public static String connectionPassword;
 	
-	/** The connection driver jar path. */
-	//public static String connectionDriverJarPath;
-	
 	/** The connection driver template. */
 	public static String connectionDriverTemplate;
+	
 	
 	public static String connectionGroupId;
 	
@@ -105,12 +76,8 @@ public class EclipseGeneratorUtil {
 	
 	public static String connectionVersion;
 	
-
 	/** The company domain name. */
 	public static String companyDomainName;
-	
-	/** The destination directory. */
-	public static String destinationDirectory;
 	
 	/** The catalog. */
 	public static String catalog;
@@ -123,16 +90,6 @@ public class EclipseGeneratorUtil {
 	
 	/** The tables list. */
 	public static List<String> tablesList;
-	
-	/** The meta data model. */
-	private static MetaDataModel metaDataModel = null;
-	
-	
-
-	/** The wizard main. */
-	//public static WizardMainZathura wizardMain;
-	
-	//public static boolean isMavenProject;
 	
 	public static File pomXmlFile;
 	
@@ -164,77 +121,17 @@ public class EclipseGeneratorUtil {
 		connectionUsername = null;
 		connectionPassword = null;
 		companyDomainName = null;
-		//connectionDriverJarPath = null;
-		destinationDirectory = null;
+		
 		schema = null;
 		catalogAndSchema = null;
 		tablesList = null;
 		
-		
-		//isMavenProject = false;
 		pomXmlFile = null;
 		groupIdMavenPoject = null;
 		artifactIdMavenProject = null;
 	}
 
-	/**
-	 * Se usa para generar cuando termina el wizard.
-	 *
-	 * @throws MetaDataReaderNotFoundException the meta data reader not found exception
-	 * @throws GeneratorNotFoundException the generator not found exception
-	 */
-	public static void generate() throws MetaDataReaderNotFoundException, GeneratorNotFoundException,Exception {
-		
-		
-
-		EclipseGeneratorUtil.metaDataReader = MetaDataReaderFactory.JPAEntityLoaderEngine;
-		
-		GeneratorUtil.generateMavenDirectoryStructure(fullPathProject);
-		
-		String jpaPath = EclipseGeneratorUtil.javaClassFolderPath;
-		String jpaPckgName = EclipseGeneratorUtil.javaEntityPackage;
-		String projectName = EclipseGeneratorUtil.projectName;
-		String folderProjectPath = EclipseGeneratorUtil.javaSourceFolderPath;
-		
-		File pomFile = EclipseGeneratorUtil.pomXmlFile;
-		
-		String MAIN_RESOURCES=	GeneratorUtil.slash+"src"+GeneratorUtil.slash+"main"+GeneratorUtil.slash+"resources"+GeneratorUtil.slash;
-		String TEST_JAVA=		GeneratorUtil.slash+"src"+GeneratorUtil.slash+"test"+GeneratorUtil.slash+"java"+GeneratorUtil.slash;
-		String TEST_RESOURCES=	GeneratorUtil.slash+"src"+GeneratorUtil.slash+"test"+GeneratorUtil.slash+"resources"+GeneratorUtil.slash;
-
-		
-		int specificityLevel = 1;
-		/*
-		// Para que no corte los nombres de los paquetes
-		
-
-		if (metaDataModel == null) {
-			IMetaDataReader entityLoader = null;
-			entityLoader = MetaDataReaderFactory.createMetaDataReader(MetaDataReaderFactory.JPAEntityLoaderEngine);
-			metaDataModel = entityLoader.loadMetaDataModel(jpaPath, jpaPckgName);
-		}
-		*/
-
-		// Variables para el properties
-		Properties properties = new Properties();
-		properties.put("fullPathProject", fullPathProject);
-		properties.put("jpaPath", jpaPath);
-		properties.put("jpaPckgName", jpaPckgName);
-		properties.put("specificityLevel", new Integer(specificityLevel));
-		
-		
-		properties.put("folderProjectPath", folderProjectPath);
-		//TODO isMavenProjecyt se debe borrar
-		//properties.put("isMavenProject", isMavenProject);
-		properties.put("pomFile", pomFile);
-		
-		properties.put("mainResoruces", fullPathProject+MAIN_RESOURCES);
-		properties.put("testJava", 		fullPathProject+TEST_JAVA);
-		properties.put("testResoruces", fullPathProject+TEST_RESOURCES);
-		
-		//IZathuraGenerator zathuraGenerator = ZathuraGeneratorFactory.createZathuraGenerator(EclipseGeneratorUtil.zathuraGeneratorName);
-		//zathuraGenerator.toGenerate(metaDataModel, projectName, folderProjectPath, properties);
-	}
+	
 
 	/**
 	 * Validar package.
@@ -246,192 +143,7 @@ public class EclipseGeneratorUtil {
 		if (packageName.startsWith(".") || packageName.endsWith(".")) {
 			throw new Exception("A package name cannot start or end with a dot");
 		}
-	}
-	
-	
-
-	/**
-	 * Generate jpa reverse engineering.
-	 */
-	public static void generateJPAReverseEngineering()throws Exception{
-
-		try {
-			
-		
-		Properties connectionProperties = new Properties();
-
-		destinationDirectory = workspaceFolderPath + destinationDirectory + File.separatorChar;
-
-		connectionProperties.put("connectionDriverClass", connectionDriverClass);
-		connectionProperties.put("connectionUrl", connectionUrl);
-
-		connectionProperties.put("connectionUsername", connectionUsername);
-		connectionProperties.put("connectionPassword", connectionPassword);
-		connectionProperties.put("companyDomainName", companyDomainName);
-
-		//connectionProperties.put("connectionDriverJarPath", connectionDriverJarPath);
-		connectionProperties.put("destinationDirectory", destinationDirectory);
-		
-		connectionProperties.put("catalogAndSchema", catalogAndSchema == null ? "" : catalogAndSchema);
-		connectionProperties.put("schema", schema == null ? "" : schema);
-		connectionProperties.put("catalog", catalog == null ? "" : catalog);
-
-		log.info("Delete folder in "+destinationDirectory);
-		// Borrar carpeta de temporales src/
-		GeneratorUtil.deleteFiles(destinationDirectory);
-		log.info("Create folder in "+destinationDirectory);
-		// Crea carpeta de temporales
-		GeneratorUtil.createFolder(destinationDirectory);
-
-		IZathuraReverseEngineering mappingTool = new ZathuraReverseEngineering();
-		mappingTool.makePojosJPA_V1_0(connectionProperties, tablesList);
-		
-		} catch (Exception e) {
- 			log.error("generateJPAReverseEngineering",e);
-			throw e;
-		}
-
-	}
-
-	/**
-	 * Generate jpa reverse engineering tmp.
-	 */
-	public static void generateJPAReverseEngineeringTMP()throws Exception {
-
-		Properties connectionProperties = new Properties();
-
-		destinationDirectory = ZathuraReverseEngineeringUtil.getTempFilesPath();
-
-		connectionProperties.put("connectionDriverClass", connectionDriverClass);
-		connectionProperties.put("connectionUrl", connectionUrl);
-		connectionProperties.put("connectionUsername", connectionUsername);
-		connectionProperties.put("connectionPassword", connectionPassword);
-		connectionProperties.put("companyDomainName", companyDomainName);
-		//connectionProperties.put("connectionDriverJarPath", connectionDriverJarPath);
-		connectionProperties.put("destinationDirectory", destinationDirectory);
-
-		connectionProperties.put("catalogAndSchema", catalogAndSchema == null ? "" : catalogAndSchema);
-		connectionProperties.put("schema", schema == null ? "" : schema);
-		connectionProperties.put("catalog", catalog == null ? "" : catalog);
-
-		ZathuraReverseEngineeringUtil.resetTempFiles(destinationDirectory);
-
-		IZathuraReverseEngineering mappingTool = new ZathuraReverseEngineering();
-		mappingTool.makePojosJPA_V1_0(connectionProperties, tablesList);
-
-		try {
-			EclipseGeneratorUtil.javaClassFolderPath = destinationDirectory;
-			IMetaDataReader entityLoader = null;
-			entityLoader = MetaDataReaderFactory.createMetaDataReader(MetaDataReaderFactory.JPAEntityLoaderEngine);
-			metaDataModel = entityLoader.loadMetaDataModel(destinationDirectory, companyDomainName);
-
-		} catch (MetaDataReaderNotFoundException e) {
-			log.error("generateJPAReverseEngineeringTMP",e);
-			throw e;
-		} finally {
-			ZathuraReverseEngineeringUtil.resetTempFiles(destinationDirectory);
-		}
-	}
-	
-
-//	/**
-//	 * Load jar system.
-//	 *
-//	 * @param jarLocation the jar location
-//	 * @throws Exception the exception
-//	 */
-//	@SuppressWarnings("deprecation")
-//	public static void loadJarSystem(String jarLocation,String driverClassName) throws Exception {
-//
-//		// Para que funcione con el RPC JDP se debe poner Eclipse-BuddyPolicy:
-//		// app�
-//
-//		try {
-//			Method addURL = URLClassLoader.class.getDeclaredMethod("addURL", new Class[] { URL.class });
-//			addURL.setAccessible(true);// you're telling the JVM to override the
-//			// default visibility
-//			File[] files = getExternalJars(jarLocation);// some method returning
-//			// the
-//			// jars to add
-//
-////			ClassLoader cl = ClassLoader.getSystemClassLoader();
-////
-////			for (int i = 0; i < files.length; i++) {
-////				URL url = files[i].toURL();
-////				addURL.invoke(cl, new Object[] { url });
-////				
-////				URLClassLoader classLoader = new URLClassLoader(new URL[]{url}, cl);
-////				Driver driver = (Driver) Class.forName(driverClassName, true, classLoader).newInstance();
-////				DriverManager.registerDriver(driver);
-////				
-////				
-////				log.info("Loaded JRE:" + files[i].getName());
-////			}
-//
-//			// at this point, the default class loader has all the jars you
-//			// indicated
-//			//Carga de jars en el Bundle del contenedor OSGI
-//			
-//			ClassLoader bundleClassLoader =  ZathuraGeneratorActivator.getDefault().getBundle().getClass().getClassLoader();
-//			
-//			for (int i = 0; i < files.length; i++) {
-//				URL url = files[i].toURL();
-//				addURL.invoke(bundleClassLoader, new Object[] { url });				
-//			
-//				
-//			
-//				URLClassLoader classLoader = new URLClassLoader(new URL[]{url}, bundleClassLoader);
-//				Driver driver = (Driver) Class.forName(driverClassName, true, classLoader).newInstance();
-//				DriverManager.registerDriver(driver);
-//				ZathuraGeneratorActivator.getDefault().getBundle().loadClass(driverClassName);
-//				
-//				
-//				log.info("Loaded Bundle:" + files[i].getName());
-//			}
-//			
-//			
-//			
-//		} catch (Exception e) {
-//			log.error("loadJarSystem",e);
-//			throw e;
-//		}
-//	}
-//	
-	/**
-	 * Carga una lista de Jars en el JRE y El bundle del Plugin
-	 * @param jarLocation
-	 * @throws Exception
-	 */
-//	public static void loadJarSystem(String []jarLocation,String driverClassName) throws Exception {
-//		for (String path : jarLocation) {
-//			loadJarSystem(path,driverClassName);
-//		}
-//	}
-
-	
-	
-	/**
-	 * Carga una clase en el Bundle del plugin de eclipse
-	 * @param className
-	 * @throws Exception
-	 */
-	public static void loadDriverJarBundle(String className)throws Exception{
-		//TODO Se debe hacer la carga del JDBC Driver
-		throw new NotImplementedException();
-		//ZathuraGeneratorActivator.getDefault().getBundle().loadClass(className);
-	}
-
-	/**
-	 * Gets the external jars.
-	 *
-	 * @param jarLocation the jar location
-	 * @return the external jars
-	 */
-	private static File[] getExternalJars(String jarLocation) {
-		File[] files = new File[1];
-		files[0] = new File(jarLocation);
-		return files;
-	}
+	}	
 
 	/**
 	 * Replace all.
@@ -466,21 +178,5 @@ public class EclipseGeneratorUtil {
 	private EclipseGeneratorUtil() {
 
 	}
-
-	
-
-	/**
-	 * Jar name.
-	 *
-	 * @param path the path
-	 * @return the string
-	 */
-	private static String jarName(String path) {
-		int lastIndex = path.lastIndexOf(File.separatorChar);
-		String nameJar = path.substring(lastIndex + 1, path.length());
-		return nameJar;
-	}
-	
-	
 
 }

@@ -42,9 +42,9 @@
 			   destdir="/Users/dgomez/Workspaces/workspace-2022-zcode/demo-zcode-2022/src/main/java/" 
 			   includeantruntime="false"
 			   fork="true"
-			   source="1.8"
-         	   target="1.8"
-         	   compiler="javac1.8">			
+			   source="11"
+         	   target="11"
+         	   >			
 			<include name="*.java" />
 		</javac>		
 	</target>

@@ -2,6 +2,8 @@ package ${virginPackage}.security;
 
 import static ${virginPackage}.security.Constants.ACTUATOR_URL;
 import static ${virginPackage}.security.Constants.LOGIN_URL;
+import static ${virginPackage}.security.Constants.API_DOCS;
+import static ${virginPackage}.security.Constants.SWAGGER_UI;
 
 import java.util.Arrays;
 
@@ -55,7 +57,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 				.csrf()
 				.disable()
 				.authorizeRequests()
-				.antMatchers(LOGIN_URL,ACTUATOR_URL)
+				.antMatchers(LOGIN_URL,ACTUATOR_URL,API_DOCS,SWAGGER_UI)
 				.permitAll()
 				.anyRequest()
 				.authenticated()
