@@ -5,7 +5,6 @@ import java.util.Properties;
 import org.zcode.metadata.model.MetaDataModel;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * Zathura Generator.
  *

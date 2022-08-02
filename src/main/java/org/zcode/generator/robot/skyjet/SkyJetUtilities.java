@@ -552,8 +552,7 @@ public class SkyJetUtilities {
 	 * @param packageOriginal  the package original
 	 * @param properties       the properties
 	 */
-	public void buildFoldersJava(String packageName, String hardDiskLocation, Integer specificityLevel,
-			String packageOriginal, Properties properties) {
+	public void buildFoldersJava(String packageName, String hardDiskLocation,	String packageOriginal, Properties properties) {
 
 		// / se construye paquete
 		String pckge = packageName.replace('.', '_') + "_";
@@ -608,8 +607,7 @@ public class SkyJetUtilities {
 	 * @param packageOriginal  the package original
 	 * @param properties       the properties
 	 */
-	public void buildFoldersTest(String packageName, String hardDiskLocation, Integer specificityLevel,
-			String packageOriginal, Properties properties) {
+	public void buildFoldersTest(String packageName, String hardDiskLocation,String packageOriginal, Properties properties) {
 
 		// / se construye paquete
 		String pckge = packageName.replace('.', '_') + "_";

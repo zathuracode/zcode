@@ -29,8 +29,8 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.zcode.eclipse.plugin.generator.utilities.EclipseGeneratorUtil;
 import org.zcode.generator.model.IZathuraGenerator;
+import org.zcode.generator.utilities.GeneratorPathUtil;
 import org.zcode.generator.utilities.GeneratorUtil;
 import org.zcode.generator.utilities.JalopyCodeFormatter;
 import org.zcode.metadata.model.ManyToOneMember;
@@ -68,12 +68,11 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 		try {
 			this.properties = propiedades;
 			String nombrePaquete = propiedades.getProperty("jpaPckgName");
-			Integer specificityLevel = (Integer) propiedades.get("specificityLevel");
 			String domainName = nombrePaquete.substring(0, nombrePaquete.indexOf("."));
 			this.fullPathProject = propiedades.getProperty("fullPathProject");
 
 			log.info("===================== Begin SkyJet Zathuracode =====================");
-			doTemplate(folderProjectPath, metaDataModel, nombrePaquete, projectName, specificityLevel, domainName);
+			doTemplate(folderProjectPath, metaDataModel, nombrePaquete, projectName, domainName);
 			//copyLibraries();
 			log.info("=====================  End SkyJet Zathuracode  =====================");
 		} catch (Exception e) {
@@ -85,8 +84,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 	
 
 	@Override
-	public void doTemplate(String hdLocation, MetaDataModel metaDataModel, String jpaPckgName, String projectName,
-			Integer specificityLevel, String domainName) throws Exception {
+	public void doTemplate(String hdLocation, MetaDataModel metaDataModel, String jpaPckgName, String projectName, String domainName) throws Exception {
 
 		try {
 
@@ -133,19 +131,19 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			velocityContext.put("projectName", projectName);
 			velocityContext.put("domainName", domainName);
 			velocityContext.put("modelName", modelName);
-			velocityContext.put("schema", EclipseGeneratorUtil.schema);
+			velocityContext.put("schema", GeneratorPathUtil.schema);
 
 			// Variables para generar el persistence.xml
-			velocityContext.put("connectionUrl", EclipseGeneratorUtil.connectionUrl);
-			velocityContext.put("connectionDriverClass", EclipseGeneratorUtil.connectionDriverClass);
-			velocityContext.put("connectionUsername", EclipseGeneratorUtil.connectionUsername);
-			velocityContext.put("connectionPassword", EclipseGeneratorUtil.connectionPassword);
+			velocityContext.put("connectionUrl", GeneratorPathUtil.connectionUrl);
+			velocityContext.put("connectionDriverClass", GeneratorPathUtil.connectionDriverClass);
+			velocityContext.put("connectionUsername", GeneratorPathUtil.connectionUsername);
+			velocityContext.put("connectionPassword", GeneratorPathUtil.connectionPassword);
 
 			this.paqueteVirgen = GeneratorUtil.replaceAll(virginPackage, ".", GeneratorUtil.slash);
 
-			SkyJetUtilities.getInstance().buildFoldersJava(virginPackage, hdLocation, specificityLevel, packageOriginal,
+			SkyJetUtilities.getInstance().buildFoldersJava(virginPackage, hdLocation, packageOriginal,
 					properties);
-			SkyJetUtilities.getInstance().buildFoldersTest(virginPackage, hdLocation, specificityLevel, packageOriginal,
+			SkyJetUtilities.getInstance().buildFoldersTest(virginPackage, hdLocation, packageOriginal,
 					properties);
 			SkyJetUtilities.getInstance().biuldHashToGetIdValuesLengths(listMetaData);
 
@@ -350,10 +348,10 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 				metaData.setFinalParamForIdVariables(finalParamForIdVariables);
 
 				// generacion datasource.xml
-				velocityContext.put("connectionUrl", EclipseGeneratorUtil.connectionUrl);
-				velocityContext.put("connectionDriverClass", EclipseGeneratorUtil.connectionDriverClass);
-				velocityContext.put("connectionUsername", EclipseGeneratorUtil.connectionUsername);
-				velocityContext.put("connectionPassword", EclipseGeneratorUtil.connectionPassword);
+				velocityContext.put("connectionUrl", GeneratorPathUtil.connectionUrl);
+				velocityContext.put("connectionDriverClass", GeneratorPathUtil.connectionDriverClass);
+				velocityContext.put("connectionUsername", GeneratorPathUtil.connectionUsername);
+				velocityContext.put("connectionPassword", GeneratorPathUtil.connectionPassword);
 
 				doEntityGenerator(metaData, velocityContext, hdLocation, metaDataModel);
 				doRepository(metaData, velocityContext, hdLocation);
@@ -679,11 +677,11 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 		try {
 
 			
-			String pomLocation = EclipseGeneratorUtil.fullPathProject + GeneratorUtil.slash + GeneratorUtil.pomFile;
+			String pomLocation = GeneratorPathUtil.fullPathProject + GeneratorUtil.slash + GeneratorUtil.pomFile;
 			
-			String groupId = EclipseGeneratorUtil.companyDomainName;						
-			String artifactId = EclipseGeneratorUtil.projectName;
-			String name = EclipseGeneratorUtil.projectName;
+			String groupId = GeneratorPathUtil.companyDomainName;						
+			String artifactId = GeneratorPathUtil.projectName;
+			String name = GeneratorPathUtil.projectName;
 			String description = "Spring Boot Project generated by Zathuracode";
 									
 			context.put("groupId", groupId);
@@ -692,9 +690,9 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			context.put("description", description);
 			
 			
-			String groupIdConnector = 		EclipseGeneratorUtil.connectionGroupId;
-			String artifactIdConnector = 	EclipseGeneratorUtil.connectionArtifactId;
-			String versionConnector = 		EclipseGeneratorUtil.connectionVersion;
+			String groupIdConnector = 		GeneratorPathUtil.connectionGroupId;
+			String artifactIdConnector = 	GeneratorPathUtil.connectionArtifactId;
+			String versionConnector = 		GeneratorPathUtil.connectionVersion;
 			
 			context.put("groupIdConnector", groupIdConnector.equals("")!=true?groupIdConnector:"configure yourself");
 			context.put("artifactIdConnector", artifactIdConnector.equals("")!=true?artifactIdConnector:"configure yourself");

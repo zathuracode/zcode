@@ -24,7 +24,7 @@ import org.zcode.metadata.model.MetaDataModel;
 
 public interface IZathuraSkyJetTemplate {
 
-	public void doTemplate(String hdLocation, MetaDataModel metaDataModel, String jpaPckgName, String projectName, Integer specificityLevel, String domainName)throws Exception;
+	public void doTemplate(String hdLocation, MetaDataModel metaDataModel, String jpaPckgName, String projectName, String domainName)throws Exception;
 
 	public void doRepository(MetaData metaData, VelocityContext context, String hdLocation)throws Exception;
 	

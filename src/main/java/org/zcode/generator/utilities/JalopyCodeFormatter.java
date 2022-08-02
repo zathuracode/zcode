@@ -29,7 +29,7 @@ public class JalopyCodeFormatter {
 	 *            the path folder
 	 */
 	public static void formatJavaCodeFolder(String pathFolder) {
-		log.info("formatJavaCodeFolder");
+		//log.info("formatJavaCodeFolder");
 		
 		/*
 		try {
@@ -71,7 +71,7 @@ public class JalopyCodeFormatter {
 	 *            the path files
 	 */
 	public static void formatJavaCodeFile(String pathFiles) {
-		log.info("formatJavaCodeFile in file:"+pathFiles);
+		//log.info("formatJavaCodeFile in file:"+pathFiles);
 		/*
 		
 		Jalopy jalopy = new Jalopy();
