@@ -1,6 +1,5 @@
 package org.zcode.generator.model;
 
-// TODO: Auto-generated Javadoc
 /**
  * Zathura Generator.
  *

@@ -133,44 +133,7 @@ public class GeneratorPathUtil {
 
 	
 
-	/**
-	 * Validar package.
-	 *
-	 * @param packageName the package name
-	 * @throws Exception the exception
-	 */
-	public static void validarPackage(String packageName) throws Exception {
-		if (packageName.startsWith(".") || packageName.endsWith(".")) {
-			throw new Exception("A package name cannot start or end with a dot");
-		}
-	}	
-
-	/**
-	 * Replace all.
-	 *
-	 * @param cadena the cadena
-	 * @param old the old
-	 * @param snew the snew
-	 * @return the string
-	 */
-	public static String replaceAll(String cadena, String old, String snew) {
-		StringBuffer replace = new StringBuffer();
-		String aux;
-
-		for (int i = 0; i < cadena.length(); i++) {
-			if ((i + old.length()) < cadena.length()) {
-				aux = cadena.substring(i, i + old.length());
-				if (aux.equals(old)) {
-					replace.append(snew);
-					i += old.length() - 1;
-				} else {
-					replace.append(cadena.substring(i, i + 1));
-				}
-			} else
-				replace.append(cadena.substring(i, i + 1));
-		}
-		return replace.toString();
-	}
+	
 
 	/**
 	 * The Constructor.

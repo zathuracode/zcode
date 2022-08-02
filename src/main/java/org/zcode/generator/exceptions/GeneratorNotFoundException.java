@@ -1,6 +1,5 @@
 package org.zcode.generator.exceptions;
 
-// TODO: Auto-generated Javadoc
 /**
  * Zathura Generator.
  *

@@ -3,7 +3,6 @@ package org.zcode.reverse.engine;
 import java.util.List;
 import java.util.Properties;
 
-// TODO: Auto-generated Javadoc
 /**
  * Zathura Generator.
  *

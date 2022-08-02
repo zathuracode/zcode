@@ -7,7 +7,7 @@
         <property name="hibernate.connection.driver_class">${connectionDriverClass}</property>
 		<property name="hibernate.connection.url">${connectionUrl}</property>
         <property name="hibernate.connection.password">${connectionPassword}</property>
-        <property name="hibernate.connection.username">${connectionUsername}</property>
+        <property name="hibernate.connection.username">${connectionUsername}</property>        
         
         #if(${connectionDriverClass}=='oracle.jdbc.driver.OracleDriver')
         	<property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>

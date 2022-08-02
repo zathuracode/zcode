@@ -361,5 +361,18 @@ public class GeneratorUtil {
 		}
 		return replace.toString();
 	}
+	
+	
+	/**
+	 * Validar package.
+	 *
+	 * @param packageName the package name
+	 * @throws Exception the exception
+	 */
+	public static void validarPackage(String packageName) throws Exception {
+		if (packageName.startsWith(".") || packageName.endsWith(".")) {
+			throw new Exception("A package name cannot start or end with a dot");
+		}
+	}
 
 }

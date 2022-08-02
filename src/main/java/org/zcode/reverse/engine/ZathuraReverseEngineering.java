@@ -436,10 +436,7 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 			// Compile Pojos
 			File buildFile2 = new File(ZathuraReverseEngineeringUtil.getTempFileBuildCompilePath());
 			Project p2 = new Project();
-			p2.setUserProperty("ant.file", buildFile2.getAbsolutePath());
-				
-			
-			
+			p2.setUserProperty("ant.file", buildFile2.getAbsolutePath());			
 
 			try {
 				p2.fireBuildStarted();

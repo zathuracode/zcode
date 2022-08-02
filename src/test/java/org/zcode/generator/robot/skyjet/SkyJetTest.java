@@ -159,26 +159,19 @@ public class SkyJetTest {
 			
 			
 				
-		} catch (FileNotFoundException e) {
-			
+		} catch (FileNotFoundException e) {			
 			log.error(e.getMessage());
-		} catch (InstantiationException e) {
-			
+		} catch (InstantiationException e) {			
 			log.error(e.getMessage());
-		} catch (IllegalAccessException e) {
-			
+		} catch (IllegalAccessException e) {			
 			log.error(e.getMessage());
-		} catch (ClassNotFoundException e) {
-			
+		} catch (ClassNotFoundException e) {			
 			log.error(e.getMessage());
-		} catch (XMLStreamException e) {
-			
+		} catch (XMLStreamException e) {			
 			log.error(e.getMessage());
-		} catch (GeneratorNotFoundException e) {
-			
+		} catch (GeneratorNotFoundException e) {			
 			log.error(e.getMessage());
-		} catch (Exception e) {
-			
+		} catch (Exception e) {			
 			log.error(e.getMessage());
 		}finally {
 			System.exit(1);

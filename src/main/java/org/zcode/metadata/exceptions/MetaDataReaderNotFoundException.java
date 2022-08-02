@@ -1,6 +1,5 @@
 package org.zcode.metadata.exceptions;
 
-// TODO: Auto-generated Javadoc
 /**
  * Zathura Generator.
  *
