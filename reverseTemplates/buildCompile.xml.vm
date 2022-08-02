@@ -26,11 +26,7 @@
 		<path location="../lib/velocity-1.7.jar" />
 		<!--Librerias necesarias para Hibernate-tools -->
 		
-		<!-- JDBC Drivers -->
-		<path location="../lib/mysql-connector-java-8.0.21.jar" />
-		<path location="../lib/ojdbc10.jar" />
-		<path location="../lib/postgresql-42.2.14.jar" />
-		<!-- JDBC Drivers -->
+
 	</path>
 	
 	<target name="compilePojos" description="compiles generated pojos">
