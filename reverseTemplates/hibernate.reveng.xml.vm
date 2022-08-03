@@ -44,21 +44,25 @@
 		<sql-type jdbc-type="OTHER" hibernate-type="java.sql.Timestamp" />
 		
 	</type-mapping>
-	#if(${catalogAndSchema}=='1')
+	
+	## MYSQL, SQLSERVER
+	#if(${connectionDriverClass}=='com.mysql.jdbc.Driver' || ${connectionDriverClass}=='com.microsoft.sqlserver.jdbc.SQLServerDriver')
 		#foreach($table  in ${tablesList})
-		<table-filter match-catalog="${catalog}" match-name="$table" />
+			<table-filter match-catalog="${catalog}" match-name="$table" />
 		#end
 	#end
 	
-	#if(${catalogAndSchema}=='2')
+	## ORACLE, POSTGRES
+	#if(${connectionDriverClass}=='org.postgresql.Driver' || ${connectionDriverClass}=='oracle.jdbc.driver.OracleDriver')
 		#foreach($table  in ${tablesList})
-		<table-filter match-schema="${schema}" match-name="$table" />
+			<table-filter match-schema="${schema}" match-name="$table" />
 		#end
 	#end
 	
-	#if(${catalogAndSchema}=='3')
+	## AS/400	
+	#if(${connectionDriverClass}=='com.ibm.as400.access.AS400JDBCDriver' )
 		#foreach($table  in ${tablesList})
-		<table-filter match-catalog="${catalog}" match-schema="${schema}" match-name="$table" />
+			<table-filter match-catalog="${catalog}" match-schema="${schema}" match-name="$table" />
 		#end
 	#end	
 </hibernate-reverse-engineering>

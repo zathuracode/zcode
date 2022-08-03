@@ -44,14 +44,8 @@
 		<sql-type jdbc-type="OTHER" hibernate-type="java.sql.Timestamp" />
 		
 	</type-mapping>
-		
-					<table-filter match-schema="public" match-name="document_type" />
-				<table-filter match-schema="public" match-name="customer" />
-				<table-filter match-schema="public" match-name="account" />
-				<table-filter match-schema="public" match-name="registered_account" />
-				<table-filter match-schema="public" match-name="transaction" />
-				<table-filter match-schema="public" match-name="user_type" />
-				<table-filter match-schema="public" match-name="users" />
-				<table-filter match-schema="public" match-name="transaction_type" />
+	
+							<table-filter match-catalog="bank" match-name="CUSTOMER" />
 				
-	</hibernate-reverse-engineering>
+			
+		</hibernate-reverse-engineering>

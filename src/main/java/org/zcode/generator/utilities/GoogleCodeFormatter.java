@@ -10,12 +10,14 @@ import com.google.common.io.CharSink;
 import com.google.common.io.CharSource;
 import com.google.common.io.Files;
 import com.google.googlejavaformat.java.Formatter;
+import com.google.googlejavaformat.java.JavaFormatterOptions;
+import com.google.googlejavaformat.java.JavaFormatterOptions.Style;
 
 /**
  * Zathura Generator.
  *
  * @author Diego Armando Gomez Mosquera (dgomez@vortexbird.com)
- * @version 1.0
+ * @version 2.0
  */
 public class GoogleCodeFormatter {
 
@@ -25,11 +27,10 @@ public class GoogleCodeFormatter {
 	/**
 	 * The Constructor.
 	 */
-	private GoogleCodeFormatter() {
-
-	}
+	private GoogleCodeFormatter() {}
 	
 	public static void formatJavaCodeFile(String pathFiles) {
+		/*
 		log.info("GoogleCodeFormatter Java in file:"+pathFiles);
 		
 		try {
@@ -38,13 +39,17 @@ public class GoogleCodeFormatter {
 				File file = new File(pathFiles);
 			    CharSource source = Files.asCharSource(file, Charsets.UTF_8);
 			    CharSink output = Files.asCharSink(file, Charsets.UTF_8);
-				new Formatter().formatSource(source, output);
-			
+			    
+			    //JavaFormatterOptions options = JavaFormatterOptions.builder().style(Style.GOOGLE).build();
+			    
+			    new Formatter().formatSource(source, output);			
 			}
 			
 		} catch (Exception e) {
 			log.info("Error in formatJavaCodeFile:"	+ e.toString());
-		}	
+		}
+		*/
 	}
+	
 
 }

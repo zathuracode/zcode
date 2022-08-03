@@ -33,6 +33,7 @@ public class SkyJetOracleTest {
 	public static final String POM_PATH=				"/Users/dgomez/Workspaces/workspace-2022-zcode/cuenta-coomeva/pom.xml";
 	public static final String JAVA_SOURCE_CODE_PATH=	"/Users/dgomez/Workspaces/workspace-2022-zcode/cuenta-coomeva/src/main/java/";
 	
+	
 	public static final String DOMAIN_PACKAGE_NAME = "co.com.coomeva.cuentacoomevabackrest.domain";
 	public static final String PROJECT_NAME = "cuenta-coomeva";
 	
@@ -84,7 +85,7 @@ public class SkyJetOracleTest {
 			
 
 			GeneratorPathUtil.schema="PASSPORT";
-			GeneratorPathUtil.catalogAndSchema="2";
+			//GeneratorPathUtil.catalogAndSchema="2";
 			GeneratorPathUtil.catalog=null;
 			GeneratorPathUtil.tablesList= Arrays.asList(
 					"BANK_EMPLOYEE"
@@ -138,7 +139,7 @@ public class SkyJetOracleTest {
 	
 			connectionProperties.put("destinationDirectory", JAVA_SOURCE_CODE_PATH);
 			
-			connectionProperties.put("catalogAndSchema", GeneratorPathUtil.catalogAndSchema == null ? "" : GeneratorPathUtil.catalogAndSchema);
+			//connectionProperties.put("catalogAndSchema", GeneratorPathUtil.catalogAndSchema == null ? "" : GeneratorPathUtil.catalogAndSchema);
 			connectionProperties.put("schema", GeneratorPathUtil.schema == null ? "" : GeneratorPathUtil.schema);
 			connectionProperties.put("catalog", GeneratorPathUtil.catalog == null ? "" : GeneratorPathUtil.catalog);
 	

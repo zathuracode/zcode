@@ -5,7 +5,7 @@
 
 	<taskdef name="hibernatetool"	classname="org.hibernate.tool.ant.HibernateToolTask" classpathref="toolslib" />
 	
-	<hibernatetool destdir="/Users/dgomez/Workspaces/workspace-2022-zcode/demo-zcode-2022/src/main/java/">
+	<hibernatetool destdir="/Users/dgomez/Workspaces/workspace-2022-zcode/demo-bank-mysql/src/main/java/">
 		
 	<jdbcconfiguration configurationfile="../tempFiles/hibernate.cfg.xml" packagename="com.vobi.bank.domain"
 		revengfile="../tempFiles/hibernate.reveng.xml">

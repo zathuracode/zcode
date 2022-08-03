@@ -86,7 +86,7 @@ public class GeneratorPathUtil {
 	public static String schema;
 	
 	/** The catalog and schema. */
-	public static String catalogAndSchema;
+	//public static String catalogAndSchema;
 	
 	/** The tables list. */
 	public static List<String> tablesList;
@@ -117,13 +117,14 @@ public class GeneratorPathUtil {
 
 		connectionDriverClass = null;
 		connectionUrl = null;
-		catalog = null;
+		
 		connectionUsername = null;
 		connectionPassword = null;
 		companyDomainName = null;
 		
+		catalog = null;
 		schema = null;
-		catalogAndSchema = null;
+		//catalogAndSchema = null;
 		tablesList = null;
 		
 		pomXmlFile = null;
