@@ -29,7 +29,7 @@
 			<artifactId>log4j-core</artifactId>
 			<version>2.18.0</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-slf4j-impl</artifactId>
@@ -43,7 +43,17 @@
 			<artifactId>commons-beanutils</artifactId>
 			<version>1.9.4</version>
 		</dependency>
-		
+
+		<!-- https://mvnrepository.com/artifact/com.google.googlejavaformat/google-java-format -->
+		<dependency>
+			<groupId>com.google.googlejavaformat</groupId>
+			<artifactId>google-java-format</artifactId>
+			<version>1.15.0</version>
+		</dependency>
+
+
+
+
 		<!-- JDBC Database Drivers -->
 
 		<dependency>

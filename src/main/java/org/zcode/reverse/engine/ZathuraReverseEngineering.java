@@ -131,6 +131,8 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 		// Llama los templates que generan los archivos de configuracion para
 		// HibernateTools
 		doTemplate();
+		
+		
 
 		// LLama el proceso de ANT con los archivos generados
 		callAntProcess();
@@ -145,13 +147,6 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 		
 		
 		log.info("Execute init doTemplate");
-		
-		/*
-		Thread thread = Thread.currentThread();
-		ClassLoader loader = thread.getContextClassLoader();
-		thread.setContextClassLoader(EclipseGeneratorUtil.bundleClassLoader);
-		log.info("Chaged ContextClassLoader:"+EclipseGeneratorUtil.bundleClassLoader);
-		*/
 		
 		try {
 	
@@ -203,12 +198,7 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 		} catch (Exception e) {
 			log.info(e.getMessage());
 			throw e;
-		}finally{
-			/*
-			log.info("Chaged ContextClassLoader:"+loader);
-			thread.setContextClassLoader(loader);
-			*/
-		}
+		}finally{}
 	}
 
 	/**
@@ -406,12 +396,6 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 	public static void callAntProcess() throws Exception{
 		log.info("Begin Ant");
 		
-		/*
-		Thread thread = Thread.currentThread();
-		ClassLoader loader = thread.getContextClassLoader();
-		thread.setContextClassLoader(EclipseGeneratorUtil.bundleClassLoader);
-		log.info("Chaged ContextClassLoader:"+EclipseGeneratorUtil.bundleClassLoader);
-		*/
 		try {
 			File buildFile = new File(ZathuraReverseEngineeringUtil.getTempFileBuildPath());
 			Project p = new Project();
@@ -453,10 +437,7 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 			}
 		} catch (Exception e) {
 			throw e;
-		}finally{
-			//log.info("Chaged ContextClassLoader:"+loader);
-			//thread.setContextClassLoader(loader);
-		}
+		}finally{}
 		log.info("End Ant");
 	}
 

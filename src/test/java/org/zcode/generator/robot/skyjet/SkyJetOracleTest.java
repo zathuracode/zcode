@@ -21,32 +21,32 @@ import org.zcode.reverse.engine.ZathuraReverseEngineering;
 import org.zcode.reverse.utilities.ZathuraReverseEngineeringUtil;
 
 
-public class SkyJetTest {
+public class SkyJetOracleTest {
 	
-	private final static Logger log=LoggerFactory.getLogger(SkyJetTest.class);
+	private final static Logger log=LoggerFactory.getLogger(SkyJetOracleTest.class);
 		
 	
 	public static final String ZCODE_FULL_PATH=			"/Users/dgomez/Workspaces/workspace-2022-zcode/zcode/";
 	
 	public static final String WORKSPACE_PATH=			"/Users/dgomez/Workspaces/workspace-2022-zcode";
-	public static final String PROJECT_PATH=			"/Users/dgomez/Workspaces/workspace-2022-zcode/demo-zcode-2022";
-	public static final String POM_PATH=				"/Users/dgomez/Workspaces/workspace-2022-zcode/demo-zcode-2022/pom.xml";
-	public static final String JAVA_SOURCE_CODE_PATH=	"/Users/dgomez/Workspaces/workspace-2022-zcode/demo-zcode-2022/src/main/java/";
+	public static final String PROJECT_PATH=			"/Users/dgomez/Workspaces/workspace-2022-zcode/cuenta-coomeva";
+	public static final String POM_PATH=				"/Users/dgomez/Workspaces/workspace-2022-zcode/cuenta-coomeva/pom.xml";
+	public static final String JAVA_SOURCE_CODE_PATH=	"/Users/dgomez/Workspaces/workspace-2022-zcode/cuenta-coomeva/src/main/java/";
 	
-	public static final String DOMAIN_PACKAGE_NAME = "com.vobi.bank.domain";
-	public static final String PROJECT_NAME = "demo-zcode-2022";
+	public static final String DOMAIN_PACKAGE_NAME = "co.com.coomeva.cuentacoomevabackrest.domain";
+	public static final String PROJECT_NAME = "cuenta-coomeva";
 	
 	
 	//DATABASE CONNECTION
-	public static final String DRIVER_CLASS	=	"org.postgresql.Driver";
-	public static final String URL=				"jdbc:postgresql://127.0.0.1:5432/bank";
-	public static final String USER=			"postgres";
-	public static final String PASSWORD=		"postgres";
+	public static final String DRIVER_CLASS	=	"oracle.jdbc.driver.OracleDriver";
+	public static final String URL=				"jdbc:oracle:thin:@//bdwfdes.intracoomeva.com.co:1534/WFDES";
+	public static final String USER=			"passport";
+	public static final String PASSWORD=		"pasa*34mtx";
 	
 	//MAVEN DRIVER
-	public static final String GROUP_ID="org.postgresql";
-	public static final String ARTIFACT_ID="postgresql";
-	public static final String VERSION="42.4.0";
+	public static final String GROUP_ID="com.oracle.database.jdbc";
+	public static final String ARTIFACT_ID="ojdbc11";
+	public static final String VERSION="21.6.0.0.1";
 
 	public static void main(String[] args) {
 		try {		
@@ -83,18 +83,47 @@ public class SkyJetTest {
 			GeneratorPathUtil.connectionPassword=PASSWORD;
 			
 
-			GeneratorPathUtil.schema="public";
+			GeneratorPathUtil.schema="PASSPORT";
 			GeneratorPathUtil.catalogAndSchema="2";
 			GeneratorPathUtil.catalog=null;
 			GeneratorPathUtil.tablesList= Arrays.asList(
-					"document_type"
-					,"customer"
-					,"account"
-					,"registered_account"
-					,"transaction"
-					,"user_type"
-					,"users"
-					,"transaction_type");
+					"BANK_EMPLOYEE"
+					,"DEPARTMENT"
+					,"EMPLOYEE"
+					,"FRW_APLICACION"
+					,"FRW_CLIENTE"
+					,"FRW_CONTEXT"
+					,"FRW_TOKEN"
+					,"FRW_TRAZABILIDAD"
+					,"PAS_APLICACION"
+					,"PAS_APLICACION_EMPRESA"
+					,"PAS_CAMBIO_ESTADO"
+					,"PAS_EMPRESA"
+					,"PAS_LOG"
+					,"PAS_P_GRUPO_PARAMETRO"
+					,"PAS_P_PARAMETRO"
+					,"PAS_TENENCIA"
+					,"PAS_TENENCIA_T"
+					,"PAS_TIPO_LOG"
+					,"PAS_TIPO_TRANSACCION"
+					,"PAS_USUARIO"
+					,"PAS_USUARIO_P"
+					,"PAS_USUARIO_TEMP"
+					,"PRO_ACCION"
+					,"PRO_ADMIN"
+					,"PRO_APLICACION"
+					,"PRO_APLICACION_EMPRESA"
+					,"PRO_LOG"
+					,"PRO_LOG_TEMP"
+					,"PRO_PARAMETRO"
+					,"PRO_ROL"
+					,"PRO_ROL_ACCION"
+					,"PRO_ROL_USUARIO"
+					,"PRO_SECCION"
+					,"PRO_TIPO_PARAMETRO"
+					,"PRO_USUARIO"
+					,"SOCIAL_SECURITY"
+					);
 	
 
 			Properties connectionProperties = new Properties();
