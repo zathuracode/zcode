@@ -1,17 +1,7 @@
 package org.zcode.generator.utilities;
 
-import java.io.File;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.common.base.Charsets;
-import com.google.common.io.CharSink;
-import com.google.common.io.CharSource;
-import com.google.common.io.Files;
-import com.google.googlejavaformat.java.Formatter;
-import com.google.googlejavaformat.java.JavaFormatterOptions;
-import com.google.googlejavaformat.java.JavaFormatterOptions.Style;
 
 /**
  * Zathura Generator.

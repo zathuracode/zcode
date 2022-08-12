@@ -2,6 +2,7 @@ package org.zcode.generator.robot.skyjet;
 
 import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 import javax.xml.stream.XMLStreamException;
@@ -36,7 +37,7 @@ public class SkyJetPostgresTest {
 	
 	
 	public static final String DOMAIN_PACKAGE_NAME = "com.vobi.bank.domain";
-	public static final String PROJECT_NAME = "demo-zcode-2022";
+	public static final String PROJECT_NAME = "demo-bank-postgres";
 	
 	
 	//DATABASE CONNECTION
@@ -44,11 +45,25 @@ public class SkyJetPostgresTest {
 	public static final String URL=				"jdbc:postgresql://127.0.0.1:5432/bank";
 	public static final String USER=			"postgres";
 	public static final String PASSWORD=		"postgres";
+	public static final String SCHEMA=			"public";
+	public static final String CATALOG=			null;
+	public static final List<String> TABLE_LIST=Arrays.asList(
+			"document_type"
+			,"customer"
+			,"account"
+			,"registered_account"
+			,"transaction"
+			,"user_type"
+			,"users"
+			,"transaction_type");
 	
 	//MAVEN DRIVER
 	public static final String GROUP_ID="org.postgresql";
 	public static final String ARTIFACT_ID="postgresql";
 	public static final String VERSION="42.4.0";
+	
+	
+	
 
 	public static void main(String[] args) {
 		try {		
@@ -74,6 +89,7 @@ public class SkyJetPostgresTest {
 			GeneratorPathUtil.workspaceFolderPath=WORKSPACE_PATH;
 			
 			
+			
 			//Maven POM JDBC Connector
 			GeneratorPathUtil.connectionGroupId=GROUP_ID;
 			GeneratorPathUtil.connectionArtifactId=ARTIFACT_ID;
@@ -86,31 +102,22 @@ public class SkyJetPostgresTest {
 			GeneratorPathUtil.connectionPassword=PASSWORD;
 			
 
-			GeneratorPathUtil.schema="public";
-			
-			GeneratorPathUtil.catalog=null;
-			GeneratorPathUtil.tablesList= Arrays.asList(
-					"document_type"
-					,"customer"
-					,"account"
-					,"registered_account"
-					,"transaction"
-					,"user_type"
-					,"users"
-					,"transaction_type");
+			GeneratorPathUtil.schema=SCHEMA;
+			GeneratorPathUtil.catalog=CATALOG;
+			GeneratorPathUtil.tablesList= TABLE_LIST;
 	
 
 			Properties connectionProperties = new Properties();
 			
 			
-			connectionProperties.put("connectionDriverClass", GeneratorPathUtil.connectionDriverClass);
-			connectionProperties.put("connectionUrl", GeneratorPathUtil.connectionUrl);
+			connectionProperties.put("connectionDriverClass", 	GeneratorPathUtil.connectionDriverClass);
+			connectionProperties.put("connectionUrl", 			GeneratorPathUtil.connectionUrl);
 	
-			connectionProperties.put("connectionUsername", GeneratorPathUtil.connectionUsername);
-			connectionProperties.put("connectionPassword", GeneratorPathUtil.connectionPassword);
-			connectionProperties.put("companyDomainName", GeneratorPathUtil.companyDomainName);
-			connectionProperties.put("javaEntityPackage", GeneratorPathUtil.javaEntityPackage);
-	
+			connectionProperties.put("connectionUsername", 		GeneratorPathUtil.connectionUsername);
+			connectionProperties.put("connectionPassword",		GeneratorPathUtil.connectionPassword);
+			connectionProperties.put("companyDomainName", 		GeneratorPathUtil.companyDomainName);
+			connectionProperties.put("javaEntityPackage", 		GeneratorPathUtil.javaEntityPackage);
+			
 			connectionProperties.put("destinationDirectory", JAVA_SOURCE_CODE_PATH);
 			
 			
@@ -127,13 +134,10 @@ public class SkyJetPostgresTest {
 			IZathuraReverseEngineering mappingTool = new ZathuraReverseEngineering();
 			mappingTool.makePojosJPA_V1_0(connectionProperties, GeneratorPathUtil.tablesList);
 			
-					
 			//carga
 			IMetaDataReader entityLoader = null;
 			entityLoader = MetaDataReaderFactory.createMetaDataReader(MetaDataReaderFactory.JPAEntityLoaderEngine);
 			metaDataModel = entityLoader.loadMetaDataModel(JAVA_SOURCE_CODE_PATH, DOMAIN_PACKAGE_NAME);
-			
-			
 
 			// Variables para el properties de generacion de codigo
 			Properties properties = new Properties();

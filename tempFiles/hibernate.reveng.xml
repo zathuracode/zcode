@@ -45,7 +45,14 @@
 		
 	</type-mapping>
 	
-							<table-filter match-catalog="bank" match-name="CUSTOMER" />
-				
 			
+							<table-filter match-schema="public" match-name="document_type" />
+					<table-filter match-schema="public" match-name="customer" />
+					<table-filter match-schema="public" match-name="account" />
+					<table-filter match-schema="public" match-name="registered_account" />
+					<table-filter match-schema="public" match-name="transaction" />
+					<table-filter match-schema="public" match-name="user_type" />
+					<table-filter match-schema="public" match-name="users" />
+					<table-filter match-schema="public" match-name="transaction_type" />
+				
 		</hibernate-reverse-engineering>

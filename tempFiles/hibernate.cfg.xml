@@ -4,9 +4,9 @@
 		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/bank</property>
-        <property name="hibernate.connection.password">mariadb</property>
-        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+		<property name="hibernate.connection.url">jdbc:postgresql://127.0.0.1:5432/bank</property>
+        <property name="hibernate.connection.password">postgres</property>
+        <property name="hibernate.connection.username">postgres</property>
     </session-factory>
 </hibernate-configuration>
