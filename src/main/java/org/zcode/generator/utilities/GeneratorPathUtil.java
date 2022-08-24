@@ -34,7 +34,7 @@ public class GeneratorPathUtil {
 	public static String javaEntityPackage;
 
 	/** The workspace folder path. */
-	public static String workspaceFolderPath;
+	//public static String workspaceFolderPath;
 	
 	/** The java class folder path. */
 	public static String javaClassFolderPath;
@@ -106,7 +106,7 @@ public class GeneratorPathUtil {
 
 		javaEntityPackage = null;
 
-		workspaceFolderPath = null;
+		//workspaceFolderPath = null;
 		javaClassFolderPath = null;
 		javaSourceFolderPath = null;
 		

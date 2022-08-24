@@ -30,6 +30,7 @@ import net.sourceforge.squirrel_sql.fw.sql.SQLDriverManager;
 */
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.zcode.generator.utilities.GeneratorPathUtil;
 
 
 /**
@@ -693,5 +694,21 @@ public class ZathuraReverseEngineeringUtil {
 		return listTables;
 	}
 
+	public static HashMap<String, DatabaseTypeModel> getTheZathuraDataBaseTypes() {
+		return theZathuraDataBaseTypes;
+	}
+	
+	public static void loadDataBaseMaven(String driverClass)throws Exception {
+		loadZathuraDatabaseTypes();
+		for (String clave:theZathuraDataBaseTypes.keySet()) {
+			DatabaseTypeModel databaseTypeModel = theZathuraDataBaseTypes.get(clave);
+		    if(databaseTypeModel.getDriverClassName().trim().equals(driverClass)){
+		    	GeneratorPathUtil.connectionGroupId=databaseTypeModel.getGroupId();
+		    	GeneratorPathUtil.connectionArtifactId=databaseTypeModel.getArtifactId();
+				GeneratorPathUtil.connectionVersion=databaseTypeModel.getVersion();
+		    }
+		}
+		
+	}
 
 }

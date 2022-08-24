@@ -22,40 +22,39 @@ import org.zcode.reverse.engine.ZathuraReverseEngineering;
 import org.zcode.reverse.utilities.ZathuraReverseEngineeringUtil;
 
 
-public class SkyJetPostgresTest {
+public class SkyJetFacturacionPostgresTest {
 	
-	private final static Logger log=LoggerFactory.getLogger(SkyJetPostgresTest.class);
+	private final static Logger log=LoggerFactory.getLogger(SkyJetFacturacionPostgresTest.class);
 		
 	
 	public static final String ZCODE_FULL_PATH=			"/Users/dgomez/Workspaces/workspace-2022-zcode/zcode/";
 	
 	public static final String WORKSPACE_PATH=			"/Users/dgomez/Workspaces/workspace-2022-zcode";
-	public static final String PROJECT_PATH=			"/Users/dgomez/Workspaces/workspace-2022-zcode/demo-bank-postgres";
-	public static final String POM_PATH=				"/Users/dgomez/Workspaces/workspace-2022-zcode/demo-bank-postgres/pom.xml";
-	public static final String JAVA_SOURCE_CODE_PATH=	"/Users/dgomez/Workspaces/workspace-2022-zcode/demo-bank-postgres/src/main/java/";
+	public static final String PROJECT_PATH=			"/Users/dgomez/Workspaces/workspace-2022-zcode/facturacion";
+	public static final String POM_PATH=				"/Users/dgomez/Workspaces/workspace-2022-zcode/facturacion/pom.xml";
+	public static final String JAVA_SOURCE_CODE_PATH=	"/Users/dgomez/Workspaces/workspace-2022-zcode/facturacion/src/main/java/";
 	
 	
 	
-	public static final String DOMAIN_PACKAGE_NAME = "com.vobi.bank.domain";
-	public static final String PROJECT_NAME = "demo-bank-postgres";
+	public static final String DOMAIN_PACKAGE_NAME = "com.vortexbird.facturacion.domain";
+	public static final String PROJECT_NAME = "facturacion";
 	
 	
+	//LISTAR TABLAS DE POSTGRES SELECT TABLENAME FROM pg_catalog.pg_tables WHERE schemaname='public';
 	//DATABASE CONNECTION
 	public static final String DRIVER_CLASS	=	"org.postgresql.Driver";
-	public static final String URL=				"jdbc:postgresql://127.0.0.1:5432/bank";
+	public static final String URL=				"jdbc:postgresql://127.0.0.1:5432/facturacion";
 	public static final String USER=			"postgres";
 	public static final String PASSWORD=		"postgres";
 	public static final String SCHEMA=			"public";
 	public static final String CATALOG=			null;
 	public static final List<String> TABLE_LIST=Arrays.asList(
-			"document_type"
-			,"customer"
-			,"account"
-			,"registered_account"
-			,"transaction"
-			,"user_type"
-			,"users"
-			,"transaction_type");
+			"parameters"
+			,"user"
+			,"billing_status"
+			,"billing"
+			,"comercial_line"
+			,"company");
 	
 	//MAVEN DRIVER
 	public static final String GROUP_ID="org.postgresql";
@@ -85,8 +84,7 @@ public class SkyJetPostgresTest {
 			GeneratorPathUtil.companyDomainName=	DOMAIN_PACKAGE_NAME;
 			
 			
-			//Del Proyecto
-			GeneratorPathUtil.workspaceFolderPath=WORKSPACE_PATH;
+			
 			
 			
 			

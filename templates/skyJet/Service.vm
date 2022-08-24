@@ -11,6 +11,7 @@ import $package.${metaData.getRealClassName()};
 /**
 * @author Zathura Code Generator Version 22.08 http://zathuracode.org/
 * www.zathuracode.org
+* @generationDate ${localDateTime}
 * 
 */
 public interface ${metaData.getRealClassName()}Service extends GenericService<${metaData.getRealClassName()},${metaData.primaryKey.getRealClassName()}>{

@@ -13,6 +13,8 @@ import ${virginPackage}.dto.${metaData.getRealClassName()}DTO;
 /**
 * @author Zathura Code Generator Version 22.08 http://zathuracode.org/
 * www.zathuracode.org
+* @generationDate ${localDateTime}
+*
 * 
 * Mapper Build with MapStruct https://mapstruct.org/
 * MapStruct is a code generator that greatly simplifies the

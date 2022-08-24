@@ -17,6 +17,8 @@ import lombok.NoArgsConstructor;
 /**
 * @author Zathura Code Generator Version 22.08 http://zathuracode.org/
 * www.zathuracode.org
+* @generationDate ${localDateTime}
+*
 * 
 */
 @Entity

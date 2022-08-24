@@ -68,8 +68,7 @@ public class SkyJetOracleTest {
 			GeneratorPathUtil.projectName=PROJECT_NAME;
 			
 			
-			//Del Proyecto
-			GeneratorPathUtil.workspaceFolderPath=WORKSPACE_PATH;
+			
 			
 			
 			//Maven POM JDBC Connector

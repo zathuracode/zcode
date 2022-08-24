@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
 * @author Zathura Code Generator Version 22.08 http://zathuracode.org/
 * www.zathuracode.org
+* @generationDate ${localDateTime}
 * 
 */
 @SpringBootApplication

@@ -1,11 +1,16 @@
-package org.zcode.generator.robot.skyjet;
+package org.zcode.generator;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 import javax.xml.stream.XMLStreamException;
 
+import org.apache.commons.configuration2.Configuration;
+import org.apache.commons.configuration2.builder.fluent.Configurations;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zcode.generator.exceptions.GeneratorNotFoundException;
@@ -20,63 +25,56 @@ import org.zcode.reverse.engine.IZathuraReverseEngineering;
 import org.zcode.reverse.engine.ZathuraReverseEngineering;
 import org.zcode.reverse.utilities.ZathuraReverseEngineeringUtil;
 
+public class ZcodeMain {
 
-public class SkyJetMySQLTest {
+	private final static Logger log = LoggerFactory.getLogger(ZcodeMain.class);
+
+	public static  String PROJECT_PATH = null;
 	
-	private final static Logger log=LoggerFactory.getLogger(SkyJetMySQLTest.class);
+
+	public static String DOMAIN_PACKAGE_NAME = null;
+	
+	public static String GROUP_ID = null;
+	public static String PROJECT_NAME = null;
+
+	// DATABASE CONNECTION
+	public static String DRIVER_CLASS = null;
+	public static String URL = null;
+	public static String USER = null;
+	public static String PASSWORD = null;
+	public static String SCHEMA = null;
+	public static String CATALOG = null;
+	public static List<String> TABLE_LIST = null;
+	
+	private static Configuration configuration =null;
+
+
+	public static void main(String[] args) {			
+		loadProperties();
 		
-	
-	public static final String ZCODE_FULL_PATH=			"/Users/dgomez/Workspaces/workspace-2022-zcode/zcode/";
-	
-	public static final String WORKSPACE_PATH=			"/Users/dgomez/Workspaces/workspace-2022-zcode";
-	public static final String PROJECT_PATH=			"/Users/dgomez/Workspaces/workspace-2022-zcode/demo-bank-mysql";
-	public static final String POM_PATH=				"/Users/dgomez/Workspaces/workspace-2022-zcode/demo-bank-mysql/pom.xml";
-	public static final String JAVA_SOURCE_CODE_PATH=	"/Users/dgomez/Workspaces/workspace-2022-zcode/demo-bank-mysql/src/main/java/";
-	
-	
-	
-	public static final String DOMAIN_PACKAGE_NAME = "com.vobi.bank.domain";
-	public static final String PROJECT_NAME = "demo-bank-mysql";
-	
-	
-	//DATABASE CONNECTION
-	public static final String DRIVER_CLASS	=	"com.mysql.jdbc.Driver";
-	public static final String URL=				"jdbc:mysql://localhost:3306/bank";
-	public static final String USER=			"root";
-	public static final String PASSWORD=		"mariadb";
-	
-	//MAVEN DRIVER
-	public static final String GROUP_ID="mysql";
-	public static final String ARTIFACT_ID="mysql-connector-java";
-	public static final String VERSION="8.0.30";
-
-	public static void main(String[] args) {
 		try {		
+			
 			
 			MetaDataModel metaDataModel = null;
 			 
-			ZathuraReverseEngineeringUtil.setFullPath(ZCODE_FULL_PATH);
-			GeneratorUtil.setFullPath(ZCODE_FULL_PATH);
+			ZathuraReverseEngineeringUtil.setFullPath(GeneratorUtil.getCurrentWorkingDirectory());
+			
+			//Load Maven Properties Database Coneccion
+			ZathuraReverseEngineeringUtil.loadDataBaseMaven(DRIVER_CLASS);
+			
+			
+			
+			String JAVA_SOURCE_CODE_PATH=	PROJECT_PATH+File.separator+"src/main/java/";	
 			
 			GeneratorPathUtil.fullPathProject=		PROJECT_PATH;
 			
 			GeneratorPathUtil.javaClassFolderPath=	JAVA_SOURCE_CODE_PATH;
-			GeneratorPathUtil.javaSourceFolderPath=	JAVA_SOURCE_CODE_PATH;
-			
+			GeneratorPathUtil.javaSourceFolderPath=	JAVA_SOURCE_CODE_PATH;			
 			GeneratorPathUtil.javaEntityPackage=	DOMAIN_PACKAGE_NAME;
 			
 			//MAVEN
 			GeneratorPathUtil.projectName=			PROJECT_NAME;
 			GeneratorPathUtil.companyDomainName=	DOMAIN_PACKAGE_NAME;
-			
-			
-			
-			
-			
-			//Maven POM JDBC Connector
-			GeneratorPathUtil.connectionGroupId=GROUP_ID;
-			GeneratorPathUtil.connectionArtifactId=ARTIFACT_ID;
-			GeneratorPathUtil.connectionVersion=VERSION;
 			
 			//Para generacion de los Entity	
 			GeneratorPathUtil.connectionDriverClass=DRIVER_CLASS;
@@ -85,25 +83,22 @@ public class SkyJetMySQLTest {
 			GeneratorPathUtil.connectionPassword=PASSWORD;
 			
 
-			GeneratorPathUtil.schema="public";
-			
-			GeneratorPathUtil.catalog="bank";
-			GeneratorPathUtil.tablesList= Arrays.asList(
-					"CUSTOMER"
-					);
+			GeneratorPathUtil.schema=SCHEMA;
+			GeneratorPathUtil.catalog=CATALOG;
+			GeneratorPathUtil.tablesList= TABLE_LIST;
 	
 
 			Properties connectionProperties = new Properties();
 			
 			
-			connectionProperties.put("connectionDriverClass", GeneratorPathUtil.connectionDriverClass);
-			connectionProperties.put("connectionUrl", GeneratorPathUtil.connectionUrl);
+			connectionProperties.put("connectionDriverClass", 	GeneratorPathUtil.connectionDriverClass);
+			connectionProperties.put("connectionUrl", 			GeneratorPathUtil.connectionUrl);
 	
-			connectionProperties.put("connectionUsername", GeneratorPathUtil.connectionUsername);
-			connectionProperties.put("connectionPassword", GeneratorPathUtil.connectionPassword);
-			connectionProperties.put("companyDomainName", GeneratorPathUtil.companyDomainName);
-			connectionProperties.put("javaEntityPackage", GeneratorPathUtil.javaEntityPackage);
-	
+			connectionProperties.put("connectionUsername", 		GeneratorPathUtil.connectionUsername);
+			connectionProperties.put("connectionPassword",		GeneratorPathUtil.connectionPassword);
+			connectionProperties.put("companyDomainName", 		GeneratorPathUtil.companyDomainName);
+			connectionProperties.put("javaEntityPackage", 		GeneratorPathUtil.javaEntityPackage);
+			
 			connectionProperties.put("destinationDirectory", JAVA_SOURCE_CODE_PATH);
 			
 			
@@ -120,13 +115,10 @@ public class SkyJetMySQLTest {
 			IZathuraReverseEngineering mappingTool = new ZathuraReverseEngineering();
 			mappingTool.makePojosJPA_V1_0(connectionProperties, GeneratorPathUtil.tablesList);
 			
-					
 			//carga
 			IMetaDataReader entityLoader = null;
 			entityLoader = MetaDataReaderFactory.createMetaDataReader(MetaDataReaderFactory.JPAEntityLoaderEngine);
 			metaDataModel = entityLoader.loadMetaDataModel(JAVA_SOURCE_CODE_PATH, DOMAIN_PACKAGE_NAME);
-			
-			
 
 			// Variables para el properties de generacion de codigo
 			Properties properties = new Properties();
@@ -173,6 +165,45 @@ public class SkyJetMySQLTest {
 		}finally {
 			System.exit(1);
 		}
+		
+		
+	
+	}
+	
+	private static void loadProperties() {
+		configuration = loadConfig();	
+		
+		PROJECT_PATH = 			configuration.getString("PROJECT_PATH");
+		
+		//MAVEN
+		GROUP_ID = 				configuration.getString("GROUP_ID");
+		PROJECT_NAME = 			configuration.getString("PROJECT_NAME");
+		
+		//DOMAIN
+		DOMAIN_PACKAGE_NAME = 	configuration.getString("DOMAIN_PACKAGE_NAME");
+
+		//DATABASE CONNECTION
+		DRIVER_CLASS = 			configuration.getString("DRIVER_CLASS");
+		URL = 					configuration.getString("URL");
+		USER = 					configuration.getString("USER");
+		PASSWORD = 				configuration.getString("PASSWORD");
+		SCHEMA = 				configuration.getString("SCHEMA");
+		CATALOG = 				configuration.getString("CATALOG");
+		
+		TABLE_LIST =			Arrays.asList(configuration.getString("TABLE_LIST").split(","));
+		
+		System.out.println(TABLE_LIST.size());
+	}
+
+	private static Configuration loadConfig() {
+		Configurations configurations = new Configurations();
+		try {
+			Configuration configuration = configurations.properties(new File("zcode-gen.properties"));
+			return configuration;
+		} catch (ConfigurationException cex) {
+			log.error(cex.getMessage());
+		}
+		return null;
 	}
 
 }

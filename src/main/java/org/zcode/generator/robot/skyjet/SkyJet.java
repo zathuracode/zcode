@@ -19,6 +19,7 @@ package org.zcode.generator.robot.skyjet;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.StringWriter;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -124,6 +125,9 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			} catch (Exception e) {
 				log.error(e.toString());
 			}
+			
+			
+			velocityContext.put("localDateTime", LocalDateTime.now());
 
 			velocityContext.put("packageOriginal", packageOriginal);
 			velocityContext.put("virginPackage", virginPackage);

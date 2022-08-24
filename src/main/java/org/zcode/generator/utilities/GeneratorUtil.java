@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +40,14 @@ public class GeneratorUtil {
 
 	/** The xml config. */
 	private static String xmlConfig = "config" + slash;
+	
+	
+	public static String getCurrentWorkingDirectory() {
+		String currentWorkingDirectory=Paths.get("").toAbsolutePath().toString()+File.separatorChar;
+		log.info("currentWorkingDirectory:"+currentWorkingDirectory);
+		GeneratorUtil.setFullPath(currentWorkingDirectory);
+		return currentWorkingDirectory;
+	}
 
 	/**
 	 * Crea la estructura de caroetas del proyecto maven si no existe
@@ -374,5 +383,7 @@ public class GeneratorUtil {
 			throw new Exception("A package name cannot start or end with a dot");
 		}
 	}
+	
+	
 
 }

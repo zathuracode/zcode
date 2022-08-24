@@ -30,6 +30,8 @@ import ${virginPackage}.exception.VortexbirdException;
  * for all endpoints income data that use the @Valid annotation
  * @author Zathura Code Generator Version 22.08 http://zathuracode.org/
  * @author Ehab Qadah
+* @generationDate ${localDateTime}
+ *
  */
 @ControllerAdvice
 public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {

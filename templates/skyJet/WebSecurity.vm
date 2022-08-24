@@ -25,6 +25,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 /**
 * @author Zathura Code Generator Version 22.08 http://zathuracode.org/
 * www.zathuracode.org
+* @generationDate ${localDateTime}
 * 
 */
 
