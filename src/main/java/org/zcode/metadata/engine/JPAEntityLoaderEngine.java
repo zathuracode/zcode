@@ -28,6 +28,7 @@ import javax.persistence.Transient;
 import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.zcode.generator.utilities.GeneratorUtil;
 import org.zcode.metadata.model.GeneratedValueMember;
 import org.zcode.metadata.model.ManyToManyMember;
 import org.zcode.metadata.model.ManyToOneMember;
@@ -60,10 +61,10 @@ public class JPAEntityLoaderEngine implements IMetaDataReader {
 		log.info("Loading JPA Entity Data Model");
 		MetaDataModel metaDataModel = new MetaDataModel();
 		metaDataModel.setTheMetaData(new ArrayList<MetaData>());
+		List<Class> classes=null;
 
 		try {
-			log.info("Reading from:" + JPAEntityLoaderEngine.class.getClassLoader().getResource("").getFile());
-			List<Class> classes = MetaDataUtil.findEntityInFolder(path, pckgName);
+			classes = MetaDataUtil.findEntityInFolder(path, pckgName);
 			for (Class clazz : classes) {
 				log.info("--------------------------------------------------------------------------------------------------");
 				log.info("Loading MetaData Entity class:" + clazz.getCanonicalName());

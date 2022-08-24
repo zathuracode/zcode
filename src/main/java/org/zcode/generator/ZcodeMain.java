@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 import javax.xml.stream.XMLStreamException;
 
@@ -21,6 +22,7 @@ import org.zcode.generator.utilities.GeneratorUtil;
 import org.zcode.metadata.model.MetaDataModel;
 import org.zcode.metadata.reader.IMetaDataReader;
 import org.zcode.metadata.reader.MetaDataReaderFactory;
+import org.zcode.metadata.utilities.MetaDataUtil;
 import org.zcode.reverse.engine.IZathuraReverseEngineering;
 import org.zcode.reverse.engine.ZathuraReverseEngineering;
 import org.zcode.reverse.utilities.ZathuraReverseEngineeringUtil;
@@ -54,7 +56,6 @@ public class ZcodeMain {
 		
 		try {		
 			
-			
 			MetaDataModel metaDataModel = null;
 			 
 			ZathuraReverseEngineeringUtil.setFullPath(GeneratorUtil.getCurrentWorkingDirectory());
@@ -64,7 +65,12 @@ public class ZcodeMain {
 			
 			
 			
-			String JAVA_SOURCE_CODE_PATH=	PROJECT_PATH+File.separator+"src/main/java/";	
+			String JAVA_SOURCE_CODE_PATH=	PROJECT_PATH+File.separator+"src/main/java/";
+			
+			
+			GeneratorUtil.createFolder(PROJECT_PATH);
+			GeneratorUtil.createFolder(JAVA_SOURCE_CODE_PATH);
+			
 			
 			GeneratorPathUtil.fullPathProject=		PROJECT_PATH;
 			
@@ -74,6 +80,9 @@ public class ZcodeMain {
 			
 			//MAVEN
 			GeneratorPathUtil.projectName=			PROJECT_NAME;
+			GeneratorPathUtil.groupIdMavenPoject=	GROUP_ID;
+			
+			//Domain 
 			GeneratorPathUtil.companyDomainName=	DOMAIN_PACKAGE_NAME;
 			
 			//Para generacion de los Entity	
@@ -119,6 +128,9 @@ public class ZcodeMain {
 			IMetaDataReader entityLoader = null;
 			entityLoader = MetaDataReaderFactory.createMetaDataReader(MetaDataReaderFactory.JPAEntityLoaderEngine);
 			metaDataModel = entityLoader.loadMetaDataModel(JAVA_SOURCE_CODE_PATH, DOMAIN_PACKAGE_NAME);
+			
+			//Delete .class
+			MetaDataUtil.deleteClass(JAVA_SOURCE_CODE_PATH, DOMAIN_PACKAGE_NAME);
 
 			// Variables para el properties de generacion de codigo
 			Properties properties = new Properties();
@@ -190,9 +202,9 @@ public class ZcodeMain {
 		SCHEMA = 				configuration.getString("SCHEMA");
 		CATALOG = 				configuration.getString("CATALOG");
 		
-		TABLE_LIST =			Arrays.asList(configuration.getString("TABLE_LIST").split(","));
+		TABLE_LIST =			Arrays.asList(configuration.getString("TABLE_LIST").split(",")).stream().map(String::trim).collect(Collectors.toList());;
 		
-		System.out.println(TABLE_LIST.size());
+		
 	}
 
 	private static Configuration loadConfig() {
@@ -205,5 +217,7 @@ public class ZcodeMain {
 		}
 		return null;
 	}
+	
+
 
 }

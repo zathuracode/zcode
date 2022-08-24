@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.zcode.generator.utilities.GeneratorUtil;
 import org.zcode.metadata.model.Member;
 
 
@@ -97,11 +98,9 @@ public class MetaDataUtil {
 			for (int i = 0; i < files.length; i++) {
 				if (files[i].endsWith(".class")) {
 					Class clazz = loadClassInFolder(pathName, pckgName + "." + files[i].substring(0, files[i].length() - 6));
-					// Class
-					// clazz=Class.forName(pckgName+"."+files[i].substring(0,files[i].length()-6));
 
 					if (clazz.getAnnotation(Entity.class) != null) {
-						ret.add(clazz);
+						ret.add(clazz);						
 					}
 				}
 			}
@@ -194,6 +193,25 @@ public class MetaDataUtil {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	
+	public static void deleteClass(final String pathName, final String pckgName) throws ClassNotFoundException, MalformedURLException {
+		String realPath = pathName + pckgName.replace('.', File.separatorChar);
+		final File directory = new File(realPath);
+		log.info("Folder path:" + directory);
+		if (directory.exists()) {
+			final String[] files = directory.list();
+			for (int i = 0; i < files.length; i++) {
+				if (files[i].endsWith(".class")) {
+					Class clazz = loadClassInFolder(pathName, pckgName + "." + files[i].substring(0, files[i].length() - 6));
+					if (clazz.getAnnotation(Entity.class) != null) {				
+						log.info(directory+File.separator+files[i]);
+						GeneratorUtil.deleteFile(directory+File.separator+files[i]);
+					}
+				}
+			}
+		}
 	}
 
 }

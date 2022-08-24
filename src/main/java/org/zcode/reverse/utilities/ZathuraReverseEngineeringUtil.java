@@ -294,9 +294,13 @@ public class ZathuraReverseEngineeringUtil {
 	 *            the list
 	 * @return true, if validations list
 	 */
-	public static boolean validationsList(List list) {
+	public static boolean validationsList(List<String> list) {
 		if (list != null) {
 			if (!list.isEmpty() && list.size() > 0) {
+				//Quita espacios en blanco
+				for (String table : list) {
+					
+				}
 				return true;
 			} else {
 				return false;
