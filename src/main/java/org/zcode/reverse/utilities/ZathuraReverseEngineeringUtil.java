@@ -367,22 +367,22 @@ public class ZathuraReverseEngineeringUtil {
 					databaseTypeModel = new DatabaseTypeModel();
 				} else if (localName.equals("name") == true) {
 					boolName = true;
-					log.info(localName);
+					log.debug(localName);
 				} else if (localName.equals("url") == true) {
 					boolUrl = true;
-					log.info(localName);
+					log.debug(localName);
 				} else if (localName.equals("driverClassName") == true) {
 					boolDriverClassName = true;
-					log.info(localName);
+					log.debug(localName);
 				}else if (localName.equals("groupId") == true) {
 					boolGroupId = true;
-					log.info(localName);
+					log.debug(localName);
 				}else if (localName.equals("artifactId") == true) {
 					boolArtifactId = true;
-					log.info(localName);
+					log.debug(localName);
 				}else if (localName.equals("version") == true) {
 					boolVersion = true;
-					log.info(localName);
+					log.debug(localName);
 				}
 				
 
@@ -393,27 +393,27 @@ public class ZathuraReverseEngineeringUtil {
 					databaseTypeModel.setName(cadena);
 					theZathuraDataBaseNames.add(cadena);
 					boolName = false;
-					log.info(cadena);
+					log.debug(cadena);
 				} else if (boolUrl == true) {
 					databaseTypeModel.setUrl(cadena);
 					boolUrl = false;
-					log.info(cadena);
+					log.debug(cadena);
 				} else if (boolDriverClassName == true) {
 					databaseTypeModel.setDriverClassName(cadena);
 					boolDriverClassName = false;
-					log.info(cadena);
+					log.debug(cadena);
 				}else if (boolGroupId == true) {
 					databaseTypeModel.setGroupId(cadena);
 					boolGroupId = false;
-					log.info(cadena);
+					log.debug(cadena);
 				}else if (boolArtifactId == true) {
 					databaseTypeModel.setArtifactId(cadena);
 					boolArtifactId = false;
-					log.info(cadena);
+					log.debug(cadena);
 				}else if (boolVersion == true) {
 					databaseTypeModel.setVersion(cadena);
 					boolVersion = false;
-					log.info(cadena);
+					log.debug(cadena);
 				}
 			} else if (e.isEndElement() == true) {
 				EndElement endElement = (EndElement) e;

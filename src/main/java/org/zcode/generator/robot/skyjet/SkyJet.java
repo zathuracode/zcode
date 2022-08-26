@@ -602,7 +602,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			bwUtilities.write(swUtilities.toString());
 			bwUtilities.close();
 			fwUtilities.close();
-			log.info("Begin Utilities");
+			log.info("End Utilities");
 
 		} catch (Exception e) {
 			log.error(e.toString());
@@ -740,7 +740,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			fwIMapperDTO.close();
 
 			GoogleCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "Mapper.java");
-
+			log.info("End Interface DTO Mapper");
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;
@@ -766,7 +766,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			bwUtilities.write(swUtilities.toString());
 			bwUtilities.close();
 			fwUtilities.close();
-			log.info("Begin GeneralExceptionHandler");
+			log.info("End GeneralExceptionHandler");
 
 		} catch (Exception e) {
 			log.error(e.toString());
@@ -793,10 +793,9 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			bwBackEndBean.write(swBackEndBean.toString());
 			bwBackEndBean.close();
 			fwBackEndBean.close();
-			log.info("Begin RestControllers 2");
+			log.info("End RestControllers");
 			GoogleCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "RestController.java");
-			// JenderUtilities.getInstance().dates = null;
-			// JenderUtilities.getInstance().datesId = null;
+			
 
 		} catch (Exception e) {
 			log.error(e.toString());
@@ -842,6 +841,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			}
 
 			GoogleCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + ".java");
+			log.info("End Entity Generator");
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;

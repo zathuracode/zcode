@@ -5,7 +5,7 @@
 		<Console name="Console-Appender" target="SYSTEM_OUT">
 			<PatternLayout>
 				<pattern>
-					%d{ISO8601} %-5p [%c] - %m%n
+					 [%c] - %m%n
 				</pattern>
 			</PatternLayout>
 		</Console>		

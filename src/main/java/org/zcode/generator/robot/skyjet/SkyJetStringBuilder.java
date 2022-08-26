@@ -1825,7 +1825,7 @@ public class SkyJetStringBuilder implements ISkyJetStringBuilder {
 
 		for (Member member : metaData.getSimpleProperties()) {
 
-			log.info(member.getName());
+			log.debug(member.getName());
 
 			if (member.isPrimiaryKeyAComposeKey() == false) {
 				String realType = "";
