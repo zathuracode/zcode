@@ -32,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 @Scope("singleton")
 @Service
 @Slf4j
-public class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.getRealClassName()}Service{
+class ${metaData.getRealClassName()}ServiceImpl implements ${metaData.getRealClassName()}Service{
 
 	@Autowired
 	private ${metaData.getRealClassName()}Repository ${metaData.getRealClassNameAsVariable()}Repository;
