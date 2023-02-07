@@ -1,10 +1,10 @@
 package ${virginPackage}.${modelName};
 
 import java.util.Date;
-import javax.persistence.Embeddable;
-import javax.persistence.Id;
-import javax.validation.constraints.*;
-import javax.persistence.Column;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+
 
 /**
 * @author Zathura Code Generator Version 22.08 http://zathuracode.org/

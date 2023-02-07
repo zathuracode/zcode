@@ -27,7 +27,7 @@ public class SkyJetBankPostgresTest {
 	
 	private final static Logger log=LoggerFactory.getLogger(SkyJetBankPostgresTest.class);
 	
-	public static final String PROJECT_PATH=			"/Users/dgomez/Workspaces/workspace-2022-zcode/demo-bank-postgres";
+	public static final String PROJECT_PATH=			"/Users/dgomez/Workspaces/workspace-2023-zcode/demo-bank-postgres";
 	
 	
 	public static final String GROUP_ID = "com.vobi.bank";
@@ -77,6 +77,7 @@ public class SkyJetBankPostgresTest {
 			
 			//MAVEN
 			GeneratorPathUtil.projectName=			PROJECT_NAME;
+			GeneratorPathUtil.groupIdMavenPoject=	GROUP_ID;
 			GeneratorPathUtil.companyDomainName=	DOMAIN_PACKAGE_NAME;
 			
 			//Para generacion de los Entity	

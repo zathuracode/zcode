@@ -1,6 +1,6 @@
 package ${virginPackage}.entity.controller;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.Optional;
 
 import ${virginPackage}.mapper.${metaData.getRealClassName()}Mapper;

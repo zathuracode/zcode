@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<project name="zathuraReverse" default="compilePojos" basedir=".">
+	
+	<path id="toolslib">
+		<!--Librerias necesarias para Hibernate-tools -->
+
+		<path location="../lib/hibernate-jpa-2.1-api-1.0.0.Final.jar" />
+	
+		<!--Librerias necesarias para Hibernate-tools -->
+		
+
+	</path>
+	
+	<target name="compilePojos" description="compiles generated pojos">
+		
+		
+		<!-- Create the distribution directory -->
+		<javac classpathref="toolslib" 
+			   srcdir="/Users/dgomez/Workspaces/workspace-2023-zcode/demo-bank-postgres/src/main/java/com/vobi/bank/domain" 
+			   destdir="/Users/dgomez/Workspaces/workspace-2023-zcode/demo-bank-postgres/src/main/java/" 
+			   includeantruntime="false"
+			   fork="true"
+			   source="11"
+         	   target="11"
+         	   >			
+			<include name="*.java" />
+		</javac>		
+	</target>
+		
+</project>

@@ -3,7 +3,7 @@ import java.util.Date;
 import java.io.Serializable;
 import java.sql.*;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

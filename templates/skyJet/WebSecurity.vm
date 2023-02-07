@@ -12,7 +12,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -33,7 +34,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity(prePostEnabled = true)
 public class WebSecurity {
 
 	@Autowired
@@ -56,9 +57,9 @@ public class WebSecurity {
 		
 		/*
 		 * 1. Se desactiva el uso de cookies
-		 * 2. Se activa la configuraciï¿½n CORS con los valores por defecto
+		 * 2. Se activa la configuraciÃÂ¯ÃÂ¿ÃÂ½n CORS con los valores por defecto
 		 * 3. Se desactiva el filtro CSRF
-		 * 4. Se indica que el login no requiere autenticaciï¿½n
+		 * 4. Se indica que el login no requiere autenticaciÃÂ¯ÃÂ¿ÃÂ½n
 		 * 5. Se indica que el resto de URLs esten securizadas
 		 */
 		httpSecurity.sessionManagement()
@@ -68,8 +69,8 @@ public class WebSecurity {
 				.and()
 				.csrf()
 				.disable()
-				.authorizeRequests()
-				.antMatchers(LOGIN_URL,ACTUATOR_URL,API_DOCS,SWAGGER_UI)
+				.authorizeHttpRequests()
+				.requestMatchers(LOGIN_URL,ACTUATOR_URL,API_DOCS,SWAGGER_UI)
 				.permitAll()
 				.anyRequest()
 				.authenticated()
@@ -82,6 +83,7 @@ public class WebSecurity {
 	
 		 return httpSecurity.build(); 	
 	}
+
 
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		// Se define la clase que recupera los usuarios y el algoritmo para procesar los passwords
