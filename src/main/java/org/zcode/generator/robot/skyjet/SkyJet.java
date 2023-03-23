@@ -365,8 +365,6 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 				doDTOMapper(metaData, velocityContext, hdLocation, metaDataModel);
 				doRestControllers(metaData, velocityContext, hdLocation, metaDataModel);
 
-				doServiceTest(metaData, velocityContext, hdLocation, metaDataModel, modelName);
-
 			}
 
 			
@@ -380,7 +378,6 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			doUtilites(velocityContext, hdLocation, metaDataModel, modelName);
 			doGeneralExceptionHandler(velocityContext, hdLocation, metaDataModel, modelName);
 			doSpringBootRunner(velocityContext, hdLocation, metaDataModel, modelName);
-			//doSwaggerConfig(velocityContext, hdLocation, metaDataModel, modelName);
 			doApplicationProperties(metaDataModel, velocityContext, hdLocation);
 			doORMXML(metaDataModel, velocityContext, hdLocation);
 
@@ -454,33 +451,6 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 
 			GoogleCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "Service.java");
 			GoogleCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "ServiceImpl.java");
-
-		} catch (Exception e) {
-			log.error(e.toString());
-			throw e;
-		}
-	}
-
-	@Override
-	public void doServiceTest(MetaData metaData, VelocityContext context, String hdLocation, MetaDataModel dataModel,
-			String modelName) throws Exception {
-		try {
-			String path = properties.getProperty("testJava") + paqueteVirgen + GeneratorUtil.slash + "service"
-					+ GeneratorUtil.slash;
-
-			log.info("Begin Interface Service");
-			Template templateIlogic = ve.getTemplate("ServiceTest.vm");
-			StringWriter swIlogic = new StringWriter();
-			templateIlogic.merge(context, swIlogic);
-
-			FileWriter fwIlogic = new FileWriter(path + metaData.getRealClassName() + "ServiceTest.java");
-			BufferedWriter bwIlogic = new BufferedWriter(fwIlogic);
-			bwIlogic.write(swIlogic.toString());
-			bwIlogic.close();
-			fwIlogic.close();
-			log.info("End Interface Service");
-
-			GoogleCodeFormatter.formatJavaCodeFile(path + metaData.getRealClassName() + "ServiceTest.java");
 
 		} catch (Exception e) {
 			log.error(e.toString());

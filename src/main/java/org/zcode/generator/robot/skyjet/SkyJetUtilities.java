@@ -609,6 +609,7 @@ public class SkyJetUtilities {
 	 */
 	public void buildFoldersTest(String packageName, String hardDiskLocation,String packageOriginal, Properties properties) {
 
+		/*
 		// / se construye paquete
 		String pckge = packageName.replace('.', '_') + "_";
 		String modelPckg = packageOriginal.replace('.', '_') + "_";
@@ -634,6 +635,7 @@ public class SkyJetUtilities {
 				log.error(e.getMessage());
 			}
 		}
+		*/
 
 	}
 
