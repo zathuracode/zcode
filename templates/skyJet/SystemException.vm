@@ -1,7 +1,7 @@
 package ${virginPackage}.exception;
 
 /**
-* @author Zathura Code Generator Version 22.08 http://zathuracode.org/
+* @author Zathura Code Generator Version 23.03 http://zathuracode.org/
 * www.zathuracode.org
 * @generationDate ${localDateTime}
 * 
