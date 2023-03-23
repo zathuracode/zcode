@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -57,29 +58,27 @@ public class WebSecurity {
 		
 		/*
 		 * 1. Se desactiva el uso de cookies
-		 * 2. Se activa la configuraciÃÂ¯ÃÂ¿ÃÂ½n CORS con los valores por defecto
+		 * 2. Se activa la configuracion CORS con los valores por defecto
 		 * 3. Se desactiva el filtro CSRF
-		 * 4. Se indica que el login no requiere autenticaciÃÂ¯ÃÂ¿ÃÂ½n
+		 * 4. Se indica que el login no requiere autenticacion
 		 * 5. Se indica que el resto de URLs esten securizadas
 		 */
-		httpSecurity.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and()
-				.cors()
-				.and()
-				.csrf()
-				.disable()
-				.authorizeHttpRequests()
-				.requestMatchers(LOGIN_URL,ACTUATOR_URL,API_DOCS,SWAGGER_UI)
-				.permitAll()
-				.anyRequest()
-				.authenticated()
-				.and()
-				.addFilter(new JWTAuthenticationFilter(authenticationManager))
-				.addFilter(new JWTAuthorizationFilter(authenticationManager))
-				.authenticationManager(authenticationManager);
-		
-		 httpSecurity.headers().frameOptions().disable();
+		httpSecurity
+			.sessionManagement(sessionManager -> {
+				sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+			})
+			.authorizeHttpRequests( auth -> {
+				auth.requestMatchers(LOGIN_URL, ACTUATOR_URL, API_DOCS, SWAGGER_UI).permitAll();
+				auth.anyRequest().authenticated();
+			})
+			
+			.csrf( AbstractHttpConfigurer::disable )
+			.addFilter(new JWTAuthorizationFilter(authenticationManager))
+			.addFilter(new JWTAuthorizationFilter(authenticationManager))
+			.authenticationManager(authenticationManager)
+			.headers( headersConfig -> {
+				headersConfig.frameOptions().disable();
+			});
 	
 		 return httpSecurity.build(); 	
 	}

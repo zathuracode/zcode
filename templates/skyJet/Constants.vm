@@ -15,7 +15,8 @@ public class Constants {
 	// Spring Security
 
 	public static final String LOGIN_URL = "/login";
-	public static final String ACTUATOR_URL = "/actuator/*";
+	//Path http://localhost:9090/actuator
+	public static final String ACTUATOR_URL = "/actuator/**";
 	
 	//Path http://localhost:9090/swagger-ui/index.html
 	public static final String API_DOCS="/v3/api-docs/**";
@@ -28,7 +29,7 @@ public class Constants {
 	// JWT
 
 	public static final String ISSUER_INFO = "https://zathuracode.org";
-	public static final String SUPER_SECRET_KEY = "z4tur4c0dv102023isth3b3stcodeg3n3ratorintheworldofj4v4v0rtex2022";
+	public static final String SUPER_SECRET_KEY = "z4tur4c0dv102023isth3b3stcodeg3n3ratorintheworldofj4v4v0rtex2023";
 	public static final long TOKEN_EXPIRATION_TIME = 864_000_000; // 10 day
 
 }

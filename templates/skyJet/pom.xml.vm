@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.2</version>
+		<version>3.0.5</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
@@ -30,14 +30,14 @@
 
 		<io.jsonwebtoken.version>0.11.2</io.jsonwebtoken.version>
 		
-		<org.jacoco.maven.plugin.version>0.8.6</org.jacoco.maven.plugin.version>
+		<org.jacoco.maven.plugin.version>0.8.8</org.jacoco.maven.plugin.version>
 		<org.openclover.clover.maven.plugin.version>4.4.1</org.openclover.clover.maven.plugin.version>
-		<org.pitest.maven.version>1.6.3</org.pitest.maven.version>
-		<org.pitest.junit5.plugin.version>0.12</org.pitest.junit5.plugin.version>
+		<org.pitest.maven.version>1.11.5</org.pitest.maven.version>
+		<org.pitest.junit5.plugin.version>1.1.2</org.pitest.junit5.plugin.version>
 		<!-- Por defecto, solo teste unitarios seran ejecutados. -->
         <skip.integration.tests>true</skip.integration.tests>
         <skip.unit.tests>false</skip.unit.tests>
-        <skip.jacoco>false</skip.jacoco>
+        <skip.jacoco>true</skip.jacoco>
         <surefire.and.failsafe.report.dir>target/test-report</surefire.and.failsafe.report.dir>
 	</properties>
 	

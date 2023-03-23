@@ -2,6 +2,7 @@ package ${virginPackage}.entity.controller;
 
 import jakarta.validation.Valid;
 import java.util.Optional;
+import java.util.Date;
 
 import ${virginPackage}.mapper.${metaData.getRealClassName()}Mapper;
 import ${virginPackage}.entity.service.${metaData.getRealClassName()}Service;
@@ -58,7 +59,7 @@ public class ${metaData.getRealClassName()}RestController {
 					${primaryKey.getShowName()}.set${cka.getShowName().substring(0,1).toUpperCase()}${cka.getShowName().substring(1,${cka.getShowName().length()})}(${cka.getShowName()});
 				#end
 
-				Optional<${metaData.getRealClassName()}> optional${metaData.getRealClassName()} = documentTypeService.findById(dotyId);
+				Optional<${metaData.getRealClassName()}> optional${metaData.getRealClassName()} = ${metaData.getRealClassNameAsVariable()}Service.findById({primaryKey.getShowName()});
 				
 				${metaData.getRealClassName()} ${metaData.getRealClassNameAsVariable()} = optional${metaData.getRealClassName()}.isPresent()?optional${metaData.getRealClassName()}.get():null;
 						
