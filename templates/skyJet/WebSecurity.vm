@@ -74,10 +74,10 @@ public class WebSecurity {
 			
 			.csrf( AbstractHttpConfigurer::disable )
 			.addFilter(new JWTAuthorizationFilter(authenticationManager))
-			.addFilter(new JWTAuthorizationFilter(authenticationManager))
+			.addFilter(new JWTAuthenticationFilter(authenticationManager))
 			.authenticationManager(authenticationManager)
 			.headers( headersConfig -> {
-				headersConfig.frameOptions().disable();
+				headersConfig.frameOptions((frameOptions) -> frameOptions.disable());
 			});
 	
 		 return httpSecurity.build(); 	
