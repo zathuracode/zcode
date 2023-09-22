@@ -28,7 +28,6 @@ import javax.persistence.Transient;
 import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.zcode.generator.utilities.GeneratorUtil;
 import org.zcode.metadata.model.GeneratedValueMember;
 import org.zcode.metadata.model.ManyToManyMember;
 import org.zcode.metadata.model.ManyToOneMember;
