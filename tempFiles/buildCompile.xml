@@ -4,7 +4,7 @@
 	<path id="toolslib">
 		<!--Librerias necesarias para Hibernate-tools -->
 
-		<path location="../lib/hibernate-jpa-2.1-api-1.0.0.Final.jar" />
+		<path location="../lib/hibernate-jpa-2.1-api-1.0.2.Final.jar" />
 	
 		<!--Librerias necesarias para Hibernate-tools -->
 		
