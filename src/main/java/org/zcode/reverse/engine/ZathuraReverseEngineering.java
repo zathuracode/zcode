@@ -31,9 +31,9 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.MethodInvocationException;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.zcode.reverse.utilities.ZathuraReverseEngineeringUtil;
+
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -43,6 +43,7 @@ import org.zcode.reverse.utilities.ZathuraReverseEngineeringUtil;
  * @author William Altuzarra Noriega Noriega (williamaltu@gmail.com)
  * @version 1.0
  */
+@Slf4j
 public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 	
 	
@@ -56,10 +57,6 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 	// DB2 AS400
 	/** The Constant CATALOG_SCHEMA. */
 	public final static String CATALOG_SCHEMA = "3";
-
-	/** The log. */
-    private static final Logger log = LoggerFactory.getLogger(ZathuraReverseEngineering.class);
-
 
 	/** The Constant reverseTemplatesPath. */
 	private final static String reverseTemplatesPath = ZathuraReverseEngineeringUtil.getReverseTemplates();

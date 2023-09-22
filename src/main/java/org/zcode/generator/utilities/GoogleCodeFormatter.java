@@ -1,7 +1,14 @@
 package org.zcode.generator.utilities;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.File;
+
+import com.google.common.base.Charsets;
+import com.google.common.io.CharSink;
+import com.google.common.io.CharSource;
+import com.google.common.io.Files;
+import com.google.googlejavaformat.java.Formatter;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Zathura Generator.
@@ -9,10 +16,10 @@ import org.slf4j.LoggerFactory;
  * @author Diego Armando Gomez Mosquera (dgomez@vortexbird.com)
  * @version 2.0
  */
+@Slf4j
 public class GoogleCodeFormatter {
 
-	/** The log. */
-	private static Logger log = LoggerFactory.getLogger(GoogleCodeFormatter.class);
+	
 
 	/**
 	 * The Constructor.
@@ -20,7 +27,7 @@ public class GoogleCodeFormatter {
 	private GoogleCodeFormatter() {}
 	
 	public static void formatJavaCodeFile(String pathFiles) {
-		/*
+		
 		log.info("GoogleCodeFormatter Java in file:"+pathFiles);
 		
 		try {
@@ -38,7 +45,7 @@ public class GoogleCodeFormatter {
 		} catch (Exception e) {
 			log.info("Error in formatJavaCodeFile:"	+ e.toString());
 		}
-		*/
+		
 	}
 	
 

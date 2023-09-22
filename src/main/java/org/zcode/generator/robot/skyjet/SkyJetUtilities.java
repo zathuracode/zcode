@@ -11,13 +11,13 @@ import java.util.Properties;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.zcode.generator.utilities.GeneratorUtil;
 import org.zcode.metadata.model.Member;
 import org.zcode.metadata.model.MetaData;
 import org.zcode.metadata.model.MetaDataModel;
 import org.zcode.metadata.model.SimpleMember;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Zathuracode Generator www.zathuracode.org
@@ -25,9 +25,8 @@ import org.zcode.metadata.model.SimpleMember;
  * @author Diego Armando Gomez (dgomez@vortexbird.com)
  * @version 1.0
  */
+@Slf4j
 public class SkyJetUtilities {
-
-	private static final Logger log = LoggerFactory.getLogger(SkyJetUtilities.class);
 
 	/** The instance. */
 	private static SkyJetUtilities instance = null;

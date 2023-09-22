@@ -28,8 +28,6 @@ import java.util.Properties;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.zcode.generator.model.IZathuraGenerator;
 import org.zcode.generator.utilities.GeneratorPathUtil;
 import org.zcode.generator.utilities.GeneratorUtil;
@@ -42,15 +40,17 @@ import org.zcode.metadata.model.OneToManyMember;
 import org.zcode.metadata.model.OneToOneMember;
 import org.zcode.metadata.model.SimpleMember;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Zathuracode Generator www.zathuracode.org
  * 
  * @author Diego Armando Gomez (dgomez@vortexbird.com)
  * @version 1.0
  */
+@Slf4j
 public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 
-	private static final Logger log = LoggerFactory.getLogger(SkyJet.class);
 
 	private String paqueteVirgen;
 	private VelocityEngine ve;

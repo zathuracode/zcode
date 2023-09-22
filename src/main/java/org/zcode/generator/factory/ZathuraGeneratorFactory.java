@@ -15,12 +15,12 @@ import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.zcode.generator.exceptions.GeneratorNotFoundException;
 import org.zcode.generator.model.GeneratorModel;
 import org.zcode.generator.model.IZathuraGenerator;
 import org.zcode.generator.utilities.GeneratorUtil;
+
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -29,10 +29,8 @@ import org.zcode.generator.utilities.GeneratorUtil;
  * @author Diego Armando Gomez Mosquera (dgomez@vortexbird.com)
  * @version 1.0
  */
+@Slf4j
 public class ZathuraGeneratorFactory {
-
-	/** Log4j. */
-	private static final Logger log = LoggerFactory.getLogger(ZathuraGeneratorFactory.class);
 
 	/** xml file path. */
 	private static String xmlConfigFactoryPath = GeneratorUtil.getXmlConfigFactoryPath();

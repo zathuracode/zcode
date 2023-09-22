@@ -9,23 +9,19 @@ import java.util.List;
 
 import javax.persistence.Entity;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.zcode.generator.utilities.GeneratorUtil;
 import org.zcode.metadata.model.Member;
 
+import lombok.extern.slf4j.Slf4j;
 
-// TODO: Auto-generated Javadoc
 /**
  * Zathura Generator.
  *
  * @author Diego Armando Gomez Mosquera (dgomez@vortexbird.com)
  * @version 1.0
  */
+@Slf4j
 public class MetaDataUtil {
-
-	/** The log. */
-	private static Logger log = LoggerFactory.getLogger(MetaDataUtil.class);
 
 	/**
 	 * Removes the member.

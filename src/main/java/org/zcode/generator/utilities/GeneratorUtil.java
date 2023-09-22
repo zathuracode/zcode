@@ -7,8 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Zathura Generator.
@@ -16,10 +15,8 @@ import org.slf4j.LoggerFactory;
  * @author Diego Armando Gomez Mosquera (dgomez@vortexbird.com)
  * @version 1.0
  */
+@Slf4j
 public class GeneratorUtil {
-
-	/** The log. */
-	private static final Logger log = LoggerFactory.getLogger(GeneratorUtil.class);
 
 	private final static String generatorTemplatesPath = "templates";
 	private final static String generatorExtPath = "ext";

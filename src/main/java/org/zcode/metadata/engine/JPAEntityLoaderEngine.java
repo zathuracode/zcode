@@ -26,8 +26,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.zcode.metadata.model.GeneratedValueMember;
 import org.zcode.metadata.model.ManyToManyMember;
 import org.zcode.metadata.model.ManyToOneMember;
@@ -40,6 +38,8 @@ import org.zcode.metadata.model.SimpleMember;
 import org.zcode.metadata.reader.IMetaDataReader;
 import org.zcode.metadata.utilities.MetaDataUtil;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 /**
  * Zathura Generator.
@@ -47,10 +47,9 @@ import org.zcode.metadata.utilities.MetaDataUtil;
  * @author Diego Armando Gomez Mosquera (dgomez@vortexbird.com)
  * @version 1.0
  */
+@Slf4j
 public class JPAEntityLoaderEngine implements IMetaDataReader {
 
-	/** The log. */
-	private static final Logger log = LoggerFactory.getLogger(JPAEntityLoaderEngine.class);
 
 	/* (non-Javadoc)
 	 * @see org.zathuracode.metadata.reader.IMetaDataReader#loadMetaDataModel(java.lang.String, java.lang.String)

@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.zcode.metadata.model.ManyToOneMember;
 import org.zcode.metadata.model.Member;
 import org.zcode.metadata.model.MetaData;
 import org.zcode.metadata.model.SimpleMember;
+
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -19,9 +19,9 @@ import org.zcode.metadata.model.SimpleMember;
  * @author Diego Armando Gomez (dgomez@vortexbird.com)
  * @version 1.0
  */
+@Slf4j
 public class SkyJetStringBuilderForId implements ISkyJetStringBuilderForId {
 	
-	private static final Logger log = LoggerFactory.getLogger(SkyJetStringBuilderForId.class);
 
 	/** The hash map ids. */
 	public HashMap<String, String> hashMapIds;

@@ -20,17 +20,9 @@ import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-/*
-import net.sourceforge.squirrel_sql.fw.sql.ISQLAlias;
-import net.sourceforge.squirrel_sql.fw.sql.ISQLConnection;
-import net.sourceforge.squirrel_sql.fw.sql.ISQLDriver;
-import net.sourceforge.squirrel_sql.fw.sql.ITableInfo;
-import net.sourceforge.squirrel_sql.fw.sql.SQLDriver;
-import net.sourceforge.squirrel_sql.fw.sql.SQLDriverManager;
-*/
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.zcode.generator.utilities.GeneratorPathUtil;
+
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -40,6 +32,7 @@ import org.zcode.generator.utilities.GeneratorPathUtil;
  * @author William Altuzarra Noriega Noriega (williamaltu@gmail.com)
  * @version 1.0
  */
+@Slf4j
 public class ZathuraReverseEngineeringUtil {
 	
 
@@ -89,10 +82,6 @@ public class ZathuraReverseEngineeringUtil {
 
 	/** The types. */
 	String[] types = { "TABLE", "VIEW", "SYNONYM", "ALIAS" };
-
-	/** Log4j. */
-    private static final Logger log = LoggerFactory.getLogger(ZathuraReverseEngineeringUtil.class);
-
 
 	/** Generator Model. */
 	private static HashMap<String, DatabaseTypeModel> theZathuraDataBaseTypes = null;

@@ -12,8 +12,6 @@ import javax.xml.stream.XMLStreamException;
 import org.apache.commons.configuration2.Configuration;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.apache.commons.configuration2.ex.ConfigurationException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.zcode.generator.exceptions.GeneratorNotFoundException;
 import org.zcode.generator.factory.ZathuraGeneratorFactory;
 import org.zcode.generator.model.IZathuraGenerator;
@@ -27,13 +25,13 @@ import org.zcode.reverse.engine.IZathuraReverseEngineering;
 import org.zcode.reverse.engine.ZathuraReverseEngineering;
 import org.zcode.reverse.utilities.ZathuraReverseEngineeringUtil;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class ZcodeMain {
-
-	private final static Logger log = LoggerFactory.getLogger(ZcodeMain.class);
-
+	
 	public static  String PROJECT_PATH = null;
 	
-
 	public static String DOMAIN_PACKAGE_NAME = null;
 	
 	public static String GROUP_ID = null;
