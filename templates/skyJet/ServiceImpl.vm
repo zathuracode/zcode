@@ -23,8 +23,8 @@ import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
 
 /**
-* @author Zathura Code Generator Version 23.09 http://zathuracode.org/
-* www.zathuracode.org
+* @author Zathura Code Generator Version 23.10 http://zathuracode.org/
+* 
 * @generationDate ${localDateTime}
 * 
 */

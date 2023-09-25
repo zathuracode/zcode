@@ -2,7 +2,11 @@ package org.zcode.generator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
@@ -34,6 +38,7 @@ public class ZcodeMain {
 	
 	public static String DOMAIN_PACKAGE_NAME = null;
 	
+	//MAVEN PROPERTIES
 	public static String GROUP_ID = null;
 	public static String PROJECT_NAME = null;
 
@@ -48,8 +53,11 @@ public class ZcodeMain {
 	
 	private static Configuration configuration =null;
 
-
-	public static void main(String[] args) {			
+	
+	public static void main(String[] args) {		
+		
+		printBanner();
+		log.info("CurrentWorkingDirectory:{}",GeneratorUtil.getCurrentWorkingDirectory());
 		loadProperties();
 		
 		try {		
@@ -122,7 +130,7 @@ public class ZcodeMain {
 			IZathuraReverseEngineering mappingTool = new ZathuraReverseEngineering();
 			mappingTool.makePojosJPA_V1_0(connectionProperties, GeneratorPathUtil.tablesList);
 			
-			//carga
+			//Carga el La metadata de los pojos con JPA
 			IMetaDataReader entityLoader = null;
 			entityLoader = MetaDataReaderFactory.createMetaDataReader(MetaDataReaderFactory.JPAEntityLoaderEngine);
 			metaDataModel = entityLoader.loadMetaDataModel(JAVA_SOURCE_CODE_PATH, DOMAIN_PACKAGE_NAME);
@@ -139,7 +147,7 @@ public class ZcodeMain {
 			properties.put("folderProjectPath", JAVA_SOURCE_CODE_PATH);
 			properties.put("isMavenProject", true);
 			
-			
+			//Se crean las cadenas de los path
 			String MAIN_RESOURCES=	GeneratorUtil.slash+"src"+GeneratorUtil.slash+"main"+GeneratorUtil.slash+"resources"+GeneratorUtil.slash;
 			String TEST_JAVA=		GeneratorUtil.slash+"src"+GeneratorUtil.slash+"test"+GeneratorUtil.slash+"java"+GeneratorUtil.slash;
 			String TEST_RESOURCES=	GeneratorUtil.slash+"src"+GeneratorUtil.slash+"test"+GeneratorUtil.slash+"resources"+GeneratorUtil.slash;
@@ -181,28 +189,54 @@ public class ZcodeMain {
 	}
 	
 	private static void loadProperties() {
-		configuration = loadConfig();	
+		log.info("Reading Configuration Properties");
 		
-		PROJECT_PATH = 			configuration.getString("PROJECT_PATH");
-		
-		//MAVEN
-		GROUP_ID = 				configuration.getString("GROUP_ID");
-		PROJECT_NAME = 			configuration.getString("PROJECT_NAME");
-		
-		//DOMAIN
-		DOMAIN_PACKAGE_NAME = 	configuration.getString("DOMAIN_PACKAGE_NAME");
+			configuration = loadConfig();	
+			
+			PROJECT_PATH = 			configuration.getString("PROJECT_PATH");
+			
+			//MAVEN
+			GROUP_ID = 				configuration.getString("GROUP_ID");
+			PROJECT_NAME = 			configuration.getString("PROJECT_NAME");
+			
+			//DOMAIN
+			DOMAIN_PACKAGE_NAME = 	configuration.getString("DOMAIN_PACKAGE_NAME");
+	
+			//DATABASE CONNECTION
+			DRIVER_CLASS = 			configuration.getString("DRIVER_CLASS");
+			URL = 					configuration.getString("URL");
+			USER = 					configuration.getString("USER");
+			PASSWORD = 				configuration.getString("PASSWORD");
+			SCHEMA = 				configuration.getString("SCHEMA");
+			CATALOG = 				configuration.getString("CATALOG");
+			
+			TABLE_LIST =			Arrays.asList(configuration.getString("TABLE_LIST").split(",")).stream().map(String::trim).collect(Collectors.toList());
+			
+			printProperties();
+	}
 
-		//DATABASE CONNECTION
-		DRIVER_CLASS = 			configuration.getString("DRIVER_CLASS");
-		URL = 					configuration.getString("URL");
-		USER = 					configuration.getString("USER");
-		PASSWORD = 				configuration.getString("PASSWORD");
-		SCHEMA = 				configuration.getString("SCHEMA");
-		CATALOG = 				configuration.getString("CATALOG");
-		
-		TABLE_LIST =			Arrays.asList(configuration.getString("TABLE_LIST").split(",")).stream().map(String::trim).collect(Collectors.toList());;
-		
-		
+	/**
+	 * Print the configuration file
+	 */
+	private static void printProperties() {
+		log.info("#------------------------------------------#");
+			Iterator<String> keys=configuration.getKeys();
+			while (keys.hasNext()) {
+				String key = (String) keys.next();
+				log.info("{}:{}",key,configuration.getString(key));
+			}
+		log.info("#------------------------------------------#");
+	}
+	
+	/**
+	 * Print the Welcome Banner
+	 */
+	private static void printBanner() {
+		try {
+			Files.readAllLines(Paths.get(GeneratorUtil.getCurrentWorkingDirectory()+File.separator+"config"+File.separator+"banner.txt")).forEach(line->System.out.println(line));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private static Configuration loadConfig() {
@@ -216,6 +250,5 @@ public class ZcodeMain {
 		return null;
 	}
 	
-
 
 }

@@ -11,8 +11,8 @@ import ${virginPackage}.dto.${metaData.getRealClassName()}DTO;
 
 
 /**
-* @author Zathura Code Generator Version 23.09 http://zathuracode.org/
-* www.zathuracode.org
+* @author Zathura Code Generator Version 23.10 http://zathuracode.org/
+* 
 * @generationDate ${localDateTime}
 *
 * 

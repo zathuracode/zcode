@@ -41,7 +41,6 @@ public class GeneratorUtil {
 	
 	public static String getCurrentWorkingDirectory() {
 		String currentWorkingDirectory=Paths.get("").toAbsolutePath().toString()+File.separatorChar;
-		log.info("currentWorkingDirectory:"+currentWorkingDirectory);
 		GeneratorUtil.setFullPath(currentWorkingDirectory);
 		return currentWorkingDirectory;
 	}

@@ -13,8 +13,8 @@ import java.util.regex.Pattern;
 
 
 /**
-* @author Zathura Code Generator Version 23.09 http://zathuracode.org/
-* www.zathuracode.org
+* @author Zathura Code Generator Version 23.10 http://zathuracode.org/
+* 
 * @generationDate ${localDateTime}
 * 
 */

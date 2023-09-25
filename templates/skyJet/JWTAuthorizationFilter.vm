@@ -23,8 +23,8 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 /**
-* @author Zathura Code Generator Version 23.09 http://zathuracode.org/
-* www.zathuracode.org
+* @author Zathura Code Generator Version 23.10 http://zathuracode.org/
+* 
 * @generationDate ${localDateTime}
 *
 */
