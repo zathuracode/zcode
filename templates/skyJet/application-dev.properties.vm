@@ -5,6 +5,7 @@ spring.info.build.encoding=UTF-8
 #Spring DataSource Basic Config
 spring.datasource.url=${connectionUrl}
 spring.jpa.properties.hibernate.default_schema=${schema}
+spring.jpa.open-in-view=false
 spring.datasource.username= ${connectionUsername}
 spring.datasource.password= ${connectionPassword}
 
