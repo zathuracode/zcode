@@ -9,10 +9,7 @@ target/
 Servers/
 dataSourceContext.xml
 zathura-connections.properties
-tempFiles/build.xml
-tempFiles/buildCompile.xml
-tempFiles/hibernate.cfg.xml
-tempFiles/hibernate.reveng.xml
+
 
 HELP.md
 target/
