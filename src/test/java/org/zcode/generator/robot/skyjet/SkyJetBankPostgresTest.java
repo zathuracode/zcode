@@ -1,13 +1,5 @@
 package org.zcode.generator.robot.skyjet;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
-
-import javax.xml.stream.XMLStreamException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zcode.generator.exceptions.GeneratorNotFoundException;
@@ -21,6 +13,13 @@ import org.zcode.metadata.reader.MetaDataReaderFactory;
 import org.zcode.reverse.engine.IZathuraReverseEngineering;
 import org.zcode.reverse.engine.ZathuraReverseEngineering;
 import org.zcode.reverse.utilities.ZathuraReverseEngineeringUtil;
+
+import javax.xml.stream.XMLStreamException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
 
 
 public class SkyJetBankPostgresTest {

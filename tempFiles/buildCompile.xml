@@ -16,8 +16,8 @@
 		
 		<!-- Create the distribution directory -->
 		<javac classpathref="toolslib" 
-			   srcdir="/Users/dgomez/Workspaces/workspace-2023-zcode/demo-bank-postgres/src/main/java/com/vobi/bank/domain" 
-			   destdir="/Users/dgomez/Workspaces/workspace-2023-zcode/demo-bank-postgres/src/main/java/" 
+			   srcdir="/Users/dgomez/workspaces-java/workspace-2023-zcode/demo-bank-postgres/src/main/java/com/vobi/bank/domain" 
+			   destdir="/Users/dgomez/workspaces-java/workspace-2023-zcode/demo-bank-postgres/src/main/java/" 
 			   includeantruntime="false"
 			   fork="true"
 			   source="21"

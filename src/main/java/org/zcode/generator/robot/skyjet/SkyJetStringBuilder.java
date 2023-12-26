@@ -1,18 +1,17 @@
 package org.zcode.generator.robot.skyjet;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.ListUtils;
 import org.zcode.generator.utilities.GeneratorUtil;
 import org.zcode.metadata.model.ManyToOneMember;
 import org.zcode.metadata.model.Member;
 import org.zcode.metadata.model.MetaData;
 
-import lombok.extern.slf4j.Slf4j;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Zathuracode Generator www.zathuracode.org

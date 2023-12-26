@@ -1,8 +1,8 @@
 package org.zcode.generator.model;
 
-import java.util.Properties;
-
 import org.zcode.metadata.model.MetaDataModel;
+
+import java.util.Properties;
 
 
 /**
