@@ -38,8 +38,18 @@ server.tomcat.accesslog.file-date-format=yyyy-MM-dd
 server.tomcat.accesslog.prefix=access_log
 server.tomcat.accesslog.suffix=.log
 
+#If you’re running on Java 21 or up, you can enable virtual threads by setting the property
+spring.threads.virtual.enabled=true
+
+#Swagger
+springdoc.api-docs.enabled=true
+springdoc.swagger-ui.enabled=true
+#springdoc.swagger-ui.path=/swagger-ui.html
+#springdoc.paths-to-match=/api/v1/gs/**
+#springdoc.paths-to-exclude=/api/v1/gs/ping/**
+
 #Logs
-logging.file.name=${name}.log
+logging.file.name=logs/${name}.log
 logging.level.org.springframework=INFO
 #logging.level.org.hibernate=INFO
 #logging.level.org.hibernate.SQL=DEBUG
