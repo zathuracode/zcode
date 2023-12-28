@@ -44,7 +44,9 @@ public interface IZathuraSkyJetTemplate {
 	
 	public void doGeneralExceptionHandler(VelocityContext context, String hdLocation,MetaDataModel dataModel, String modelName)throws Exception;
 		
-	public void doApplicationProperties(MetaDataModel dataModel, VelocityContext context, String hdLocation)throws Exception;
+	public void doApplicationProperties(VelocityContext context)throws Exception;
+	
+	public void doBitbucketPipeline(VelocityContext context)throws Exception;
 	
 	void doDTOMapper(MetaData metaData, VelocityContext context, String hdLocation, MetaDataModel dataModel)throws Exception;
 

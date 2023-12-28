@@ -26,42 +26,70 @@
 		<org.projectlombok.version>1.18.30</org.projectlombok.version>
 		<lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
 		
-		<springdoc-openapi-ui.version>1.6.15</springdoc-openapi-ui.version>
+		<springdoc-openapi-starter-webmvc-ui.version>2.3.0</springdoc-openapi-starter-webmvc-ui.version>
 		
-		<org.apache.commons.collections4>4.4</org.apache.commons.collections4>
+		<org.apache.commons.collections4.version>4.4</org.apache.commons.collections4.version>
 
-		<io.jsonwebtoken.version>0.11.5</io.jsonwebtoken.version>
+		<io.jsonwebtoken.version>0.12.3</io.jsonwebtoken.version>
 		
-		<org.jacoco.maven.plugin.version>0.8.10</org.jacoco.maven.plugin.version>
-		<org.openclover.clover.maven.plugin.version>4.4.1</org.openclover.clover.maven.plugin.version>
-		<org.pitest.maven.version>1.14.4</org.pitest.maven.version>
-		<org.pitest.junit5.plugin.version>1.2.0</org.pitest.junit5.plugin.version>
+		<org.jacoco.maven.plugin.version>0.8.11</org.jacoco.maven.plugin.version>
+		<org.openclover.clover.maven.plugin.version>4.5.1</org.openclover.clover.maven.plugin.version>
+		<org.pitest.maven.version>1.15.3</org.pitest.maven.version>
+		<org.pitest.junit5.plugin.version>1.2.1</org.pitest.junit5.plugin.version>
 		
 		<!-- Por defecto, solo test unitarios seran ejecutados. -->
-        <skip.integration.tests>true</skip.integration.tests>
-        <skip.unit.tests>false</skip.unit.tests>
-        <skip.jacoco>true</skip.jacoco>
-        <surefire.and.failsafe.report.dir>target/test-report</surefire.and.failsafe.report.dir>
+		<skip.integration.tests>true</skip.integration.tests>
+		<skip.unit.tests>true</skip.unit.tests>
+		<skip.jacoco>true</skip.jacoco>
+		<skipPitest>true</skipPitest>
+		<surefire.and.failsafe.report.dir>target/test-report</surefire.and.failsafe.report.dir>
+		
+		<sonar.exclusions>
+        	src/main/java/${virginPackageWithSeparator}/SpringBootRunner.java,
+			src/main/java/${virginPackageWithSeparator}/entity/controller/*,
+			src/main/java/${virginPackageWithSeparator}/entity/service/*,
+		</sonar.exclusions>
+		
+		<sonar.coverage.exclusions>
+			src/main/java/${virginPackageWithSeparator}/controller/*,
+			src/main/java/${virginPackageWithSeparator}/domain/*,
+			src/main/java/${virginPackageWithSeparator}/dto/**,
+			src/main/java/${virginPackageWithSeparator}/exception/*,
+			src/main/java/${virginPackageWithSeparator}/mapper/*,
+			src/main/java/${virginPackageWithSeparator}/security/*,
+			src/main/java/${virginPackageWithSeparator}/utility/*,
+		</sonar.coverage.exclusions>
 	</properties>
 	
 	<profiles>
-        <profile>
-        	<activation>
-        		<activeByDefault>true</activeByDefault>
-        	</activation>
-            <id>dev</id>            
-        </profile>
-        
-        <profile>
-            <id>integration-test</id>
-            <properties>
-                <!-- Solo los test de integracion seran ejecutados. -->
-                <skip.integration.tests>false</skip.integration.tests>
-                <skip.unit.tests>true</skip.unit.tests>
-                <skip.jacoco>true</skip.jacoco>
-            </properties>
-        </profile>
-    </profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<active.profile>dev</active.profile>
+				<skip.unit.tests>false</skip.unit.tests>
+				<skip.jacoco>false</skip.jacoco>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>test</id>
+			<properties>
+				<active.profile>test</active.profile>
+				<skip.unit.tests>false</skip.unit.tests>
+				<skip.integration.tests>false</skip.integration.tests>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>prod</id>
+			<properties>
+				<active.profile>prod</active.profile>
+			</properties>
+		</profile>
+	</profiles>
 
 	<dependencies>
 
@@ -94,8 +122,8 @@
 
 		<dependency>
 			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>${springdoc-openapi-ui.version}</version>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>${springdoc-openapi-starter-webmvc-ui.version}</version>
 		</dependency>
 
 		<dependency>
@@ -118,7 +146,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
-            <version>${org.apache.commons.collections4}</version>
+            <version>${org.apache.commons.collections4.version}</version>
         </dependency>
 
         <dependency>
@@ -181,6 +209,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>${project.name}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -270,13 +299,13 @@
 						<exclude>${virginPackage}/SpringBootRunner.class</exclude>
 						
 						<!-- exclude classes in package -->
-						<exclude>${virginPackage}/entity/service/*</exclude>
-						<exclude>${virginPackage}/entity/controller/*</exclude>
-						<exclude>${virginPackage}/dto/*</exclude>
-						<exclude>${virginPackage}/domain/*</exclude>
-						<exclude>${virginPackage}/mapper/*</exclude>
-						<exclude>${virginPackage}/utility/*</exclude>
-						<exclude>${virginPackage}/exception/*</exclude>
+						<exclude>${virginPackage}.entity.service.*</exclude>
+						<exclude>${virginPackage}.entity.controller.*</exclude>
+						<exclude>${virginPackage}.dto.*</exclude>
+						<exclude>${virginPackage}.domain.*</exclude>
+						<exclude>${virginPackage}.mapper.*</exclude>
+						<exclude>${virginPackage}.utility.*</exclude>
+						<exclude>${virginPackage}.exception.*</exclude>
 						
 					</excludes>
 				</configuration>

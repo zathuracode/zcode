@@ -48,3 +48,4 @@ build/
 ### Velocity
 velocity.*
 velocity.log*
+tempFiles

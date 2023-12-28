@@ -1,0 +1,92 @@
+image: maven:3.8.5-openjdk-17
+
+clone:
+  depth: full # SonarCloud scanner needs the full history to assign issues properly
+
+definitions:
+  caches:
+    sonar: ~/.sonar/cache # Caching SonarCloud artifacts will speed up your build
+    maven: ~/.m2/repository
+  steps:
+    - step: &maven-test
+        name: Run maven test, verify coverage and security scan
+        caches:
+          - maven
+        script:
+          - mvn -B clean verify --file $PROJECT_NAME/pom.xml -Dskip.unit.tests=false -Dskip.jacoco=false
+        after-script:
+          # Collect checkstyle check results if any and convert to Bitbucket Code Insights.
+          - pipe: atlassian/checkstyle-report:0.3.0
+    - step: &build-test-sonarcloud
+        name: Build, test and analyze on SonarCloud
+        caches:
+          - maven
+          - sonar
+        script:
+          - mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar --file $PROJECT_NAME/pom.xml -Dsonar.branch.name=$BITBUCKET_BRANCH
+        artifacts:
+          - target/**
+    - step: &build-test-sonarcloud-pr
+        name: Build, test and analyze on SonarCloud
+        caches:
+          - maven
+          - sonar
+        script:
+          - mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar --file $PROJECT_NAME/pom.xml -Dsonar.pullrequest.branch=$BITBUCKET_BRANCH -Dsonar.pullrequest.base=$BITBUCKET_PR_DESTINATION_BRANCH -Dsonar.pullrequest.key=$BITBUCKET_PR_ID
+        artifacts:
+          - target/**
+    - step: &notify-deploy
+        name: Notify Deploy
+        script:
+          - curl -X POST "$NOTIFY_CHAT" -H "Content-Type:application/json" -d "{\"text\":\"Se ha realizado la compilacion del aplicativo $PROJECT_NAME\"}"
+    - step: &maven-package-test
+        name: Maven Package projects
+        caches:
+          - maven
+        script:
+          - mvn package --file $PROJECT_NAME/pom.xml -Dactive.profile=test
+        artifacts:
+          - "**.jar"
+    - step: &maven-package-prod
+        name: Clean package with maven
+        caches:
+          - maven
+        script:
+          - mvn clean package --file $PROJECT_NAME/pom.xml -Dactive.profile=prod
+        artifacts:
+          - "**.jar"
+    - step: &publish-artifacts
+        name: Publish artifacts
+        script:
+          - pipe: atlassian/bitbucket-upload-file:0.3.3
+            variables:
+              BITBUCKET_USERNAME: $BITBUCKET_USERNAME
+              BITBUCKET_APP_PASSWORD: $BITBUCKET_APP_PASSWORD
+              FILENAME: "$PROJECT_NAME/target/**.jar"
+
+pipelines:
+  branches:
+    feature/*:
+      - step: *maven-test
+    release/*:
+      - step: *maven-test
+      - step: *maven-package-test
+      - step: *notify-deploy
+      - step: *publish-artifacts
+    develop:
+      - step: *maven-package-test
+      - step: *notify-deploy
+      - step: *publish-artifacts
+    main:
+      - step: *maven-package-prod
+      - step: *notify-deploy
+      - step: *publish-artifacts
+  pull-requests:
+    feature/*:
+      - step: *maven-test
+      - step: *build-test-sonarcloud-pr
+    release/*:
+      - step: *maven-test
+      - step: *maven-package-prod
+      - step: *notify-deploy
+      - step: *publish-artifacts

@@ -98,6 +98,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			ISkyJetStringBuilder stringBuilder = new SkyJetStringBuilder(listMetaData,(SkyJetStringBuilderForId) stringBuilderForId);
 			String packageOriginal = null;
 			String virginPackage = null;
+			String virginPackageWithSeparator = null;
 			String modelName = null;
 
 			HashMap<String, String> primaryKeyByClass = new HashMap<String, String>();
@@ -115,6 +116,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 
 				int virginLastIndexOf = packageOriginal.lastIndexOf(".");
 				virginPackage = packageOriginal.substring(0, virginLastIndexOf);
+				virginPackageWithSeparator = virginPackage.replace(".", "/"); 
 			} catch (Exception e) {
 				log.error(e.toString());
 			}
@@ -124,6 +126,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 
 			velocityContext.put("packageOriginal", packageOriginal);
 			velocityContext.put("virginPackage", virginPackage);
+			velocityContext.put("virginPackageWithSeparator", virginPackageWithSeparator);
 			velocityContext.put("package", jpaPckgName);
 			velocityContext.put("projectName", projectName);
 			velocityContext.put("domainName", domainName);
@@ -371,7 +374,8 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			doUtilites(velocityContext, hdLocation, metaDataModel, modelName);
 			doGeneralExceptionHandler(velocityContext, hdLocation, metaDataModel, modelName);
 			doSpringBootRunner(velocityContext, hdLocation, metaDataModel, modelName);
-			doApplicationProperties(metaDataModel, velocityContext, hdLocation);
+			doApplicationProperties(velocityContext);
+			doBitbucketPipeline(velocityContext);
 			doORMXML(metaDataModel, velocityContext, hdLocation);
 
 			String restPath = paqueteVirgen + GeneratorUtil.slash + "controller";
@@ -575,8 +579,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 	}
 
 	@Override
-	public void doApplicationProperties(MetaDataModel dataModel, VelocityContext context, String hdLocation)
-			throws Exception {
+	public void doApplicationProperties(VelocityContext context) throws Exception {
 
 		try {
 			log.info("Begin application.properties.vm");
@@ -602,6 +605,32 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			fwApplicationDev.close();
 			
 			log.info("End application.properties.vm");
+
+		} catch (Exception e) {
+			log.error(e.toString());
+			throw e;
+		}
+
+	}
+	
+	@Override
+	public void doBitbucketPipeline(VelocityContext context) throws Exception {
+
+		try {
+			log.info("Begin BitbucketPipeline");
+			
+			String path = properties.getProperty("fullPathProject");
+			
+			Template templateBitbucketPipeline = ve.getTemplate("bitbucket-pipelines.yml.vm");
+			StringWriter swBitbucketPipeline = new StringWriter();
+			templateBitbucketPipeline.merge(context, swBitbucketPipeline);
+			FileWriter fwBitbucketPipeline = new FileWriter(path + GeneratorUtil.slash + "bitbucket-pipelines.yml");
+			BufferedWriter bwBitbucketPipeline = new BufferedWriter(fwBitbucketPipeline);
+			bwBitbucketPipeline.write(swBitbucketPipeline.toString());
+			bwBitbucketPipeline.close();
+			fwBitbucketPipeline.close();
+			
+			log.info("End BitbucketPipeline");
 
 		} catch (Exception e) {
 			log.error(e.toString());
