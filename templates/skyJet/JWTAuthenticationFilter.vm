@@ -62,9 +62,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(SUPER_SECRET_KEY));
 
 		String token = Jwts.builder()
-				.setIssuedAt(new Date()).setIssuer(ISSUER_INFO)
-				.setSubject(((User) auth.getPrincipal()).getUsername())
-				.setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
+				.issuedAt(new Date()).issuer(ISSUER_INFO)
+				.subject(((User) auth.getPrincipal()).getUsername())
+				.expiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
 				.signWith(key)
 				.compact();
 

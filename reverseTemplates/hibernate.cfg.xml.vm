@@ -9,34 +9,26 @@
         <property name="hibernate.connection.password">${connectionPassword}</property>
         <property name="hibernate.connection.username">${connectionUsername}</property>
         
-        ##Schema ORACLE 
-        #if(${connectionDriverClass}=='oracle.jdbc.driver.OracleDriver')
-        	<property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
+		#if(${connectionDriverClass}=='oracle.jdbc.driver.OracleDriver')
+		##Schema ORACLE
+<property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
 		#end
-		
-		
-		##Schema POSTGRES 
-        #if(${connectionDriverClass}=='org.postgresql.Driver')
-        	<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+		#if(${connectionDriverClass}=='org.postgresql.Driver')
+		##Schema POSTGRES
+<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 		#end
-		
-		
+		#if(${connectionDriverClass}=='com.mysql.jdbc.Driver')
 		##Schema MYSQL 
-        #if(${connectionDriverClass}=='com.mysql.jdbc.Driver')
-        	<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 		#end  
-		
-		
+		#if(${connectionDriverClass}=='com.microsoft.sqlserver.jdbc.SQLServerDriver')
 		##Schema SQLSERVER 
-        #if(${connectionDriverClass}=='com.microsoft.sqlserver.jdbc.SQLServerDriver')
-        	<property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
+<property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
 		#end 
-		
-		
+		#if(${connectionDriverClass}=='com.ibm.as400.access.AS400JDBCDriver')
 		##Schema AS400
-        #if(${connectionDriverClass}=='com.ibm.as400.access.AS400JDBCDriver')
-        	<property name="hibernate.dialect">org.hibernate.dialect.DB2iDialect</property>
+<property name="hibernate.dialect">org.hibernate.dialect.DB2iDialect</property>
 		#end        
-    </session-factory>
+	</session-factory>
     
 </hibernate-configuration>

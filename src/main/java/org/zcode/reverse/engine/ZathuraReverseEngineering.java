@@ -150,19 +150,19 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 			
 			// Limpio las propiedades
 			
-			ve.clearProperty("file.resource.loader.description");
-			ve.clearProperty("file.resource.loader.class");
-			ve.clearProperty("file.resource.loader.path");
-			ve.clearProperty("file.resource.loader.cache");
-			ve.clearProperty("file.resource.loader.modificationCheckInterval");
+			ve.clearProperty("resource.loader.file.description");
+			ve.clearProperty("resource.loader.file.class");
+			ve.clearProperty("resource.loader.file.path");
+			ve.clearProperty("resource.loader.file.cache");
+			ve.clearProperty("resource.loader.file.modificationCheckInterval");
 			
 			Properties properties = new Properties();
 
-			properties.setProperty("file.resource.loader.description", "Velocity File Resource Loader");															  		 
-			properties.setProperty("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.FileResourceLoader");
-			properties.setProperty("file.resource.loader.path", reverseTemplatesPath);
-			properties.setProperty("file.resource.loader.cache", "false");
-			properties.setProperty("file.resource.loader.modificationCheckInterval", "2");
+			properties.setProperty("resource.loader.file.description", "Velocity File Resource Loader");															  		 
+			properties.setProperty("resource.loader.file.class", "org.apache.velocity.runtime.resource.loader.FileResourceLoader");
+			properties.setProperty("resource.loader.file.path", reverseTemplatesPath);
+			properties.setProperty("resource.loader.file.cache", "false");
+			properties.setProperty("resource.loader.file.modificationCheckInterval", "2");
 			
 			
 
