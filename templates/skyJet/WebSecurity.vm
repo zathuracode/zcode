@@ -65,9 +65,7 @@ public class WebSecurity {
 		 * 5. Se indica que el resto de URLs esten securizadas
 		 */
 		httpSecurity
-			.sessionManagement(sessionManager -> {
-				sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-			})
+			.sessionManagement(sessionManager -> sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authorizeHttpRequests( auth -> {
 				auth.requestMatchers(LOGIN_URL, ACTUATOR_URL, API_DOCS, SWAGGER_UI).permitAll();
 				auth.anyRequest().authenticated();
@@ -77,9 +75,7 @@ public class WebSecurity {
 			.addFilter(new JWTAuthorizationFilter(authenticationManager))
 			.addFilter(new JWTAuthenticationFilter(authenticationManager))
 			.authenticationManager(authenticationManager)
-			.headers( headersConfig -> {
-				headersConfig.frameOptions(FrameOptionsConfig::disable);
-			});
+			.headers( headersConfig -> headersConfig.frameOptions(FrameOptionsConfig::disable));
 	
 		 return httpSecurity.build(); 	
 	}
