@@ -38,7 +38,7 @@ server.tomcat.accesslog.file-date-format=yyyy-MM-dd
 server.tomcat.accesslog.prefix=access_log
 server.tomcat.accesslog.suffix=.log
 
-#If you’re running on Java 21 or up, you can enable virtual threads by setting the property
+#If you are running on Java 21 or up, you can enable virtual threads by setting the property
 spring.threads.virtual.enabled=true
 
 #Swagger

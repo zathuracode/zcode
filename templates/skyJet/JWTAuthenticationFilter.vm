@@ -1,10 +1,10 @@
 package ${virginPackage}.security;
 
-import static  ${virginPackage}.security.Constants.HEADER_AUTHORIZACION_KEY;
-import static  ${virginPackage}.security.Constants.ISSUER_INFO;
-import static  ${virginPackage}.security.Constants.SUPER_SECRET_KEY;
-import static  ${virginPackage}.security.Constants.TOKEN_BEARER_PREFIX;
-import static  ${virginPackage}.security.Constants.TOKEN_EXPIRATION_TIME;
+import static  ${virginPackage}.security.SecurityConstants.HEADER_AUTHORIZACION_KEY;
+import static  ${virginPackage}.security.SecurityConstants.ISSUER_INFO;
+import static  ${virginPackage}.security.SecurityConstants.SUPER_SECRET_KEY;
+import static  ${virginPackage}.security.SecurityConstants.TOKEN_BEARER_PREFIX;
+import static  ${virginPackage}.security.SecurityConstants.TOKEN_EXPIRATION_TIME;
 
 import java.io.IOException;
 import java.util.ArrayList;

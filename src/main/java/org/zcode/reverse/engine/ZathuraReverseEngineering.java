@@ -31,6 +31,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.StringWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Properties;
 
@@ -228,6 +230,10 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 			}
 
 			cfg.merge(context, swCfg);
+			
+			if(!Files.isDirectory(Path.of(tempFiles))) {
+				Files.createDirectory(Path.of(tempFiles));
+			}
 
 			FileWriter fstream = new FileWriter(tempFiles + "hibernate.cfg.xml");
 			BufferedWriter out = new BufferedWriter(fstream);

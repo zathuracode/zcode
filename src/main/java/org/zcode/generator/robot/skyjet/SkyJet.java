@@ -570,6 +570,18 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			bwUtilities.close();
 			fwUtilities.close();
 			log.info("End Utilities");
+			
+			log.info("Begin Constants");
+			Template templateIlogic = ve.getTemplate("Constants.vm");
+			StringWriter swIlogic = new StringWriter();
+			templateIlogic.merge(context, swIlogic);
+
+			FileWriter fwIlogic = new FileWriter(path + "Constants.java");
+			BufferedWriter bwIlogic = new BufferedWriter(fwIlogic);
+			bwIlogic.write(swIlogic.toString());
+			bwIlogic.close();
+			fwIlogic.close();
+			log.info("End Constants");
 
 		} catch (Exception e) {
 			log.error(e.toString());
@@ -926,17 +938,17 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 					+ "service" + GeneratorUtil.slash;
 			String pathDomain = hdLocation + paqueteVirgen + GeneratorUtil.slash + "domain" + GeneratorUtil.slash;
 
-			log.info("Begin Constants");
-			Template templateIlogic = ve.getTemplate("Constants.vm");
+			log.info("Begin SecurityConstants");
+			Template templateIlogic = ve.getTemplate("SecurityConstants.vm");
 			StringWriter swIlogic = new StringWriter();
 			templateIlogic.merge(context, swIlogic);
 
-			FileWriter fwIlogic = new FileWriter(path + "Constants.java");
+			FileWriter fwIlogic = new FileWriter(path + "SecurityConstants.java");
 			BufferedWriter bwIlogic = new BufferedWriter(fwIlogic);
 			bwIlogic.write(swIlogic.toString());
 			bwIlogic.close();
 			fwIlogic.close();
-			log.info("End Constants");
+			log.info("End SecurityConstants");
 
 			log.info("Begin JWTAuthenticationFilter");
 			templateIlogic = ve.getTemplate("JWTAuthenticationFilter.vm");
