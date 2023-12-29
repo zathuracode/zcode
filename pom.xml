@@ -80,8 +80,8 @@
 			<artifactId>commons-configuration2</artifactId>
 			<version>${org.apache.commons.configuration2.version}</version>
 		</dependency>
-		<!-- JDBC Database Drivers -->
 
+		<!-- JDBC Database Drivers -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
