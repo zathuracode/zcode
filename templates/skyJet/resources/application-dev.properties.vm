@@ -58,3 +58,11 @@ logging.level.org.springframework=INFO
 #Monitoring Spring Boot Actuator path /actuator/
 #https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-features.html#production-ready
 management.endpoints.web.exposure.include=*
+
+#eureka configuration
+eureka.client.enabled=false
+#eureka.client.service-url.defaultZone=http://127.0.0.1:9080/eureka
+#eureka.instance.prefer-ip-address=true
+
+#URL Frontend App for CORS
+deployment.url.frontend=http://localhost:8080

@@ -11,10 +11,14 @@ public class SystemException extends VortexbirdException {
 	private static final long serialVersionUID = 1L;
 
 	public SystemException(String exception) {
-        super(500, exception, null);
-    }
-    
-    public SystemException(String exception, Exception e) {
-        super(500, exception, e);
-    }
+		super(ErrorType.SYSTEM, exception);
+	}
+
+	public SystemException(String exception, Exception e) {
+		super(ErrorType.SYSTEM, exception, e);
+	}
+	
+	public SystemException(String exception, String... params) {
+		super(ErrorType.SYSTEM, exception, params);
+	}
 }

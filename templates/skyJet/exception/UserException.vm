@@ -12,10 +12,14 @@ public class UserException extends VortexbirdException {
 	private static final long serialVersionUID = 1L;
 
 	public UserException(String exception) {
-        super(400, exception, null);
-    }
-    
-    public UserException(String exception, Exception e) {
-        super(400, exception, e);
-    }
+		super(ErrorType.USER, exception);
+	}
+
+	public UserException(String exception, Exception e) {
+		super(ErrorType.USER, exception, e);
+	}
+	
+	public UserException(String exception, String... params) {
+		super(ErrorType.USER, exception, params);
+	}
 }

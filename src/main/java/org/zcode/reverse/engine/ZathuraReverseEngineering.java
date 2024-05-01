@@ -160,7 +160,7 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 			
 			Properties properties = new Properties();
 
-			properties.setProperty("resource.loader.file.description", "Velocity File Resource Loader");															  		 
+			properties.setProperty("resource.loader.file.description", "Velocity File Resource Loader");
 			properties.setProperty("resource.loader.file.class", "org.apache.velocity.runtime.resource.loader.FileResourceLoader");
 			properties.setProperty("resource.loader.file.path", reverseTemplatesPath);
 			properties.setProperty("resource.loader.file.cache", "false");
@@ -265,7 +265,7 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 				build = ve.getTemplate("build.xml.vm");
 			} catch (ResourceNotFoundException rnfe) {
 				rnfe.printStackTrace();
-				log.info("doBuild",rnfe);				
+				log.info("doBuild",rnfe);
 			} catch (ParseErrorException pee) {
 				// syntax error: problem parsing the template
 				pee.printStackTrace();
@@ -401,7 +401,7 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 		try {
 			File buildFile = new File(ZathuraReverseEngineeringUtil.getTempFileBuildPath());
 			Project p = new Project();
-			p.setUserProperty("ant.file", buildFile.getAbsolutePath());	
+			p.setUserProperty("ant.file", buildFile.getAbsolutePath());
 			
 			
 
@@ -422,7 +422,7 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 			// Compile Pojos
 			File buildFile2 = new File(ZathuraReverseEngineeringUtil.getTempFileBuildCompilePath());
 			Project p2 = new Project();
-			p2.setUserProperty("ant.file", buildFile2.getAbsolutePath());			
+			p2.setUserProperty("ant.file", buildFile2.getAbsolutePath());
 
 			try {
 				p2.fireBuildStarted();
@@ -435,6 +435,7 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 			} catch (BuildException e) {
 				p2.fireBuildFinished(e);
 				log.error("callAntProcess Helper 2 Compile Pojos",e);
+				e.printStackTrace();
 				throw e;
 			}
 		} catch (Exception e) {

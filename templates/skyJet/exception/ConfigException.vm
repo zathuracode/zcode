@@ -1,0 +1,24 @@
+package ${virginPackage}.exception;
+
+/**
+* @author Zathura Code Generator Version 23.10 http://zathuracode.org/
+* 
+* @generationDate ${localDateTime}
+*
+*/
+public class ConfigException extends VortexbirdException {
+
+	private static final long serialVersionUID = 1L;
+
+	public ConfigException(String exception) {
+		super(ErrorType.CONFIG, exception);
+	}
+
+	public ConfigException(String exception, Exception e) {
+		super(ErrorType.CONFIG, exception, e);
+	}
+	
+	public ConfigException(String exception, String... params) {
+		super(ErrorType.CONFIG, exception, params);
+	}
+}

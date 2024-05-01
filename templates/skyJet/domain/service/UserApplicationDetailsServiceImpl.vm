@@ -1,4 +1,4 @@
-package  ${virginPackage}.entity.service;
+package  ${virginPackage}.domain.service;
 
 import static java.util.Collections.emptyList;
 

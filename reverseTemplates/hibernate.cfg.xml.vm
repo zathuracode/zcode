@@ -21,6 +21,10 @@
 		##Schema MYSQL 
 <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 		#end  
+		#if(${connectionDriverClass}=='software.aws.rds.jdbc.mysql.Driver')
+		##Schema MYSQL AWS
+<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		#end  
 		#if(${connectionDriverClass}=='com.microsoft.sqlserver.jdbc.SQLServerDriver')
 		##Schema SQLSERVER 
 <property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>

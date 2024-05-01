@@ -46,7 +46,7 @@
 	</type-mapping>
 	
 	## MYSQL, SQLSERVER
-	#if(${connectionDriverClass}=='com.mysql.jdbc.Driver' || ${connectionDriverClass}=='com.microsoft.sqlserver.jdbc.SQLServerDriver')
+	#if(${connectionDriverClass}=='com.mysql.jdbc.Driver' || ${connectionDriverClass}=='com.microsoft.sqlserver.jdbc.SQLServerDriver' || ${connectionDriverClass}=='software.aws.rds.jdbc.mysql.Driver')
 		#foreach($table  in ${tablesList})
 			<table-filter match-catalog="${catalog}" match-name="$table" />
 		#end

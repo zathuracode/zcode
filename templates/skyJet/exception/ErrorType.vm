@@ -1,0 +1,22 @@
+package ${virginPackage}.exception;
+
+import lombok.Getter;
+
+/**
+* @author Zathura Code Generator Version 23.10 http://zathuracode.org/
+* 
+* @generationDate ${localDateTime}
+*
+*/
+@Getter
+public enum ErrorType {
+
+	USER(400), CONFIG(412), SYSTEM(500), FORBIDDEN(403), NOT_FOUND(404);
+
+	private final int value;
+
+	ErrorType(int value) {
+		this.value = value;
+	}
+
+}

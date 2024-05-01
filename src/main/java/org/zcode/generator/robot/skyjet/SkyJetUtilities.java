@@ -564,6 +564,8 @@ public class SkyJetUtilities {
 		folderBuilder.add(pckge + "exception");
 
 		folderBuilder.add(pckge + "utility");
+		
+		folderBuilder.add(pckge + "config");
 
 		folderBuilder.add(pckge + "controller");
 
@@ -579,11 +581,11 @@ public class SkyJetUtilities {
 
 		folderBuilder.add(pckge + "security");
 
-		folderBuilder.add(pckge + "entity");
+		folderBuilder.add(pckge + "domain");
 
-		folderBuilder.add(pckge + "entity_service");
+		folderBuilder.add(pckge + "domain_service");
 
-		folderBuilder.add(pckge + "entity_controller");
+		folderBuilder.add(pckge + "domain_controller");
 
 		for (String string : folderBuilder) {
 			try {
@@ -606,18 +608,13 @@ public class SkyJetUtilities {
 	 */
 	public void buildFoldersTest(String packageName, String hardDiskLocation,String packageOriginal, Properties properties) {
 
-		/*
+		
 		// / se construye paquete
 		String pckge = packageName.replace('.', '_') + "_";
-		String modelPckg = packageOriginal.replace('.', '_') + "_";
-
-		String model = modelPckg;
 
 		List<String> folderBuilder = new ArrayList<String>();
 
 		folderBuilder.add(pckge);
-
-		// folderBuilder.add(pckge + "controller");
 
 		folderBuilder.add(pckge + "service");
 		
@@ -632,7 +629,6 @@ public class SkyJetUtilities {
 				log.error(e.getMessage());
 			}
 		}
-		*/
 
 	}
 

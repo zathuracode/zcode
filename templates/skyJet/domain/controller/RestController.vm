@@ -1,11 +1,11 @@
-package ${virginPackage}.entity.controller;
+package ${virginPackage}.domain.controller;
 
 import jakarta.validation.Valid;
 import java.util.Optional;
 import java.util.Date;
 
 import ${virginPackage}.mapper.${metaData.getRealClassName()}Mapper;
-import ${virginPackage}.entity.service.${metaData.getRealClassName()}Service;
+import ${virginPackage}.domain.service.${metaData.getRealClassName()}Service;
 import ${virginPackage}.exception.VortexbirdException;
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,0 +1,14 @@
+package ${virginPackage}.domain.service;
+
+/**
+* @author Zathura Code Generator Version 23.10 http://zathuracode.org/
+* 
+* @generationDate ${localDateTime}
+*
+*/
+
+public interface MessageService {
+
+	public String getMessage(String code, String... params);
+
+}

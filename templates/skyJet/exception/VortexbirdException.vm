@@ -1,0 +1,35 @@
+package ${virginPackage}.exception;
+
+import lombok.Getter;
+import lombok.Setter;
+
+/**
+* @author Zathura Code Generator Version 23.10 http://zathuracode.org/
+* 
+* @generationDate ${localDateTime}
+* 
+*/
+
+@Getter
+@Setter
+public class VortexbirdException extends Exception {
+	
+	private static final long serialVersionUID = 1L;
+	private final ErrorType errorType;
+	private final String exception;
+	private final String[] params;
+
+	public VortexbirdException(ErrorType errorType, String exception, Exception e, String... params) {
+		super(e);
+		this.errorType = errorType;
+		this.exception = exception;
+		this.params = params;
+	}
+	
+	public VortexbirdException(ErrorType errorType, String exception, String... params) {
+		this.errorType = errorType;
+		this.exception = exception;
+		this.params = params;
+	}
+
+}

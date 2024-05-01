@@ -16,7 +16,18 @@
 
 package org.zcode.generator.robot.skyjet;
 
-import lombok.extern.slf4j.Slf4j;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.OutputStreamWriter;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Properties;
+
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -24,20 +35,19 @@ import org.zcode.generator.model.IZathuraGenerator;
 import org.zcode.generator.utilities.GeneratorPathUtil;
 import org.zcode.generator.utilities.GeneratorUtil;
 import org.zcode.generator.utilities.GoogleCodeFormatter;
-import org.zcode.metadata.model.*;
+import org.zcode.metadata.model.ManyToOneMember;
+import org.zcode.metadata.model.Member;
+import org.zcode.metadata.model.MetaData;
+import org.zcode.metadata.model.MetaDataModel;
+import org.zcode.metadata.model.OneToManyMember;
+import org.zcode.metadata.model.OneToOneMember;
+import org.zcode.metadata.model.SimpleMember;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.StringWriter;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Properties;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Zathuracode Generator www.zathuracode.org
- * 
+ *
  * @author Diego Armando Gomez (dgomez@vortexbird.com)
  * @version 1.0
  */
@@ -116,7 +126,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 
 				int virginLastIndexOf = packageOriginal.lastIndexOf(".");
 				virginPackage = packageOriginal.substring(0, virginLastIndexOf);
-				virginPackageWithSeparator = virginPackage.replace(".", "/"); 
+				virginPackageWithSeparator = virginPackage.replace(".", "/");
 			} catch (Exception e) {
 				log.error(e.toString());
 			}
@@ -365,16 +375,16 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 
 			
 			doPomXml(velocityContext, hdLocation);
-			
-
 			doExceptions(velocityContext, hdLocation);
 			doGenericService(velocityContext, hdLocation, metaDataModel, modelName);
 			doDocker(velocityContext, hdLocation, metaDataModel, modelName);
 			doJWTSecurity(velocityContext, hdLocation, metaDataModel, modelName);
-			doUtilites(velocityContext, hdLocation, metaDataModel, modelName);
+			doUtilites(velocityContext, hdLocation);
+			doConfig(velocityContext, hdLocation);
 			doGeneralExceptionHandler(velocityContext, hdLocation, metaDataModel, modelName);
 			doSpringBootRunner(velocityContext, hdLocation, metaDataModel, modelName);
 			doApplicationProperties(velocityContext);
+			doMessagesProperties(velocityContext, hdLocation);
 			doBitbucketPipeline(velocityContext);
 			doORMXML(metaDataModel, velocityContext, hdLocation);
 
@@ -397,7 +407,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 
 			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "repository" + GeneratorUtil.slash;
 			log.info("Begin Interface EntityRepository");
-			Template templateIDao = ve.getTemplate("EntityRepository.vm");
+			Template templateIDao = ve.getTemplate("domain/repository/EntityRepository.vm");
 			StringWriter swIdao = new StringWriter();
 			templateIDao.merge(context, swIdao);
 			FileWriter fwIdao = new FileWriter(path + metaData.getRealClassName() + "Repository.java");
@@ -420,11 +430,11 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 	public void doService(MetaData metaData, VelocityContext context, String hdLocation, MetaDataModel dataModel,
 			String modelName) throws Exception {
 		try {
-			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "entity" + GeneratorUtil.slash + "service"
+			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "domain" + GeneratorUtil.slash + "service"
 					+ GeneratorUtil.slash;
 
 			log.info("Begin Interface Service");
-			Template templateIlogic = ve.getTemplate("Service.vm");
+			Template templateIlogic = ve.getTemplate("domain/service/Service.vm");
 			StringWriter swIlogic = new StringWriter();
 			templateIlogic.merge(context, swIlogic);
 
@@ -436,7 +446,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			log.info("End Interface Service");
 
 			log.info("Begin Class ServiceImpl");
-			Template templateLogic = ve.getTemplate("ServiceImpl.vm");
+			Template templateLogic = ve.getTemplate("domain/service/ServiceImpl.vm");
 			StringWriter swLogic = new StringWriter();
 			templateLogic.merge(context, swLogic);
 			FileWriter fwLogic = new FileWriter(path + metaData.getRealClassName() + "ServiceImpl.java");
@@ -460,7 +470,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			String modelName) throws Exception {
 		try {
 
-			Template dtoTemplate = ve.getTemplate("Dto.vm");
+			Template dtoTemplate = ve.getTemplate("dto/Dto.vm");
 			StringWriter swDto = new StringWriter();
 			dtoTemplate.merge(context, swDto);
 
@@ -488,7 +498,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			
 			log.info("Begin Exception");
 			
-			Template zMessException = ve.getTemplate("ZMessManager.vm");
+			Template zMessException = ve.getTemplate("exception/ZMessManager.vm");
 			StringWriter swZMessException = new StringWriter();
 			zMessException.merge(context, swZMessException);
 			
@@ -498,7 +508,17 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			bwZMessException.close();
 			fwZMessException.close();
 			
-			Template vbException = ve.getTemplate("VortexbirdException.vm");
+			Template errorTypeException = ve.getTemplate("exception/ErrorType.vm");
+			StringWriter swErrorTypeException = new StringWriter();
+			errorTypeException.merge(context, swErrorTypeException);
+			
+			FileWriter fwErrorTypeException = new FileWriter(path + "ErrorType.java");
+			BufferedWriter bwErrorTypeException = new BufferedWriter(fwErrorTypeException);
+			bwErrorTypeException.write(swErrorTypeException.toString());
+			bwErrorTypeException.close();
+			fwErrorTypeException.close();
+			
+			Template vbException = ve.getTemplate("exception/VortexbirdException.vm");
 			StringWriter swVbException = new StringWriter();
 			vbException.merge(context, swVbException);
 			
@@ -508,7 +528,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			bwVbException.close();
 			fwVbException.close();
 			
-			Template systemException = ve.getTemplate("SystemException.vm");
+			Template systemException = ve.getTemplate("exception/SystemException.vm");
 			StringWriter swSystemException = new StringWriter();
 			systemException.merge(context, swSystemException);
 			
@@ -518,7 +538,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			bwSystemException.close();
 			fwSystemException.close();
 			
-			Template configException = ve.getTemplate("ConfigException.vm");
+			Template configException = ve.getTemplate("exception/ConfigException.vm");
 			StringWriter swConfigException = new StringWriter();
 			configException.merge(context, swConfigException);
 			
@@ -528,7 +548,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			bwConfigException.close();
 			fwConfigException.close();
 			
-			Template userException = ve.getTemplate("UserException.vm");
+			Template userException = ve.getTemplate("exception/UserException.vm");
 			StringWriter swUserException = new StringWriter();
 			userException.merge(context, swUserException);
 			
@@ -554,14 +574,13 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 	}
 	
 	@Override
-	public void doUtilites(VelocityContext context, String hdLocation, MetaDataModel dataModel, String modelName)
-			throws Exception {
+	public void doUtilites(VelocityContext context, String hdLocation) throws Exception {
 
 		try {
 
 			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "utility" + GeneratorUtil.slash;
 			log.info("Begin Utilities");
-			Template templateUtilities = ve.getTemplate("Utilities.vm");
+			Template templateUtilities = ve.getTemplate("utility/Utilities.vm");
 			StringWriter swUtilities = new StringWriter();
 			templateUtilities.merge(context, swUtilities);
 			FileWriter fwUtilities = new FileWriter(path + "Utilities.java");
@@ -572,7 +591,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			log.info("End Utilities");
 			
 			log.info("Begin Constants");
-			Template templateIlogic = ve.getTemplate("Constants.vm");
+			Template templateIlogic = ve.getTemplate("utility/Constants.vm");
 			StringWriter swIlogic = new StringWriter();
 			templateIlogic.merge(context, swIlogic);
 
@@ -589,6 +608,43 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 		}
 
 	}
+	
+	@Override
+	public void doConfig(VelocityContext context, String hdLocation)
+			throws Exception {
+		
+		try {
+			
+			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "config" + GeneratorUtil.slash;
+			log.info("Begin LocaleConfig");
+			Template templateUtilities = ve.getTemplate("config/LocaleConfig.vm");
+			StringWriter swUtilities = new StringWriter();
+			templateUtilities.merge(context, swUtilities);
+			FileWriter fwUtilities = new FileWriter(path + "LocaleConfig.java");
+			BufferedWriter bwUtilities = new BufferedWriter(fwUtilities);
+			bwUtilities.write(swUtilities.toString());
+			bwUtilities.close();
+			fwUtilities.close();
+			log.info("End LocaleConfig");
+			
+			log.info("Begin LocaleInterceptor");
+			Template templateIlogic = ve.getTemplate("config/LocaleInterceptor.vm");
+			StringWriter swIlogic = new StringWriter();
+			templateIlogic.merge(context, swIlogic);
+			
+			FileWriter fwIlogic = new FileWriter(path + "LocaleInterceptor.java");
+			BufferedWriter bwIlogic = new BufferedWriter(fwIlogic);
+			bwIlogic.write(swIlogic.toString());
+			bwIlogic.close();
+			fwIlogic.close();
+			log.info("End LocaleInterceptor");
+			
+		} catch (Exception e) {
+			log.error(e.toString());
+			throw e;
+		}
+		
+	}
 
 	@Override
 	public void doApplicationProperties(VelocityContext context) throws Exception {
@@ -598,7 +654,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			
 			String path = properties.getProperty("mainResoruces");
 			
-			Template templateApplication = ve.getTemplate("application.properties.vm");
+			Template templateApplication = ve.getTemplate("resources/application.properties.vm");
 			StringWriter swApplication = new StringWriter();
 			templateApplication.merge(context, swApplication);
 			FileWriter fwApplication = new FileWriter(path + GeneratorUtil.slash + "application.properties");
@@ -607,7 +663,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			bwApplication.close();
 			fwApplication.close();
 			
-			Template templateApplicationDev = ve.getTemplate("application-dev.properties.vm");
+			Template templateApplicationDev = ve.getTemplate("resources/application-dev.properties.vm");
 			StringWriter swApplicationDev = new StringWriter();
 			templateApplicationDev.merge(context, swApplicationDev);
 			FileWriter fwApplicationDev = new FileWriter(path + GeneratorUtil.slash + "application-dev.properties");
@@ -618,6 +674,69 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			
 			log.info("End application.properties.vm");
 
+		} catch (Exception e) {
+			log.error(e.toString());
+			throw e;
+		}
+
+	}
+	
+	@Override
+	public void doMessagesProperties(VelocityContext context, String hdLocation) throws Exception {
+
+		try {
+			log.info("Begin messages.properties.vm");
+			
+			String path = properties.getProperty("mainResoruces");
+			
+			Template templateApplication = ve.getTemplate("resources/messages.properties.vm");
+			StringWriter swApplication = new StringWriter();
+			templateApplication.merge(context, swApplication);
+			
+			OutputStreamWriter fwApplication = new OutputStreamWriter(new FileOutputStream(path + GeneratorUtil.slash + "messages_es.properties"), StandardCharsets.UTF_8);
+			BufferedWriter bwApplication = new BufferedWriter(fwApplication);
+			bwApplication.write(swApplication.toString());
+			bwApplication.close();
+			fwApplication.close();
+			
+			FileWriter fwApplication2 = new FileWriter(path + GeneratorUtil.slash + "messages_en.properties");
+			BufferedWriter bwApplication2 = new BufferedWriter(fwApplication2);
+			bwApplication2.write(swApplication.toString());
+			bwApplication2.close();
+			fwApplication2.close();
+			
+			log.info("End messages.properties.vm");
+			
+			
+			String pathService = hdLocation + paqueteVirgen + GeneratorUtil.slash + "domain" + GeneratorUtil.slash + "service"
+					+ GeneratorUtil.slash;
+			
+			log.info("Begin MessageService.vm");
+			
+			Template messageService = ve.getTemplate("domain/service/MessageService.vm");
+			StringWriter msWriter = new StringWriter();
+			messageService.merge(context, msWriter);
+			FileWriter fwMessageService = new FileWriter(pathService + GeneratorUtil.slash + "MessageService.java");
+			BufferedWriter bwMessageService = new BufferedWriter(fwMessageService);
+			bwMessageService.write(msWriter.toString());
+			bwMessageService.close();
+			fwMessageService.close();
+			
+			log.info("End MessageService.vm");
+			
+			log.info("Begin MessageServiceImpl.vm");
+			
+			Template messageServiceImpl = ve.getTemplate("domain/service/MessageServiceImpl.vm");
+			StringWriter msWriterImpl = new StringWriter();
+			messageServiceImpl.merge(context, msWriterImpl);
+			FileWriter fwMessageServiceImpl = new FileWriter(pathService + GeneratorUtil.slash + "MessageServiceImpl.java");
+			BufferedWriter bwMessageServiceImpl = new BufferedWriter(fwMessageServiceImpl);
+			bwMessageServiceImpl.write(msWriterImpl.toString());
+			bwMessageServiceImpl.close();
+			fwMessageServiceImpl.close();
+			
+			log.info("End MessageServiceImpl.vm");
+			
 		} catch (Exception e) {
 			log.error(e.toString());
 			throw e;
@@ -658,7 +777,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 
 			log.info("Begin orm.xml.vm");
 			String path = properties.getProperty("mainResoruces");
-			Template templatePersistence = ve.getTemplate("orm.xml.vm");
+			Template templatePersistence = ve.getTemplate("resources/orm.xml.vm");
 			StringWriter swPersistence = new StringWriter();
 			templatePersistence.merge(context, swPersistence);
 			FileWriter fwPersistence = new FileWriter(path + GeneratorUtil.slash + "META-INF" + GeneratorUtil.slash + "orm.xml");
@@ -679,7 +798,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 		
 		log.info("Begin doPomXml");
 		
-		Template pomTemplate = ve.getTemplate("pom.xml.vm");;
+		Template pomTemplate = ve.getTemplate("pom.xml.vm");
 		StringWriter swPom = new StringWriter();
 		
 		try {
@@ -687,11 +806,11 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			
 			String pomLocation = GeneratorPathUtil.fullPathProject + GeneratorUtil.slash + GeneratorUtil.pomFile;
 			
-			String groupId = GeneratorPathUtil.groupIdMavenPoject;						
+			String groupId = GeneratorPathUtil.groupIdMavenPoject;
 			String artifactId = GeneratorPathUtil.projectName;
 			String name = GeneratorPathUtil.projectName;
 			String description = "Spring Boot Project generated by Zathuracode 23.10";
-									
+			
 			context.put("groupId", groupId);
 			context.put("artifactId", artifactId);
 			context.put("name", name);
@@ -707,7 +826,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			context.put("versionConnector", versionConnector.equals("")!=true?versionConnector:"configure yourself");
 			
 			
-			pomTemplate.merge(context, swPom);			
+			pomTemplate.merge(context, swPom);
 			
 			FileWriter fstream = new FileWriter(pomLocation);
 			BufferedWriter out = new BufferedWriter(fstream);
@@ -733,7 +852,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "mapper" + GeneratorUtil.slash;
 
 			log.info("Begin Interface DTO Mapper");
-			Template templateIMapperDTO = ve.getTemplate("DTOMapper.vm");
+			Template templateIMapperDTO = ve.getTemplate("mapper/DTOMapper.vm");
 			StringWriter swIMapperDTO = new StringWriter();
 			templateIMapperDTO.merge(context, swIMapperDTO);
 
@@ -758,11 +877,11 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 
 		try {
 
-			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "entity" + GeneratorUtil.slash
+			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "domain" + GeneratorUtil.slash
 					+ "controller" + GeneratorUtil.slash;
 
 			log.info("Begin GeneralExceptionHandler");
-			Template templateUtilities = ve.getTemplate("GeneralExceptionHandler.vm");
+			Template templateUtilities = ve.getTemplate("domain/controller/GeneralExceptionHandler.vm");
 			StringWriter swUtilities = new StringWriter();
 			templateUtilities.merge(context, swUtilities);
 			FileWriter fwUtilities = new FileWriter(path + "GeneralExceptionHandler.java");
@@ -784,11 +903,11 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			MetaDataModel dataModel) throws Exception {
 		try {
 
-			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "entity" + GeneratorUtil.slash
+			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "domain" + GeneratorUtil.slash
 					+ "controller" + GeneratorUtil.slash;
 
 			log.info("Begin RestControllers");
-			Template templateBakcEndBean = ve.getTemplate("RestController.vm");
+			Template templateBakcEndBean = ve.getTemplate("domain/controller/RestController.vm");
 			StringWriter swBackEndBean = new StringWriter();
 			templateBakcEndBean.merge(context, swBackEndBean);
 
@@ -820,7 +939,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 
 			log.info("Begin Entity Generator");
 
-			Template templateEntity = ve.getTemplate("EntityGenerator.vm");
+			Template templateEntity = ve.getTemplate("domain/EntityGenerator.vm");
 			StringWriter swEntity = new StringWriter();
 			templateEntity.merge(velocityContext, swEntity);
 
@@ -831,7 +950,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			fwEntity.close();
 
 			if (metaData.getComposeKey() != null) {
-				Template templateEntityComposeKey = ve.getTemplate("EntityIdGenerator.vm");
+				Template templateEntityComposeKey = ve.getTemplate("domain/EntityIdGenerator.vm");
 				StringWriter swEntityComposeKey = new StringWriter();
 				templateEntityComposeKey.merge(velocityContext, swEntityComposeKey);
 
@@ -883,11 +1002,11 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 	public void doGenericService(VelocityContext context, String hdLocation, MetaDataModel dataModel, String modelName)
 			throws Exception {
 		try {
-			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "entity" + GeneratorUtil.slash + "service"
+			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "domain" + GeneratorUtil.slash + "service"
 					+ GeneratorUtil.slash;
 
 			log.info("Begin Interface GenericService");
-			Template templateIlogic = ve.getTemplate("GenericService.vm");
+			Template templateIlogic = ve.getTemplate("domain/service/GenericService.vm");
 			StringWriter swIlogic = new StringWriter();
 			templateIlogic.merge(context, swIlogic);
 
@@ -934,12 +1053,12 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			throws Exception {
 		try {
 			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "security" + GeneratorUtil.slash;
-			String pathService = hdLocation + paqueteVirgen + GeneratorUtil.slash + "entity" + GeneratorUtil.slash
+			String pathService = hdLocation + paqueteVirgen + GeneratorUtil.slash + "domain" + GeneratorUtil.slash
 					+ "service" + GeneratorUtil.slash;
 			String pathDomain = hdLocation + paqueteVirgen + GeneratorUtil.slash + "domain" + GeneratorUtil.slash;
 
 			log.info("Begin SecurityConstants");
-			Template templateIlogic = ve.getTemplate("SecurityConstants.vm");
+			Template templateIlogic = ve.getTemplate("security/SecurityConstants.vm");
 			StringWriter swIlogic = new StringWriter();
 			templateIlogic.merge(context, swIlogic);
 
@@ -951,7 +1070,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			log.info("End SecurityConstants");
 
 			log.info("Begin JWTAuthenticationFilter");
-			templateIlogic = ve.getTemplate("JWTAuthenticationFilter.vm");
+			templateIlogic = ve.getTemplate("security/JWTAuthenticationFilter.vm");
 			swIlogic = new StringWriter();
 			templateIlogic.merge(context, swIlogic);
 
@@ -963,7 +1082,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			log.info("End JWTAuthenticationFilter");
 
 			log.info("Begin JWTAuthorizationFilter");
-			templateIlogic = ve.getTemplate("JWTAuthorizationFilter.vm");
+			templateIlogic = ve.getTemplate("security/JWTAuthorizationFilter.vm");
 			swIlogic = new StringWriter();
 			templateIlogic.merge(context, swIlogic);
 
@@ -975,7 +1094,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			log.info("End JWTAuthorizationFilter");
 
 			log.info("Begin WebSecurity");
-			templateIlogic = ve.getTemplate("WebSecurity.vm");
+			templateIlogic = ve.getTemplate("security/WebSecurity.vm");
 			swIlogic = new StringWriter();
 			templateIlogic.merge(context, swIlogic);
 
@@ -987,7 +1106,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			log.info("End WebSecurity");
 
 			log.info("Begin UserApplicationDetailsServiceImpl");
-			templateIlogic = ve.getTemplate("UserApplicationDetailsServiceImpl.vm");
+			templateIlogic = ve.getTemplate("domain/service/UserApplicationDetailsServiceImpl.vm");
 			swIlogic = new StringWriter();
 			templateIlogic.merge(context, swIlogic);
 
@@ -999,7 +1118,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			log.info("End UserApplicationDetailsServiceImpl");
 
 			log.info("Begin UserApplication");
-			templateIlogic = ve.getTemplate("UserApplication.vm");
+			templateIlogic = ve.getTemplate("dto/UserApplication.vm");
 			swIlogic = new StringWriter();
 			templateIlogic.merge(context, swIlogic);
 

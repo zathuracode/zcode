@@ -76,7 +76,7 @@ public class Utilities {
 	
 	/**
 	 * @author Camilo Puente
-	 * @author Frank Edward Daza Gonz�lez
+	 * @author Frank Edward Daza González
 	 * @date Nov 1, 2017
 	 * @param lblName
 	 * @param locale
@@ -129,7 +129,7 @@ public class Utilities {
 	/**
 	 * Retorna una fecha inicial con horas, minutos y segundos: 00:00:00
 	 * 
-	 * @author Frank Edward Daza Gonz�lez
+	 * @author Frank Edward Daza González
 	 * @date Nov 20, 2017
 	 * @param date
 	 * @return Date
@@ -148,7 +148,7 @@ public class Utilities {
 	/**
 	 * Retorna una fecha final con horas, minutos y segundos: 23:59:59
 	 * 
-	 * @author Frank Edward Daza Gonz�lez
+	 * @author Frank Edward Daza González
 	 * @date Nov 20, 2017
 	 * @param date
 	 * @return Date
@@ -165,7 +165,7 @@ public class Utilities {
 	}
 
 	/**
-	 * Func��n para redondear un n�mero double a los decimales que le ingresen
+	 * Función para redondear un número double a los decimales que le ingresen
 	 * 
 	 * @author Camilo Delgado
 	 * @version Mar 23, 2018
@@ -187,7 +187,7 @@ public class Utilities {
     }
 
 	/**
-	 * Funci�n para obtener el n�mero que sea m�ltiplo de "multiploDe"
+	 * Función para obtener el número que sea múltiplo de "multiploDe"
 	 * y mayor que "mayorQue"
 	 *
 	 * @author Camilo Delgado

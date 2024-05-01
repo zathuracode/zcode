@@ -32,6 +32,15 @@
     	<version>8.0.21</version>
 	</database>
 	
+	<database>	
+		<name>MySQL Connector/J AWS</name>
+		<driverClassName>software.aws.rds.jdbc.mysql.Driver</driverClassName>
+		<url>jdbc:mysql:aws//&lt;hostname&gt;[&lt;:3306&gt;]/&lt;dbname&gt;</url>	
+		<groupId>software.aws.rds</groupId>
+    	<artifactId>aws-mysql-jdbc</artifactId>
+    	<version>1.1.14</version>
+	</database>
+	
 	<database>
 		<name>Oracle 19c (ojdbc10) (Thin driver)</name>
 		<driverClassName>oracle.jdbc.driver.OracleDriver</driverClassName>

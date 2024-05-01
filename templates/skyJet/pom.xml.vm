@@ -37,6 +37,8 @@
 		<org.pitest.maven.version>1.15.3</org.pitest.maven.version>
 		<org.pitest.junit5.plugin.version>1.2.1</org.pitest.junit5.plugin.version>
 		
+		<spring.cloud.version>2023.0.0</spring.cloud.version>
+		
 		<!-- Por defecto, solo test unitarios seran ejecutados. -->
 		<skip.integration.tests>true</skip.integration.tests>
 		<skip.unit.tests>true</skip.unit.tests>
@@ -125,6 +127,18 @@
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>${springdoc.openapi.starter.webmvc.ui.version}</version>
         </dependency>
+        
+        <!-- Eureka Client -->
+        <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+		
+		<!-- Micrometer prometheus-->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
 
 		<dependency>
 			<groupId>${groupIdConnector}</groupId>
@@ -178,8 +192,6 @@
 			<scope>runtime</scope>
 		</dependency>
 		
-		
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -299,8 +311,8 @@
 						<exclude>${virginPackage}/SpringBootRunner.class</exclude>
 						
 						<!-- exclude classes in package -->
-						<exclude>${virginPackage}.entity.service.*</exclude>
-						<exclude>${virginPackage}.entity.controller.*</exclude>
+						<exclude>${virginPackage}.domain.service.*</exclude>
+						<exclude>${virginPackage}.domain.controller.*</exclude>
 						<exclude>${virginPackage}.dto.*</exclude>
 						<exclude>${virginPackage}.domain.*</exclude>
 						<exclude>${virginPackage}.mapper.*</exclude>
@@ -355,10 +367,10 @@
 	            <!--optional-->
 	            <configuration>
 	                <targetClasses>
-	                    <param>${virginPackage}.entity.service*</param>
+	                    <param>${virginPackage}.service*</param>
 	                </targetClasses>
 	                <targetTests>
-	                    <param>${virginPackage}.entity.service*</param>
+	                    <param>${virginPackage}.service*</param>
 	                </targetTests>
 	            </configuration>	
 	        </plugin>
@@ -366,5 +378,17 @@
 
 		</plugins>
 	</build>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring.cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 </project>

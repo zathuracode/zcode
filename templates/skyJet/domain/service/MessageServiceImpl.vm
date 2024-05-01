@@ -1,0 +1,37 @@
+package ${virginPackage}.domain.service;
+
+import java.util.Locale;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.stereotype.Service;
+
+/**
+* @author Zathura Code Generator Version 23.10 http://zathuracode.org/
+* 
+* @generationDate ${localDateTime}
+*
+*/
+
+@Service
+@Scope("singleton")
+public class MessageServiceImpl implements MessageService {
+	
+	@Autowired
+    private ResourceBundleMessageSource source;
+	
+	public String getMessage(String code, String... params) {
+		Locale locale = LocaleContextHolder.getLocale();
+        
+		try {
+			String message = source.getMessage(code, params, locale);
+			return message;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return code;
+		}
+	}
+	
+}
