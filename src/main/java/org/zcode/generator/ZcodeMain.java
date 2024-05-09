@@ -1,9 +1,24 @@
 package org.zcode.generator;
 
-import lombok.extern.slf4j.Slf4j;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Properties;
+import java.util.stream.Collectors;
+
+import javax.xml.stream.XMLStreamException;
+
 import org.apache.commons.configuration2.Configuration;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.apache.maven.model.Model;
+import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.zcode.generator.exceptions.GeneratorNotFoundException;
 import org.zcode.generator.factory.ZathuraGeneratorFactory;
 import org.zcode.generator.model.IZathuraGenerator;
@@ -17,17 +32,7 @@ import org.zcode.reverse.engine.IZathuraReverseEngineering;
 import org.zcode.reverse.engine.ZathuraReverseEngineering;
 import org.zcode.reverse.utilities.ZathuraReverseEngineeringUtil;
 
-import javax.xml.stream.XMLStreamException;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Properties;
-import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ZcodeMain {
@@ -50,7 +55,6 @@ public class ZcodeMain {
 	public static List<String> TABLE_LIST = null;
 	
 	private static Configuration configuration =null;
-
 	
 	public static void main(String[] args) {		
 		
@@ -154,6 +158,7 @@ public class ZcodeMain {
 			properties.put("testJava", 		PROJECT_PATH+TEST_JAVA);
 			properties.put("testResoruces", PROJECT_PATH+TEST_RESOURCES);
 			properties.put("fullPathProject",PROJECT_PATH);
+			properties.put("zcodeVersion", getZcodeVersion());
 			
 			GeneratorUtil.generateMavenDirectoryStructure(PROJECT_PATH);
 			
@@ -181,9 +186,12 @@ public class ZcodeMain {
 		}finally {
 			System.exit(1);
 		}
-		
-		
+	}
 	
+	private static String getZcodeVersion() throws Exception {
+		MavenXpp3Reader reader = new MavenXpp3Reader();
+        Model model = reader.read(new FileReader("pom.xml"));
+		return model.getVersion();
 	}
 	
 	private static void loadProperties() {
@@ -232,7 +240,8 @@ public class ZcodeMain {
 	private static void printBanner() {
 		try {
 			Files.readAllLines(Paths.get(GeneratorUtil.getCurrentWorkingDirectory()+File.separator+"config"+File.separator+"banner.txt")).forEach(line->System.out.println(line));
-		} catch (IOException e) {
+			System.out.println("(v:" + getZcodeVersion() + ")");
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

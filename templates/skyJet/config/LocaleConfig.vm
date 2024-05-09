@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * @author Zathura Code Generator Version ${zcodeVersion} http://zathuracode.org/
+ * @generationDate ${localDateTime}
+*/
 @Configuration
 public class LocaleConfig implements WebMvcConfigurer {
 

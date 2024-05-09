@@ -24,12 +24,9 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
-* @author Zathura Code Generator Version 23.10 http://zathuracode.org/
-* 
-* @generationDate ${localDateTime}
-* 
+ * @author Zathura Code Generator Version ${zcodeVersion} http://zathuracode.org/
+ * @generationDate ${localDateTime}
 */
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)

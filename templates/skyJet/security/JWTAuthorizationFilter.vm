@@ -23,10 +23,8 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 /**
-* @author Zathura Code Generator Version 23.10 http://zathuracode.org/
-* 
-* @generationDate ${localDateTime}
-*
+ * @author Zathura Code Generator Version ${zcodeVersion} http://zathuracode.org/
+ * @generationDate ${localDateTime}
 */
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
