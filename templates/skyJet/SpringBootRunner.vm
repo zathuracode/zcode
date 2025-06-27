@@ -10,7 +10,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 
 /**
-* @author Zathura Code Generator Version 23.10 http://zathuracode.org/
+* @author Zathura Code Generator Version 25.07 http://zathuracode.org/
 * 
 * @generationDate ${localDateTime}
 * 
