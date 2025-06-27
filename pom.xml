@@ -12,7 +12,7 @@
 		<java.version>21</java.version>
 
 		<org.projectlombok.version>1.18.38</org.projectlombok.version>
-		<org.apache.logging.log4j.version>2.20.0</org.apache.logging.log4j.version>
+		<org.apache.logging.log4j.version>2.25.0</org.apache.logging.log4j.version>
 
 		<org.hibernate.tools.version>5.2.13.Final</org.hibernate.tools.version>
 		<org.apache.velocity.version>2.4.1</org.apache.velocity.version>
