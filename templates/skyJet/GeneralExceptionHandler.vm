@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -24,7 +25,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import jakarta.validation.ConstraintViolationException;
 
-import ${virginPackage}.exception.VortexbirdException;
+
 
 /**
  * * Handle all exceptions and java bean validation errors
@@ -52,7 +53,7 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
 	private static final String TYPE = "type";
     	
 	@Override
-	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception,HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(@NonNull MethodArgumentNotValidException exception,@NonNull HttpHeaders headers, @NonNull HttpStatusCode status, @NonNull WebRequest request) {
 		List<String> validationErrors = exception.getBindingResult().getFieldErrors().stream()
 				.map(error -> error.getField() + FIELD_ERROR_SEPARATOR + error.getDefaultMessage())
 				.collect(Collectors.toList());
@@ -64,7 +65,7 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	@Override
 	@Nullable
-	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException exception,HttpHeaders headers, HttpStatusCode status, WebRequest request) {		
+	protected ResponseEntity<Object> handleHttpMessageNotReadable(@NonNull HttpMessageNotReadableException exception,@NonNull HttpHeaders headers, @NonNull HttpStatusCode status, @NonNull WebRequest request) {		
 		return getExceptionResponseEntity(exception, HttpStatus.BAD_REQUEST,request,Collections.singletonList(exception.getLocalizedMessage()));
 	}
 
