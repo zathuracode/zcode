@@ -1,10 +1,10 @@
 package org.zcode.generator.factory;
 
-import lombok.extern.slf4j.Slf4j;
-import org.zcode.generator.exceptions.GeneratorNotFoundException;
-import org.zcode.generator.model.GeneratorModel;
-import org.zcode.generator.model.IZathuraGenerator;
-import org.zcode.generator.utilities.GeneratorUtil;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
@@ -14,11 +14,13 @@ import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
+
+import org.zcode.generator.exceptions.GeneratorNotFoundException;
+import org.zcode.generator.model.GeneratorModel;
+import org.zcode.generator.model.IZathuraGenerator;
+import org.zcode.generator.utilities.GeneratorUtil;
+
+import lombok.extern.slf4j.Slf4j;
 
 
 /**

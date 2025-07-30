@@ -1,16 +1,18 @@
 package org.zcode.metadata.utilities;
 
-import lombok.extern.slf4j.Slf4j;
-import org.zcode.generator.utilities.GeneratorUtil;
-import org.zcode.metadata.model.Member;
-
-import javax.persistence.Entity;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Entity;
+
+import org.zcode.generator.utilities.GeneratorUtil;
+import org.zcode.metadata.model.Member;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Zathura Generator.

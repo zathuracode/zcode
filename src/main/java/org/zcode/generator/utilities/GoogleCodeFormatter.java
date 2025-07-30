@@ -1,13 +1,14 @@
 package org.zcode.generator.utilities;
 
+import java.io.File;
+
 import com.google.common.base.Charsets;
 import com.google.common.io.CharSink;
 import com.google.common.io.CharSource;
 import com.google.common.io.Files;
 import com.google.googlejavaformat.java.Formatter;
-import lombok.extern.slf4j.Slf4j;
 
-import java.io.File;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Zathura Generator.

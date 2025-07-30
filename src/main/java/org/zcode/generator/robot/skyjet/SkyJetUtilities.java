@@ -1,14 +1,5 @@
 package org.zcode.generator.robot.skyjet;
 
-import lombok.extern.slf4j.Slf4j;
-import org.zcode.generator.utilities.GeneratorUtil;
-import org.zcode.metadata.model.Member;
-import org.zcode.metadata.model.MetaData;
-import org.zcode.metadata.model.MetaDataModel;
-import org.zcode.metadata.model.SimpleMember;
-
-import javax.persistence.Basic;
-import javax.persistence.Column;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -16,6 +7,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+
+import org.zcode.generator.utilities.GeneratorUtil;
+import org.zcode.metadata.model.Member;
+import org.zcode.metadata.model.MetaData;
+import org.zcode.metadata.model.MetaDataModel;
+import org.zcode.metadata.model.SimpleMember;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Zathuracode Generator www.zathuracode.org

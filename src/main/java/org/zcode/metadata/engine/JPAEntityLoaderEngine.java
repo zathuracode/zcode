@@ -1,18 +1,44 @@
 package org.zcode.metadata.engine;
 
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.beanutils.BeanUtils;
-import org.zcode.metadata.model.*;
-import org.zcode.metadata.reader.IMetaDataReader;
-import org.zcode.metadata.utilities.MetaDataUtil;
-
-import javax.persistence.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.net.MalformedURLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.zcode.metadata.model.GeneratedValueMember;
+import org.zcode.metadata.model.ManyToManyMember;
+import org.zcode.metadata.model.ManyToOneMember;
+import org.zcode.metadata.model.Member;
+import org.zcode.metadata.model.MetaData;
+import org.zcode.metadata.model.MetaDataModel;
+import org.zcode.metadata.model.OneToManyMember;
+import org.zcode.metadata.model.OneToOneMember;
+import org.zcode.metadata.model.SimpleMember;
+import org.zcode.metadata.reader.IMetaDataReader;
+import org.zcode.metadata.utilities.MetaDataUtil;
+
+import lombok.extern.slf4j.Slf4j;
 
 
 /**

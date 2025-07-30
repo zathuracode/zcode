@@ -1,9 +1,13 @@
 package org.zcode.generator.utilities;
 
-import lombok.extern.slf4j.Slf4j;
-
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Paths;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Zathura Generator.

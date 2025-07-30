@@ -16,16 +16,6 @@
 
 package org.zcode.generator.robot.skyjet;
 
-import lombok.extern.slf4j.Slf4j;
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.VelocityEngine;
-import org.zcode.generator.model.IZathuraGenerator;
-import org.zcode.generator.utilities.GeneratorPathUtil;
-import org.zcode.generator.utilities.GeneratorUtil;
-import org.zcode.generator.utilities.GoogleCodeFormatter;
-import org.zcode.metadata.model.*;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.StringWriter;
@@ -34,6 +24,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
+
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
+import org.zcode.generator.model.IZathuraGenerator;
+import org.zcode.generator.utilities.GeneratorPathUtil;
+import org.zcode.generator.utilities.GeneratorUtil;
+import org.zcode.generator.utilities.GoogleCodeFormatter;
+import org.zcode.metadata.model.ManyToOneMember;
+import org.zcode.metadata.model.Member;
+import org.zcode.metadata.model.MetaData;
+import org.zcode.metadata.model.MetaDataModel;
+import org.zcode.metadata.model.OneToManyMember;
+import org.zcode.metadata.model.OneToOneMember;
+import org.zcode.metadata.model.SimpleMember;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Zathuracode Generator www.zathuracode.org
