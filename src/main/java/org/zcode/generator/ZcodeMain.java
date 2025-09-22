@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -57,6 +58,7 @@ public class ZcodeMain {
 	public static void main(String[] args) {		
 		
 		printBanner();
+		jdkInfo();
 		log.info("CurrentWorkingDirectory:{}",GeneratorUtil.getCurrentWorkingDirectory());
 		loadProperties();
 		
@@ -248,6 +250,44 @@ public class ZcodeMain {
 			log.error(cex.getMessage());
 		}
 		return null;
+	}
+	
+	private static void jdkInfo() {
+		log.info("#----------------------JDK INFO--------------------#");
+		 // Versión del runtime (Java 9+)
+	    var v = Runtime.version();
+	    log.info("Java version: " + v);                // ej. 21.0.3+7
+	    log.info("Feature: " + v.feature());           // ej. 21
+	    log.info("Interim: " + v.interim());
+	    log.info("Update: " + v.update());
+	    log.info("Build: " + v.build().orElse(null));
+
+	    // Properties típicas
+	    log.info("java.vendor: " + System.getProperty("java.vendor"));
+	    log.info("java.vm.name: " + System.getProperty("java.vm.name"));
+
+	    // Ruta del runtime (JAVA_HOME o la imagen del JDK/JRE en uso)
+	    String javaHome = System.getProperty("java.home");       // ej. .../jdk-21.0.3
+	    log.info("java.home: " + javaHome);
+
+	    // Ruta del ejecutable java que lanzó el proceso
+	    String javaCmd = java.lang.ProcessHandle.current()
+	        .info()
+	        .command()
+	        .orElse("desconocido");
+	    log.info("java executable: " + javaCmd);
+
+	    // ¿Es JDK completo (tiene compilador) o solo JRE?
+	    boolean esJdk = javax.tools.ToolProvider.getSystemJavaCompiler() != null;
+	    log.info("is complete JDK?: " + esJdk);
+
+	    // (Opcional) “Raíz” del JDK cuando java.home apunta a .../jre (antiguo Java 8)
+	    Path raizAproximada = Paths.get(javaHome).getFileName().toString().equalsIgnoreCase("jre")
+	        ? Paths.get(javaHome).getParent()
+	        : Paths.get(javaHome);
+	    log.info("Possible JDK root: " + raizAproximada);
+		log.info("#----------------------JDK INFO--------------------#");
+
 	}
 	
 
