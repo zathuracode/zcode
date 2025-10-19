@@ -30,7 +30,7 @@ import jakarta.validation.ConstraintViolationException;
 /**
  * * Handle all exceptions and java bean validation errors
  * for all endpoints income data that use the @Valid annotation
- * @author Zathura Code Generator Version 25.07 http://zathuracode.org/
+ * @author Zathura Code Generator Version 25.11 http://zathuracode.org/
  * @author Ehab Qadah
 * @generationDate ${localDateTime}
  *
