@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.vortexbird.zcode</groupId>
 	<artifactId>zcode</artifactId>
-	<version>25.07</version>
+	<version>25.10</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -20,8 +20,8 @@
 		<org.apache.commons.configuration2.version>2.9.0</org.apache.commons.configuration2.version>
 		<commons-beanutils.version>1.9.4</commons-beanutils.version>
 
-		<org.postgresql.version>42.7.1</org.postgresql.version>
-		<com.mysql.mysql-connector-j.version>8.2.0</com.mysql.mysql-connector-j.version>
+		<org.postgresql.version>42.7.8</org.postgresql.version>
+		<com.mysql.mysql-connector-j.version>9.4.0</com.mysql.mysql-connector-j.version>
 		<com.oracle.database.jdbc.ojdbc11.version>23.3.0.23.09</com.oracle.database.jdbc.ojdbc11.version>
 		<com.microsoft.sqlserver.mssql-jdbc.version>12.5.0.jre11-preview</com.microsoft.sqlserver.mssql-jdbc.version>
 	</properties>

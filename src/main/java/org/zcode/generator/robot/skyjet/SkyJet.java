@@ -697,7 +697,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			String groupId = GeneratorPathUtil.groupIdMavenPoject;						
 			String artifactId = GeneratorPathUtil.projectName;
 			String name = GeneratorPathUtil.projectName;
-			String description = "Zathura Code Generator Version 25.07";
+			String description = "Zathura Code Generator Version 25.11";
 									
 			context.put("groupId", groupId);
 			context.put("artifactId", artifactId);
