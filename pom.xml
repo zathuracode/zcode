@@ -11,21 +11,21 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>25</java.version>
 
-		<org.projectlombok.version>1.18.42</org.projectlombok.version>
-		<org.apache.logging.log4j.version>2.25.0</org.apache.logging.log4j.version>
+		<org.projectlombok.version>1.18.44</org.projectlombok.version>
+		<org.apache.logging.log4j.version>2.25.2</org.apache.logging.log4j.version>
 
 		<org.hibernate.tools.version>5.2.13.Final</org.hibernate.tools.version>
 		<org.apache.velocity.version>2.4.1</org.apache.velocity.version>
 		<com.google.guava.version>33.5.0-jre</com.google.guava.version>
-		<com.google.googlejavaformat.version>1.30.0</com.google.googlejavaformat.version>
+		<com.google.googlejavaformat.version>1.35.0</com.google.googlejavaformat.version>
 
-		<org.apache.commons.configuration2.version>2.9.0</org.apache.commons.configuration2.version>
-		<commons-beanutils.version>1.9.4</commons-beanutils.version>
+		<org.apache.commons.configuration2.version>2.13.0</org.apache.commons.configuration2.version>
+		<commons-beanutils.version>1.11.0</commons-beanutils.version>
 
-		<org.postgresql.version>42.7.8</org.postgresql.version>
-		<com.mysql.mysql-connector-j.version>9.4.0</com.mysql.mysql-connector-j.version>
-		<com.oracle.database.jdbc.ojdbc11.version>23.3.0.23.09</com.oracle.database.jdbc.ojdbc11.version>
-		<com.microsoft.sqlserver.mssql-jdbc.version>12.5.0.jre11-preview</com.microsoft.sqlserver.mssql-jdbc.version>
+		<org.postgresql.version>42.7.10</org.postgresql.version>
+		<com.mysql.mysql-connector-j.version>9.6.0</com.mysql.mysql-connector-j.version>
+		<com.oracle.database.jdbc.ojdbc11.version>23.26.1.0.0</com.oracle.database.jdbc.ojdbc11.version>
+		<com.microsoft.sqlserver.mssql-jdbc.version>13.4.0.jre11</com.microsoft.sqlserver.mssql-jdbc.version>
 	</properties>
 
 	<dependencies>
@@ -125,7 +125,7 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.14.0</version>
+				<version>3.15.0</version>
 				<configuration>
 					<release>${java.version}</release>
 					<annotationProcessorPaths>
@@ -139,7 +139,28 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>3.6.2</version>
+				<executions>
+					<execution>
+						<id>enforce-maven</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireMavenVersion>
+									<version>[3.6.3,)</version>
+								</requireMavenVersion>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.8.0</version>
 				<executions>
 					<execution>
 						<phase>package</phase>
