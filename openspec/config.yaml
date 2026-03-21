@@ -1,0 +1,27 @@
+schema: spec-driven
+
+context: |
+  Project: Zcode / Zathuracode
+  Purpose: Java-based code generator that reverse engineers database schemas and generates Spring Boot applications.
+  Build: Maven project targeting Java 25.
+  Main technologies:
+    - Java
+    - Maven
+    - Apache Velocity templates
+    - Hibernate Tools for reverse engineering
+    - Log4j2 for logging
+  Important conventions:
+    - Preserve compatibility of the generator before adopting large framework migrations.
+    - Avoid unnecessary migrations from javax.* to jakarta.* in the generator unless explicitly planned.
+    - Prefer stable dependency upgrades over beta releases.
+    - Generated application output must remain buildable after generator changes.
+
+rules:
+  proposal:
+    - Describe user impact on the generator or generated projects.
+    - Call out compatibility risks explicitly when touching reverse engineering or templates.
+  design:
+    - Mention affected generation flow stages when relevant: reverse engineering, metadata loading, templating, formatting, packaging.
+  tasks:
+    - Break work into verifiable steps with build or generation validation.
+    - Include end-to-end generation validation when the change affects templates, dependencies, or code generation flow.

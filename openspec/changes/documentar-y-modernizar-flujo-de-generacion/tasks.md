@@ -1,0 +1,8 @@
+- [ ] 1.1 Documentar el flujo end to end de Zathuracode desde `ZcodeMain` hasta el proyecto Spring Boot generado.
+- [ ] 1.2 Documentar prerequisitos operativos para ejecutar el generador: Java, Maven, configuracion local y base de datos objetivo.
+- [ ] 1.3 Documentar las etapas del pipeline: reverse engineering, metadata loading, templating, formatting y validacion de packaging.
+- [ ] 2.1 Definir y publicar la politica de modernizacion incremental del generador.
+- [ ] 2.2 Registrar que migraciones mayores como Hibernate 6 o Jakarta requieren un cambio OpenSpec separado.
+- [ ] 3.1 Estandarizar la validacion minima obligatoria para cambios en dependencias, templates o flujo de generacion.
+- [ ] 3.2 Validar el flujo con `mvn -DskipTests compile`, `mvn -DskipTests package`, ejecucion de `ZcodeMain` y compilacion del proyecto generado.
+- [ ] 4.1 Socializar la documentacion con el equipo y usar este cambio como base para futuras propuestas de modernizacion.
