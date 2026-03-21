@@ -53,6 +53,7 @@ public class ZcodeMain {
 	public static List<String> TABLE_LIST = null;
 	
 	private static Configuration configuration =null;
+	private static int exitCode = 0;
 
 	
 	public static void main(String[] args) {		
@@ -169,21 +170,28 @@ public class ZcodeMain {
 			
 				
 		} catch (FileNotFoundException e) {			
+			exitCode = 1;
 			log.error(e.getMessage());
 		} catch (InstantiationException e) {			
+			exitCode = 1;
 			log.error(e.getMessage());
 		} catch (IllegalAccessException e) {			
+			exitCode = 1;
 			log.error(e.getMessage());
 		} catch (ClassNotFoundException e) {			
+			exitCode = 1;
 			log.error(e.getMessage());
 		} catch (XMLStreamException e) {			
+			exitCode = 1;
 			log.error(e.getMessage());
 		} catch (GeneratorNotFoundException e) {			
+			exitCode = 1;
 			log.error(e.getMessage());
 		} catch (Exception e) {			
+			exitCode = 1;
 			log.error(e.getMessage());
 		}finally {
-			System.exit(1);
+			System.exit(exitCode);
 		}
 		
 		
@@ -247,6 +255,7 @@ public class ZcodeMain {
 			Configuration configuration = configurations.properties(new File("zcode-gen.properties"));
 			return configuration;
 		} catch (ConfigurationException cex) {
+			exitCode = 1;
 			log.error(cex.getMessage());
 		}
 		return null;

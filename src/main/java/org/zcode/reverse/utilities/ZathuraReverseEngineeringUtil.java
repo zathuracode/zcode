@@ -483,19 +483,27 @@ public class ZathuraReverseEngineeringUtil {
 	 *            the file
 	 */
 	public static void deleteFiles(File file) {
-		File fileAux = null;
-		File listFiles[] = null;
-		int iPos = -1;
-
-		listFiles = file.listFiles();
-		for (iPos = 0; iPos < listFiles.length; iPos++) {
-			fileAux = listFiles[iPos];
-			if (fileAux.isDirectory())
-				deleteFiles(listFiles[iPos]);
-			listFiles[iPos].delete();
+		if (file == null || !file.exists()) {
+			return;
 		}
-		if (file.listFiles().length == 0)
+
+		File[] listFiles = file.listFiles();
+		if (listFiles == null) {
 			file.delete();
+			return;
+		}
+
+		for (File child : listFiles) {
+			if (child.isDirectory()) {
+				deleteFiles(child);
+			}
+			child.delete();
+		}
+
+		File[] remainingFiles = file.listFiles();
+		if (remainingFiles != null && remainingFiles.length == 0) {
+			file.delete();
+		}
 	}
 
 	/**

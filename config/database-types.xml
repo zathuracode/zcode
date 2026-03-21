@@ -23,13 +23,13 @@
     </database>
     -->
     
-    <database>	
+	<database>	
 		<name>MySQL Connector/J</name>
-		<driverClassName>com.mysql.jdbc.Driver</driverClassName>
+		<driverClassName>com.mysql.cj.jdbc.Driver</driverClassName>
 		<url>jdbc:mysql://&lt;hostname&gt;[&lt;:3306&gt;]/&lt;dbname&gt;</url>	
-		<groupId>mysql</groupId>
-    	<artifactId>mysql-connector-java</artifactId>
-    	<version>8.0.21</version>
+		<groupId>com.mysql</groupId>
+    	<artifactId>mysql-connector-j</artifactId>
+    	<version>9.6.0</version>
 	</database>
 	
 	<database>
