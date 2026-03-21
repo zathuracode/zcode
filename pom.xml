@@ -16,6 +16,8 @@
 
 		<org.hibernate.tools.version>5.2.13.Final</org.hibernate.tools.version>
 		<org.apache.velocity.version>2.4.1</org.apache.velocity.version>
+		<com.google.guava.version>33.5.0-jre</com.google.guava.version>
+		<com.google.googlejavaformat.version>1.30.0</com.google.googlejavaformat.version>
 
 		<org.apache.commons.configuration2.version>2.9.0</org.apache.commons.configuration2.version>
 		<commons-beanutils.version>1.9.4</commons-beanutils.version>
@@ -32,6 +34,7 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>${org.projectlombok.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.velocity/velocity -->
@@ -80,6 +83,18 @@
 			<version>${org.apache.commons.configuration2.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${com.google.guava.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.googlejavaformat</groupId>
+			<artifactId>google-java-format</artifactId>
+			<version>${com.google.googlejavaformat.version}</version>
+		</dependency>
+
 		<!-- JDBC Database Drivers -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -113,6 +128,13 @@
 				<version>3.14.0</version>
 				<configuration>
 					<release>${java.version}</release>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>${org.projectlombok.version}</version>
+						</path>
+					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
 			<plugin>
