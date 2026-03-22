@@ -1,13 +1,15 @@
+#set($spring = '$')
+
 #Info SpringBoot Microservices App
 spring.application.name=${name}
 spring.info.build.encoding=UTF-8
 
 #Spring DataSource Basic Config
-spring.datasource.url=${connectionUrl}
+spring.datasource.url=${spring}{DB_URL:jdbc:postgresql://localhost:5432/${name}}
 spring.jpa.properties.hibernate.default_schema=${schema}
 spring.jpa.open-in-view=false
-spring.datasource.username= ${connectionUsername}
-spring.datasource.password= ${connectionPassword}
+spring.datasource.username=${spring}{DB_USERNAME:change_me}
+spring.datasource.password=${spring}{DB_PASSWORD:change_me}
 
 #Hikari DataSource
 spring.datasource.hikari.minimum-idle=2
@@ -57,4 +59,13 @@ logging.level.org.springframework=INFO
 
 #Monitoring Spring Boot Actuator path /actuator/
 #https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-features.html#production-ready
-management.endpoints.web.exposure.include=*
+management.endpoints.web.exposure.include=health,info
+management.endpoint.health.show-details=when_authorized
+
+#Security defaults for local development. Override via environment variables or .env file.
+security.jwt.issuer=${spring}{JWT_ISSUER:https://zathuracode.org}
+security.jwt.secret=${spring}{JWT_SECRET:c3ByaW5nLWJvb3QtNC1zZWN1cmUtZGV2LWp3dC1rZXktMzItYnl0ZXM=}
+security.jwt.expiration-ms=${spring}{JWT_EXPIRATION_MS:86400000}
+app.security.allowed-origins=${spring}{APP_ALLOWED_ORIGINS:http://localhost:3000,http://127.0.0.1:3000}
+app.security.default-user.username=${spring}{APP_DEFAULT_USERNAME:admin}
+app.security.default-user.password=${spring}{APP_DEFAULT_PASSWORD:change-me-now}

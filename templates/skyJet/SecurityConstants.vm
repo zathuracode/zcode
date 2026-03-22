@@ -1,5 +1,9 @@
 package  ${virginPackage}.security;
 
+import javax.crypto.SecretKey;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+
 /**
 * @author Zathura Code Generator Version 25.11 http://zathuracode.org/
 * 
@@ -16,7 +20,8 @@ public class SecurityConstants {
 
 	public static final String LOGIN_URL = "/login";
 	//Path http://localhost:9090/actuator
-	public static final String ACTUATOR_URL = "/actuator/**";
+	public static final String ACTUATOR_URL = "/actuator/info";
+	public static final String ACTUATOR_HEALTH_URL = "/actuator/health/**";
 	
 	//Path http://localhost:9090/swagger-ui/index.html
 	public static final String API_DOCS="/v3/api-docs/**";
@@ -26,10 +31,8 @@ public class SecurityConstants {
 	public static final String HEADER_AUTHORIZACION_KEY = "Authorization";
 	public static final String TOKEN_BEARER_PREFIX = "Bearer ";
 
-	// JWT
-
-	public static final String ISSUER_INFO = "https://zathuracode.org";
-	public static final String SUPER_SECRET_KEY = "z4tur4c0dv102023isth3b3stcodeg3n3ratorintheworldofj4v4v0rtex2023";
-	public static final long TOKEN_EXPIRATION_TIME = 864_000_000; // 10 day
+	public static SecretKey buildSecretKey(String encodedSecretKey) {
+		return Keys.hmacShaKeyFor(Decoders.BASE64.decode(encodedSecretKey));
+	}
 
 }

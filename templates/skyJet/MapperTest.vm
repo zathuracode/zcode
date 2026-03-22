@@ -1,0 +1,21 @@
+package ${virginPackage}.mapper;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import ${package}.${metaData.getRealClassName()};
+import ${virginPackage}.dto.${metaData.getRealClassName()}DTO;
+import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
+
+class ${metaData.getRealClassName()}MapperTest {
+
+	private final ${metaData.getRealClassName()}Mapper mapper = Mappers.getMapper(${metaData.getRealClassName()}Mapper.class);
+
+	@Test
+	void shouldMapEntityToDto() {
+		${metaData.getRealClassName()} entity = new ${metaData.getRealClassName()}();
+		${metaData.getRealClassName()}DTO dto = mapper.${metaData.getRealClassNameAsVariable()}To${metaData.getRealClassName()}DTO(entity);
+
+		assertNotNull(dto);
+	}
+}

@@ -46,10 +46,14 @@ public class ${metaData.getRealClassName()} implements java.io.Serializable {
 		@Id
 	    @Column(name="${primaryKey.getDatabaseName()}", unique=true, nullable=false)
 	     #if(${connectionDriverClass}=='oracle.jdbc.driver.OracleDriver')
+	     	#if(${primaryKey.getType().getSimpleName()} != "String")
 	    	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CALL_SEQ_${databaseName}")
 			@SequenceGenerator(sequenceName = "SEQ_${databaseName}", allocationSize = 1, name = "CALL_SEQ_${databaseName}")
+			#end
 	    #else
+	    	#if(${primaryKey.getType().getSimpleName()} != "String")
 	    	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	    	#end
 		#end
 		private ${primaryKey.getType().getSimpleName()} ${primaryKey.getShowName()};
 	#end

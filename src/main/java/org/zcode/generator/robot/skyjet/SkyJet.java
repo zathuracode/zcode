@@ -384,6 +384,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			doApplicationProperties(velocityContext);
 			doBitbucketPipeline(velocityContext);
 			doORMXML(metaDataModel, velocityContext, hdLocation);
+			doTests(velocityContext, hdLocation, listMetaData);
 
 			String restPath = paqueteVirgen + GeneratorUtil.slash + "controller";
 			restPath = restPath.replace(GeneratorUtil.slash, ".");
@@ -427,8 +428,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 	public void doService(MetaData metaData, VelocityContext context, String hdLocation, MetaDataModel dataModel,
 			String modelName) throws Exception {
 		try {
-			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "entity" + GeneratorUtil.slash + "service"
-					+ GeneratorUtil.slash;
+			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "service" + GeneratorUtil.slash;
 
 			log.info("Begin Interface Service");
 			Template templateIlogic = ve.getTemplate("Service.vm");
@@ -544,6 +544,16 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			bwUserException.write(swUserException.toString());
 			bwUserException.close();
 			fwUserException.close();
+
+			Template resourceNotFoundException = ve.getTemplate("ResourceNotFoundException.vm");
+			StringWriter swResourceNotFoundException = new StringWriter();
+			resourceNotFoundException.merge(context, swResourceNotFoundException);
+
+			FileWriter fwResourceNotFoundException = new FileWriter(path + "ResourceNotFoundException.java");
+			BufferedWriter bwResourceNotFoundException = new BufferedWriter(fwResourceNotFoundException);
+			bwResourceNotFoundException.write(swResourceNotFoundException.toString());
+			bwResourceNotFoundException.close();
+			fwResourceNotFoundException.close();
 			
 			log.info("End Exception");
 			
@@ -552,6 +562,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			GoogleCodeFormatter.formatJavaCodeFile(path + "SystemException.java");
 			GoogleCodeFormatter.formatJavaCodeFile(path + "ConfigException.java");
 			GoogleCodeFormatter.formatJavaCodeFile(path + "UserException.java");
+			GoogleCodeFormatter.formatJavaCodeFile(path + "ResourceNotFoundException.java");
 
 		} catch (Exception e) {
 			log.error(e.toString());
@@ -765,8 +776,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 
 		try {
 
-			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "entity" + GeneratorUtil.slash
-					+ "controller" + GeneratorUtil.slash;
+			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "controller" + GeneratorUtil.slash;
 
 			log.info("Begin GeneralExceptionHandler");
 			Template templateUtilities = ve.getTemplate("GeneralExceptionHandler.vm");
@@ -791,8 +801,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			MetaDataModel dataModel) throws Exception {
 		try {
 
-			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "entity" + GeneratorUtil.slash
-					+ "controller" + GeneratorUtil.slash;
+			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "controller" + GeneratorUtil.slash;
 
 			log.info("Begin RestControllers");
 			Template templateBakcEndBean = ve.getTemplate("RestController.vm");
@@ -890,8 +899,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 	public void doGenericService(VelocityContext context, String hdLocation, MetaDataModel dataModel, String modelName)
 			throws Exception {
 		try {
-			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "entity" + GeneratorUtil.slash + "service"
-					+ GeneratorUtil.slash;
+			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "service" + GeneratorUtil.slash;
 
 			log.info("Begin Interface GenericService");
 			Template templateIlogic = ve.getTemplate("GenericService.vm");
@@ -941,8 +949,7 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			throws Exception {
 		try {
 			String path = hdLocation + paqueteVirgen + GeneratorUtil.slash + "security" + GeneratorUtil.slash;
-			String pathService = hdLocation + paqueteVirgen + GeneratorUtil.slash + "entity" + GeneratorUtil.slash
-					+ "service" + GeneratorUtil.slash;
+			String pathService = hdLocation + paqueteVirgen + GeneratorUtil.slash + "service" + GeneratorUtil.slash;
 			String pathDomain = hdLocation + paqueteVirgen + GeneratorUtil.slash + "domain" + GeneratorUtil.slash;
 
 			log.info("Begin SecurityConstants");
@@ -1021,6 +1028,102 @@ public class SkyJet implements IZathuraSkyJetTemplate, IZathuraGenerator {
 			log.error(e.toString());
 			throw e;
 		}
+	}
+
+	private void doTests(VelocityContext context, String hdLocation, List<MetaData> listMetaData) throws Exception {
+		try {
+			String baseTestPath = properties.getProperty("testJava") + GeneratorUtil.slash + paqueteVirgen
+					+ GeneratorUtil.slash;
+
+			GeneratorUtil.createFolder(baseTestPath);
+			GeneratorUtil.createFolder(baseTestPath + "mapper");
+			GeneratorUtil.createFolder(baseTestPath + "controller");
+
+			log.info("Begin SpringBootRunnerTest");
+			Template templateSpringBootRunnerTest = ve.getTemplate("SpringBootRunnerTest.vm");
+			StringWriter swSpringBootRunnerTest = new StringWriter();
+			templateSpringBootRunnerTest.merge(context, swSpringBootRunnerTest);
+			FileWriter fwSpringBootRunnerTest = new FileWriter(baseTestPath + "SpringBootRunnerTest.java");
+			BufferedWriter bwSpringBootRunnerTest = new BufferedWriter(fwSpringBootRunnerTest);
+			bwSpringBootRunnerTest.write(swSpringBootRunnerTest.toString());
+			bwSpringBootRunnerTest.close();
+			fwSpringBootRunnerTest.close();
+			GoogleCodeFormatter.formatJavaCodeFile(baseTestPath + "SpringBootRunnerTest.java");
+			log.info("End SpringBootRunnerTest");
+
+			if (listMetaData == null || listMetaData.isEmpty()) {
+				return;
+			}
+
+			MetaData sampleMetaData = listMetaData.stream()
+					.filter(metaData -> !metaData.getPrimaryKey().isPrimiaryKeyAComposeKey()).findFirst()
+					.orElse(listMetaData.get(0));
+			context.put("metaData", sampleMetaData);
+			context.put("samplePrimaryKeyValue", buildSamplePrimaryKeyValue(sampleMetaData));
+			context.put("samplePrimaryKeyPathValue", buildSamplePrimaryKeyPathValue(sampleMetaData));
+
+			log.info("Begin MapperTest");
+			Template templateMapperTest = ve.getTemplate("MapperTest.vm");
+			StringWriter swMapperTest = new StringWriter();
+			templateMapperTest.merge(context, swMapperTest);
+			FileWriter fwMapperTest = new FileWriter(baseTestPath + "mapper" + GeneratorUtil.slash
+					+ sampleMetaData.getRealClassName() + "MapperTest.java");
+			BufferedWriter bwMapperTest = new BufferedWriter(fwMapperTest);
+			bwMapperTest.write(swMapperTest.toString());
+			bwMapperTest.close();
+			fwMapperTest.close();
+			GoogleCodeFormatter.formatJavaCodeFile(baseTestPath + "mapper" + GeneratorUtil.slash
+					+ sampleMetaData.getRealClassName() + "MapperTest.java");
+			log.info("End MapperTest");
+
+			log.info("Begin ControllerTest");
+			Template templateControllerTest = ve.getTemplate("ControllerTest.vm");
+			StringWriter swControllerTest = new StringWriter();
+			templateControllerTest.merge(context, swControllerTest);
+			FileWriter fwControllerTest = new FileWriter(baseTestPath + "controller" + GeneratorUtil.slash
+					+ sampleMetaData.getRealClassName() + "RestControllerTest.java");
+			BufferedWriter bwControllerTest = new BufferedWriter(fwControllerTest);
+			bwControllerTest.write(swControllerTest.toString());
+			bwControllerTest.close();
+			fwControllerTest.close();
+			GoogleCodeFormatter.formatJavaCodeFile(baseTestPath + "controller" + GeneratorUtil.slash
+					+ sampleMetaData.getRealClassName() + "RestControllerTest.java");
+			log.info("End ControllerTest");
+		} catch (Exception e) {
+			log.error(e.toString());
+			throw e;
+		}
+	}
+
+	private String buildSamplePrimaryKeyValue(MetaData metaData) {
+		String primaryKeyType = metaData.getPrimaryKey().getRealClassName();
+		if ("Long".equals(primaryKeyType)) {
+			return "999L";
+		}
+		if ("Integer".equals(primaryKeyType) || "Short".equals(primaryKeyType) || "Byte".equals(primaryKeyType)) {
+			return "999";
+		}
+		if ("Double".equals(primaryKeyType)) {
+			return "999D";
+		}
+		if ("Float".equals(primaryKeyType)) {
+			return "999F";
+		}
+		if ("Boolean".equals(primaryKeyType)) {
+			return "false";
+		}
+		return "\"missing-id\"";
+	}
+
+	private String buildSamplePrimaryKeyPathValue(MetaData metaData) {
+		String primaryKeyType = metaData.getPrimaryKey().getRealClassName();
+		if ("String".equals(primaryKeyType) || "Character".equals(primaryKeyType)) {
+			return "missing-id";
+		}
+		if ("Boolean".equals(primaryKeyType)) {
+			return "false";
+		}
+		return "999";
 	}
 
 }

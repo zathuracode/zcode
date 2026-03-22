@@ -45,9 +45,9 @@
 		<surefire.and.failsafe.report.dir>target/test-report</surefire.and.failsafe.report.dir>
 		
 		<sonar.exclusions>
-        	src/main/java/${virginPackageWithSeparator}/SpringBootRunner.java,
-			src/main/java/${virginPackageWithSeparator}/entity/controller/*,
-			src/main/java/${virginPackageWithSeparator}/entity/service/*,
+			src/main/java/${virginPackageWithSeparator}/SpringBootRunner.java,
+			src/main/java/${virginPackageWithSeparator}/controller/*,
+			src/main/java/${virginPackageWithSeparator}/service/*,
 		</sonar.exclusions>
 		
 		<sonar.coverage.exclusions>
@@ -298,8 +298,9 @@
 						<exclude>${virginPackage}/SpringBootRunner.class</exclude>
 						
 						<!-- exclude classes in package -->
-						<exclude>${virginPackage}.entity.service.*</exclude>
-						<exclude>${virginPackage}.entity.controller.*</exclude>
+						<exclude>${virginPackage}.service.*</exclude>
+						<exclude>${virginPackage}.controller.*</exclude>
+						<exclude>${virginPackage}.service.*</exclude>
 						<exclude>${virginPackage}.dto.*</exclude>
 						<exclude>${virginPackage}.domain.*</exclude>
 						<exclude>${virginPackage}.mapper.*</exclude>
@@ -354,10 +355,10 @@
 	            <!--optional-->
 	            <configuration>
 	                <targetClasses>
-	                    <param>${virginPackage}.entity.service*</param>
+	                    <param>${virginPackage}.service*</param>
 	                </targetClasses>
 	                <targetTests>
-	                    <param>${virginPackage}.entity.service*</param>
+	                    <param>${virginPackage}.service*</param>
 	                </targetTests>
 	            </configuration>	
 	        </plugin>

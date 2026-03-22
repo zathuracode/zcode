@@ -1,14 +1,12 @@
 package ${virginPackage}.security;
 
 import static  ${virginPackage}.security.SecurityConstants.HEADER_AUTHORIZACION_KEY;
-import static  ${virginPackage}.security.SecurityConstants.ISSUER_INFO;
-import static  ${virginPackage}.security.SecurityConstants.SUPER_SECRET_KEY;
 import static  ${virginPackage}.security.SecurityConstants.TOKEN_BEARER_PREFIX;
-import static  ${virginPackage}.security.SecurityConstants.TOKEN_EXPIRATION_TIME;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.crypto.SecretKey;
 import jakarta.servlet.FilterChain;
@@ -27,8 +25,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ${virginPackage}.domain.UserApplication;
 
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
 
 /**
 * @author Zathura Code Generator Version 25.11 http://zathuracode.org/
@@ -38,10 +34,17 @@ import io.jsonwebtoken.security.Keys;
 */
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-	private AuthenticationManager authenticationManager;
+	private final AuthenticationManager authenticationManager;
+	private final SecretKey secretKey;
+	private final String issuer;
+	private final long tokenExpirationTime;
 
-	public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+	public JWTAuthenticationFilter(AuthenticationManager authenticationManager, SecretKey secretKey, String issuer, long tokenExpirationTime) {
 		this.authenticationManager = authenticationManager;
+		this.secretKey = secretKey;
+		this.issuer = issuer;
+		this.tokenExpirationTime = tokenExpirationTime;
+		setFilterProcessesUrl(SecurityConstants.LOGIN_URL);
 	}
 
 	@Override
@@ -49,7 +52,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		try {
 			UserApplication credenciales = new ObjectMapper().readValue(request.getInputStream(), UserApplication.class);
 
-			return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(credenciales.getUsername(), credenciales.getPassword(), new ArrayList<>()));
+			return authenticationManager.authenticate(UsernamePasswordAuthenticationToken.unauthenticated(credenciales.getUsername(), credenciales.getPassword()));
 
 		} catch (IOException e) {
 			throw new RuntimeException(e);
@@ -59,18 +62,18 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,Authentication auth) throws IOException, ServletException {
 
-		SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(SUPER_SECRET_KEY));
-
 		String token = Jwts.builder()
-				.issuedAt(new Date()).issuer(ISSUER_INFO)
+				.issuedAt(new Date()).issuer(issuer)
 				.subject(((User) auth.getPrincipal()).getUsername())
-				.expiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
-				.signWith(key)
+				.expiration(new Date(System.currentTimeMillis() + tokenExpirationTime))
+				.signWith(secretKey)
 				.compact();
 
 		//Se registra el token en el body
 		response.setContentType("application/json");
-		response.getWriter().write("{\"token\":"+"\""+TOKEN_BEARER_PREFIX + token+"\"}");
+		Map<String, String> payload = new HashMap<>();
+		payload.put("token", TOKEN_BEARER_PREFIX + token);
+		new ObjectMapper().writeValue(response.getWriter(), payload);
 		//Se registra el token en el Header
 		response.addHeader(HEADER_AUTHORIZACION_KEY, TOKEN_BEARER_PREFIX + token);
 		response.getWriter().flush();

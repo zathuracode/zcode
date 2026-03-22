@@ -1,0 +1,30 @@
+package ${virginPackage}.controller;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import ${virginPackage}.mapper.${metaData.getRealClassName()}Mapper;
+import ${virginPackage}.service.${metaData.getRealClassName()}Service;
+import java.util.Optional;
+import org.junit.jupiter.api.Test;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+class ${metaData.getRealClassName()}RestControllerTest {
+
+	@Test
+	void shouldReturnNotFoundWhenEntityDoesNotExist() throws Exception {
+		${metaData.getRealClassName()}Service ${metaData.getRealClassNameAsVariable()}Service = mock(${metaData.getRealClassName()}Service.class);
+		${metaData.getRealClassName()}Mapper ${metaData.getRealClassNameAsVariable()}Mapper = mock(${metaData.getRealClassName()}Mapper.class);
+		MockMvc mockMvc = MockMvcBuilders
+				.standaloneSetup(new ${metaData.getRealClassName()}RestController(${metaData.getRealClassNameAsVariable()}Service, ${metaData.getRealClassNameAsVariable()}Mapper))
+				.setControllerAdvice(new GeneralExceptionHandler())
+				.build();
+
+		when(${metaData.getRealClassNameAsVariable()}Service.findById(${samplePrimaryKeyValue})).thenReturn(Optional.empty());
+
+		mockMvc.perform(get("/api/v1/${metaData.getRealClassNameAsVariable()}/${samplePrimaryKeyPathValue}")).andExpect(status().isNotFound());
+	}
+}

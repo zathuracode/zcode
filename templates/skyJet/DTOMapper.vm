@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
 import $package.${metaData.getRealClassName()};
 import ${virginPackage}.dto.${metaData.getRealClassName()}DTO;
@@ -22,7 +23,7 @@ import ${virginPackage}.dto.${metaData.getRealClassName()}DTO;
 * based on a convention over configuration approach.
 */
 
-@Mapper
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ${metaData.getRealClassName()}Mapper {
 
 	${getMappingsEntityToDTo}

@@ -1,0 +1,20 @@
+package ${virginPackage}.exception;
+
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.http.HttpStatus;
+
+/**
+* @author Zathura Code Generator Version 25.11 http://zathuracode.org/
+* 
+* @generationDate ${localDateTime}
+* 
+*/
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class ResourceNotFoundException extends RuntimeException {
+
+	private static final long serialVersionUID = 1L;
+
+	public ResourceNotFoundException(String resourceName, String identifier) {
+		super(resourceName + " was not found with identifier " + identifier);
+	}
+}

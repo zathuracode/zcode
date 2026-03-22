@@ -1,3 +1,4 @@
 #Info SpringBoot Microservices App
 spring.application.name=${name}
 spring.profiles.active=dev
+spring.config.import=optional:file:.env[.properties]

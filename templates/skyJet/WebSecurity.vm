@@ -1,13 +1,18 @@
 package ${virginPackage}.security;
 
+#set($spring = '$')
+
 import static ${virginPackage}.security.SecurityConstants.ACTUATOR_URL;
+import static ${virginPackage}.security.SecurityConstants.ACTUATOR_HEALTH_URL;
 import static ${virginPackage}.security.SecurityConstants.LOGIN_URL;
 import static ${virginPackage}.security.SecurityConstants.API_DOCS;
 import static ${virginPackage}.security.SecurityConstants.SWAGGER_UI;
 
 import java.util.Arrays;
+import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.crypto.SecretKey;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,6 +30,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import lombok.RequiredArgsConstructor;
 
 
 /**
@@ -37,10 +43,18 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
+@RequiredArgsConstructor
 public class WebSecurity {
 
-	@Autowired
-	private UserDetailsService userDetailsService;
+	private final UserDetailsService userDetailsService;
+	@Value("${spring}{security.jwt.secret}")
+	private String jwtSecret;
+	@Value("${spring}{security.jwt.issuer}")
+	private String jwtIssuer;
+	@Value("${spring}{security.jwt.expiration-ms}")
+	private long jwtExpirationMs;
+	@Value("${spring}{app.security.allowed-origins:http://localhost:3000,http://127.0.0.1:3000}")
+	private String allowedOrigins;
 
 	@Bean
 	BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -56,6 +70,7 @@ public class WebSecurity {
        
         // Get AuthenticationManager
         AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
+        SecretKey secretKey = SecurityConstants.buildSecretKey(jwtSecret);
 		
 		/*
 		 * 1. Se desactiva el uso de cookies
@@ -67,31 +82,26 @@ public class WebSecurity {
 		httpSecurity
 			.sessionManagement(sessionManager -> sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authorizeHttpRequests( auth -> {
-				auth.requestMatchers(LOGIN_URL, ACTUATOR_URL, API_DOCS, SWAGGER_UI).permitAll();
+				auth.requestMatchers(LOGIN_URL, ACTUATOR_HEALTH_URL, ACTUATOR_URL, API_DOCS, SWAGGER_UI).permitAll();
 				auth.anyRequest().authenticated();
 			})
-			
+			.cors(cors -> cors.configurationSource(corsConfigurationSource()))
 			.csrf( AbstractHttpConfigurer::disable )
-			.addFilter(new JWTAuthorizationFilter(authenticationManager))
-			.addFilter(new JWTAuthenticationFilter(authenticationManager))
+			.addFilter(new JWTAuthorizationFilter(authenticationManager, secretKey))
+			.addFilter(new JWTAuthenticationFilter(authenticationManager, secretKey, jwtIssuer, jwtExpirationMs))
 			.authenticationManager(authenticationManager)
-			.headers( headersConfig -> headersConfig.frameOptions(FrameOptionsConfig::disable));
+			.headers( headersConfig -> headersConfig.frameOptions(FrameOptionsConfig::sameOrigin));
 	
 		 return httpSecurity.build(); 	
 	}
 
-
-	public void configure(AuthenticationManagerBuilder auth) throws Exception {
-		// Se define la clase que recupera los usuarios y el algoritmo para procesar los passwords
-		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
-	}
-	
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "DELETE", "OPTIONS", "HEAD"));
+		configuration.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "PATCH", "DELETE", "OPTIONS", "HEAD"));
 		configuration.addAllowedHeader("*");
-		configuration.addAllowedOrigin("*");
+		configuration.setAllowedOriginPatterns(List.of(allowedOrigins.split(",")));
+		configuration.setAllowCredentials(false);
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;

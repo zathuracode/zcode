@@ -1,0 +1,43 @@
+package ${virginPackage};
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import ${virginPackage}.controller.GeneralExceptionHandler;
+import ${virginPackage}.security.WebSecurity;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.runner.WebApplicationContextRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
+
+class SpringBootRunnerTest {
+
+	private final WebApplicationContextRunner contextRunner = new WebApplicationContextRunner()
+			.withPropertyValues("security.jwt.secret=c3ByaW5nLWJvb3QtNC1zZWN1cmUtZGV2LWp3dC1rZXktMzItYnl0ZXM=",
+					"security.jwt.issuer=https://zathuracode.org", "security.jwt.expiration-ms=86400000",
+					"app.security.default-user.password=test-password")
+			.withUserConfiguration(TestConfiguration.class);
+
+	@Test
+	void contextLoads() {
+		contextRunner.run(context -> {
+			assertThat(context).hasSingleBean(SecurityFilterChain.class);
+			assertThat(context).hasSingleBean(GeneralExceptionHandler.class);
+		});
+	}
+
+	@Configuration(proxyBeanMethods = false)
+	@Import({ WebSecurity.class, GeneralExceptionHandler.class })
+	static class TestConfiguration {
+
+		@Bean
+		UserDetailsService userDetailsService() {
+			return new InMemoryUserDetailsManager(User.withUsername("admin").password("{noop}test-password")
+					.authorities("ROLE_USER").build());
+		}
+	}
+}

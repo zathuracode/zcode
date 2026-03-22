@@ -1,7 +1,5 @@
 package  ${virginPackage};
 
-import java.util.concurrent.Executors;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +22,7 @@ public class SpringBootRunner {
 
 	@Bean
 	OpenAPI customOpenAPI() {
-		return new OpenAPI().info(new Info().title("${name}").version("0.0.1").description("${description}"));
+		return new OpenAPI().info(new Info().title("${name} API").version("v1").description("${description}"));
 	}
 
 }

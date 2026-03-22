@@ -1,0 +1,12 @@
+- [x] 1.1 Crear un cambio OpenSpec para la mejora de calidad del codigo generado.
+- [x] 1.2 Documentar seguridad por defecto, arquitectura generada y pruebas minimas.
+- [x] 2.1 Modernizar controllers y services generados hacia constructor injection y paquetes mas estandar.
+- [x] 2.2 Generar respuestas HTTP mas correctas para `findById`, `save` y `delete`.
+- [x] 2.3 Estandarizar errores con `ProblemDetail` y `ResourceNotFoundException`.
+- [x] 2.4 Mover secretos y credenciales generadas a propiedades configurables.
+- [x] 2.5 Evitar `@GeneratedValue` sobre llaves `String`.
+- [x] 2.6 Generar pruebas minimas para contexto, mapper y controller.
+- [x] 3.1 Regenerar `demo-bank` con `ZcodeMain`.
+- [x] 3.2 Validar `mvn -DskipTests compile` en el proyecto generado.
+- [x] 3.3 Validar `mvn test-compile` en el proyecto generado.
+- [x] 3.4 Validar `mvn test` en el proyecto generado.

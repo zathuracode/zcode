@@ -1,4 +1,6 @@
-package  ${virginPackage}.entity.service;
+package  ${virginPackage}.service;
+
+#set($spring = '$')
 
 import static java.util.Collections.emptyList;
 
@@ -7,7 +9,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import lombok.RequiredArgsConstructor;
 
 import ${virginPackage}.domain.UserApplication;
 /**
@@ -18,7 +22,14 @@ import ${virginPackage}.domain.UserApplication;
 */
 
 @Service
+@RequiredArgsConstructor
 public class UserApplicationDetailsServiceImpl implements UserDetailsService {
+
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	@Value("${spring}{app.security.default-user.username:admin}")
+	private String defaultUsername;
+	@Value("${spring}{app.security.default-user.password}")
+	private String defaultPassword;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -31,12 +42,11 @@ public class UserApplicationDetailsServiceImpl implements UserDetailsService {
 			throw new UsernameNotFoundException(username);
 		}
 		
-		if (!username.equals("admin")) {
+		if (!username.equals(defaultUsername)) {
 			throw new UsernameNotFoundException(username);
 		}
 	
-		BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
-		UserApplication userApplication=new UserApplication(username,bCryptPasswordEncoder.encode("password"));
+		UserApplication userApplication=new UserApplication(username,bCryptPasswordEncoder.encode(defaultPassword));
 			
 		return new User(userApplication.getUsername(), userApplication.getPassword(), emptyList());
 	}

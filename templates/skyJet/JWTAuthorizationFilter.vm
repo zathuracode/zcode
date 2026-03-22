@@ -1,7 +1,6 @@
 package ${virginPackage}.security;
 
 import static ${virginPackage}.security.SecurityConstants.HEADER_AUTHORIZACION_KEY;
-import static ${virginPackage}.security.SecurityConstants.SUPER_SECRET_KEY;
 import static ${virginPackage}.security.SecurityConstants.TOKEN_BEARER_PREFIX;
 
 import java.io.IOException;
@@ -19,8 +18,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
 
 /**
 * @author Zathura Code Generator Version 25.11 http://zathuracode.org/
@@ -30,8 +27,11 @@ import io.jsonwebtoken.security.Keys;
 */
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
-	public JWTAuthorizationFilter(AuthenticationManager authManager) {
+	private final SecretKey secretKey;
+
+	public JWTAuthorizationFilter(AuthenticationManager authManager, SecretKey secretKey) {
 		super(authManager);
+		this.secretKey = secretKey;
 	}
 
 	@Override
@@ -55,8 +55,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 		String token = request.getHeader(HEADER_AUTHORIZACION_KEY);
 		if (token != null) {
 			// Se procesa el token y se recupera el usuario.
-			SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(SUPER_SECRET_KEY));
-			String user = Jwts.parser().verifyWith(key).build()
+			String user = Jwts.parser().verifyWith(secretKey).build()
 					.parseSignedClaims(token.replace(TOKEN_BEARER_PREFIX, "")).getPayload().getSubject();
 
 			if (user != null) {
