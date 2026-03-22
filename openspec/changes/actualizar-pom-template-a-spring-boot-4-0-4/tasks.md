@@ -1,0 +1,7 @@
+- [x] 1.1 Crear el cambio OpenSpec para la actualizacion del template a Spring Boot 4.0.4.
+- [x] 1.2 Documentar la estrategia de usar el BOM de Spring Boot primero y fijar solo dependencias externas necesarias.
+- [x] 2.1 Actualizar `templates/skyJet/pom.xml.vm` al parent `4.0.4`.
+- [x] 2.2 Limpiar versiones redundantes en el template y conservar solo las externas necesarias.
+- [x] 2.3 Actualizar `springdoc` y `lombok` a versiones compatibles.
+- [x] 2.4 Validar generando un proyecto real con `ZcodeMain`.
+- [x] 2.5 Validar `mvn -DskipTests compile` y `mvn -DskipTests test-compile` en el proyecto generado.
