@@ -7,7 +7,7 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Entity;
+import jakarta.persistence.Entity;
 
 import org.zcode.generator.utilities.GeneratorUtil;
 import org.zcode.metadata.model.Member;

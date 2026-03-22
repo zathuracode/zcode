@@ -1,6 +1,7 @@
 package ${virginPackage}.dto;
 
 import java.io.Serial;
+import java.math.*;
 import java.util.Date;
 import java.io.Serializable;
 import java.sql.*;

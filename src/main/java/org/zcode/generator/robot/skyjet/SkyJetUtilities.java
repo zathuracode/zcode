@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
 
 import org.zcode.generator.utilities.GeneratorUtil;
 import org.zcode.metadata.model.Member;

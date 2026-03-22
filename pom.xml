@@ -14,7 +14,8 @@
 		<org.projectlombok.version>1.18.44</org.projectlombok.version>
 		<org.apache.logging.log4j.version>2.25.2</org.apache.logging.log4j.version>
 
-		<org.hibernate.tools.version>5.2.13.Final</org.hibernate.tools.version>
+		<org.hibernate.tools.version>7.3.0.Final</org.hibernate.tools.version>
+		<jakarta.persistence.version>3.2.0</jakarta.persistence.version>
 		<org.apache.velocity.version>2.4.1</org.apache.velocity.version>
 		<com.google.guava.version>33.5.0-jre</com.google.guava.version>
 		<com.google.googlejavaformat.version>1.35.0</com.google.googlejavaformat.version>
@@ -43,11 +44,21 @@
 			<artifactId>velocity-engine-core</artifactId>
 			<version>${org.apache.velocity.version}</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-tools -->
+		<!-- Hibernate Tools 7.x -->
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-tools</artifactId>
+			<groupId>org.hibernate.tool</groupId>
+			<artifactId>hibernate-tools-ant</artifactId>
 			<version>${org.hibernate.tools.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.tool</groupId>
+			<artifactId>hibernate-tools-orm</artifactId>
+			<version>${org.hibernate.tools.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.persistence</groupId>
+			<artifactId>jakarta.persistence-api</artifactId>
+			<version>${jakarta.persistence.version}</version>
 		</dependency>
 
 		<!-- LOGS log4j2 y SLF4J -->

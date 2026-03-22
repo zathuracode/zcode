@@ -1,0 +1,11 @@
+- [x] 1.1 Reemplazar `org.hibernate:hibernate-tools` por artifacts `org.hibernate.tool:*` en `7.3.0.Final`.
+- [x] 1.2 Agregar dependencias Maven para `jakarta.persistence` y eliminar el jar local de JPA.
+- [x] 2.1 Migrar la lectura de metadata del generador desde `javax.persistence` a `jakarta.persistence`.
+- [x] 2.2 Reemplazar la compilacion temporal legacy por compilacion en proceso con `JavaCompiler`.
+- [x] 2.3 Eliminar `buildCompile.xml.vm` del flujo de reverse engineering.
+- [x] 3.1 Adaptar `hibernate.cfg.xml` y `hibernate.reveng.xml` a Hibernate Tools 7.3.
+- [x] 3.2 Endurecer el reverse engineering para ejecucion offline y filtros validos.
+- [x] 3.3 Ajustar mappings numericos e imports del codigo generado.
+- [x] 4.1 Validar `mvn -DskipTests compile` y `mvn -DskipTests package` en el generador.
+- [x] 4.2 Ejecutar `org.zcode.generator.ZcodeMain` contra la base `bank`.
+- [x] 4.3 Validar `mvn -DskipTests compile` en `/Users/dgomez/demo-bank`.

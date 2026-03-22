@@ -33,6 +33,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.MethodInvocationException;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
+import org.zcode.generator.utilities.TemporaryJavaCompiler;
 import org.zcode.reverse.utilities.ZathuraReverseEngineeringUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -191,7 +192,6 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 			doCfg(context);
 			doBuild(context);
 			doRevEng(context);
-			doBuildCompile(context);
 			
 			log.info("Execute end doTemplate");
 		} catch (Exception e) {
@@ -342,61 +342,10 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 			throw e;
 		}
 	}
-
-	
-
-	/**
-	 * Do build compile.
-	 *
-	 * @param context the context
-	 */
-	private void doBuildCompile(VelocityContext context)throws Exception {
-		log.info("Begin doBuildCompile");
-		try {
-			Template build = null;
-			StringWriter swBuild = new StringWriter();
-
-			try {
-				build = ve.getTemplate("buildCompile.xml.vm");
-			} catch (ResourceNotFoundException rnfe) {
-				rnfe.printStackTrace();
-				log.error("doBuildCompile",rnfe);
-			} catch (ParseErrorException pee) {
-				// syntax error: problem parsing the template
-				pee.printStackTrace();
-				log.error("doBuildCompile",pee);
-			} catch (MethodInvocationException mie) {
-				// something invoked in the template
-				// threw an exception
-				mie.printStackTrace();
-				log.error("doBuildCompile",mie);
-			} catch (Exception e) {
-				e.printStackTrace();
-				log.error("doBuildCompile",e);
-			}
-
-			build.merge(context, swBuild);
-			log.info(swBuild.toString());
-			FileWriter fstream = new FileWriter(tempFiles + "buildCompile.xml");
-			BufferedWriter out = new BufferedWriter(fstream);
-			out.write(swBuild.toString());
-			// Close the output stream
-			out.close();
-
-			log.info("End doBuildCompile");
-
-		} catch (Exception e) {
-			log.error("Error doBuildCompile",e);
-			throw e;
-		}
-	}
-	
-	
-	
 	/**
 	 * Call ant process.
 	 */
-	public static void callAntProcess() throws Exception{
+	public void callAntProcess() throws Exception{
 		log.info("Begin Ant");
 		
 		try {
@@ -419,25 +368,8 @@ public class ZathuraReverseEngineering implements IZathuraReverseEngineering {
 				log.error("callAntProcess Helper 1 Build",e);
 				throw e;
 			}
-
-			// Compile Pojos
-			File buildFile2 = new File(ZathuraReverseEngineeringUtil.getTempFileBuildCompilePath());
-			Project p2 = new Project();
-			p2.setUserProperty("ant.file", buildFile2.getAbsolutePath());			
-
-			try {
-				p2.fireBuildStarted();
-				p2.init();
-				ProjectHelper helper2 = ProjectHelper.getProjectHelper();
-				p2.addReference("ant.projectHelper", helper2);
-				helper2.parse(p2, buildFile2);
-				p2.executeTarget(p2.getDefaultTarget());
-				p2.fireBuildFinished(null);
-			} catch (BuildException e) {
-				p2.fireBuildFinished(e);
-				log.error("callAntProcess Helper 2 Compile Pojos",e);
-				throw e;
-			}
+			
+			TemporaryJavaCompiler.compileSources(Path.of(destinationDirectory));
 		} catch (Exception e) {
 			throw e;
 		}finally{}

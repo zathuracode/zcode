@@ -7,10 +7,11 @@ Zathuracode es un generador Java que parte de una base de datos relacional y pro
 Este cambio define el flujo soportado como una cadena de etapas verificables:
 
 1. `ZcodeMain` carga configuracion y prepara directorios de salida.
-2. El reverse engineering consulta la base de datos y construye metadata.
-3. La capa SkyJet transforma esa metadata en artefactos generados mediante templates.
-4. El formatter aplica formato Java compatible con Java 25.
-5. El proyecto generado debe seguir siendo compilable con su `pom.xml.vm` vigente.
+2. Hibernate Tools 7.3 consulta la base de datos y construye entidades temporales anotadas con `jakarta.persistence`.
+3. El generador compila esas entidades temporales en proceso y carga metadata por reflexion.
+4. La capa SkyJet transforma esa metadata en artefactos generados mediante templates.
+5. El formatter aplica formato Java compatible con Java 25.
+6. El proyecto generado debe seguir siendo compilable con su `pom.xml.vm` vigente.
 
 ## Goals
 
@@ -34,11 +35,11 @@ Este cambio define el flujo soportado como una cadena de etapas verificables:
 
 ### 2. Reverse engineering
 
-Hibernate Tools inspecciona la base de datos y produce metadata relacional reutilizable por el pipeline de generacion. Esta etapa es especialmente sensible a upgrades de version y a cambios de dialecto o driver JDBC.
+Hibernate Tools 7.3 inspecciona la base de datos y produce entidades temporales usando configuracion generada por templates. Esta etapa es especialmente sensible a upgrades de version, cambios de dialecto, drivers JDBC y formato de `hibernate.reveng.xml`.
 
 ### 3. Metadata loading y templating
 
-La metadata se transforma en estructuras consumibles por los templates SkyJet. Desde ahi se generan entidades, DTOs, repositories, mappers, services, controllers y archivos de soporte del proyecto Spring Boot.
+Las entidades temporales se compilan en proceso con `JavaCompiler`, luego se cargan con reflexion y se convierten en estructuras consumibles por los templates SkyJet. Desde ahi se generan entidades, DTOs, repositories, mappers, services, controllers y archivos de soporte del proyecto Spring Boot.
 
 ### 4. Formatting
 
@@ -53,7 +54,7 @@ Luego de generar codigo, el proyecto resultante debe seguir siendo compilable co
 - Se permiten upgrades incrementales de dependencias estables si preservan el flujo end to end.
 - Si una dependencia mas nueva rompe reverse engineering o generacion, se debe priorizar la version funcional y documentar el bloqueo para una fase posterior.
 - Todo cambio en templates, formatter, dependencias de runtime o reverse engineering debe validarse ejecutando el generador contra una base conocida y compilando el proyecto generado.
-- Las migraciones mayores a Jakarta o Hibernate 6 requieren propuesta separada.
+- Las migraciones mayores posteriores, como Hibernate 6+ adicional o el reemplazo del pipeline Ant/reveng por otra estrategia, requieren propuesta separada.
 
 ## Validation Strategy
 
@@ -64,12 +65,14 @@ La validacion minima de este flujo queda definida como:
 3. Ejecucion directa de `org.zcode.generator.ZcodeMain`.
 4. Confirmacion de generacion completa de entidades y capas de aplicacion.
 5. `mvn -DskipTests compile` en el proyecto generado.
+6. Confirmacion de que el reverse engineering funciona offline sin depender de DTDs remotos.
 
 ## Risks
 
 - `hibernate-tools` sigue siendo el principal punto de compatibilidad fragil.
 - Los cambios en templates pueden romper el proyecto generado sin romper el build del generador.
 - Los cambios en formatter pueden detener el pipeline si no se degradan con seguridad.
+- Los cambios en `type-mapping` pueden afectar tipos numericos y imports requeridos en codigo generado.
 
 ## Rollout
 
