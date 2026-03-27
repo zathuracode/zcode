@@ -5,11 +5,11 @@ spring.application.name=${name}
 spring.info.build.encoding=UTF-8
 
 #Spring DataSource Basic Config
-spring.datasource.url=${spring}{DB_URL:jdbc:postgresql://localhost:5432/${name}}
+spring.datasource.url=${spring}{DB_URL:${connectionUrl}}
 spring.jpa.properties.hibernate.default_schema=${schema}
 spring.jpa.open-in-view=false
-spring.datasource.username=${spring}{DB_USERNAME:change_me}
-spring.datasource.password=${spring}{DB_PASSWORD:change_me}
+spring.datasource.username=${spring}{DB_USERNAME:${connectionUsername}}
+spring.datasource.password=${spring}{DB_PASSWORD:${connectionPassword}}
 
 #Hikari DataSource
 spring.datasource.hikari.minimum-idle=2
