@@ -581,12 +581,6 @@ public class SkyJetUtilities {
 
 		folderBuilder.add(pckge + "security");
 
-		folderBuilder.add(pckge + "entity");
-
-		folderBuilder.add(pckge + "entity_service");
-
-		folderBuilder.add(pckge + "entity_controller");
-
 		for (String string : folderBuilder) {
 			try {
 				GeneratorUtil.validateDirectory(string, hardDiskLocation);
