@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.vortexbird.zcode</groupId>
 	<artifactId>zcode</artifactId>
-	<version>25.10</version>
+	<version>26.04</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

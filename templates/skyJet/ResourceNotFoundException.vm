@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.http.HttpStatus;
 
 /**
-* @author Zathura Code Generator Version 25.11 http://zathuracode.org/
+* @author Zathura Code Generator Version 26.04 http://zathuracode.org/
 * 
 * @generationDate ${localDateTime}
 * 
